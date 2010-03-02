@@ -1,0 +1,20 @@
+- content_for :content_sidebar do
+  .block
+    %ul
+      - unless @page.nil? || @page.new_record?
+        - if @page.can_be_edited_by?(current_user)
+          %li= link_to_edit_page(@page)
+        - if @page.can_be_destroyed_by?(current_user)
+          %li= link_to_destroy_page(@page)
+      - if @group
+        - if @group.members.include?(current_user)
+          %li= link_to_new_page(@group)
+      - else
+        - if @user.nil?
+          %li= link_to_new_page(current_user)
+- if @user
+  = render :file => 'layouts/members'
+- elsif @group
+  = render :file => 'layouts/groups'
+- else
+  = render :file => 'layouts/application'

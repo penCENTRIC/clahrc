@@ -1,0 +1,8 @@
+production:
+  adapter: mysql
+  encoding: utf8
+  database: clahrc
+  pool: 5
+  username:
+  password: 
+  socket: /var/lib/mysql/mysql.sock

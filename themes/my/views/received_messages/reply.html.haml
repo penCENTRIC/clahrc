@@ -1,0 +1,22 @@
+= content_for :content_header do
+  %h1= t('reply')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_unread_received_messages
+      %li= link_to_received_messages
+      %li= link_to_sent_messages
+- form_for @message, :url => member_messages_path(:member_id => @received_message.sender.id) do |f|
+  = error_messages_for :message
+  %ol
+    %li
+      = f.label 'recipients', t('recipients')
+      = text_field_tag :recipients, @message.recipients.collect { |r| r.name_to_s }.to_sentence, :disabled => true
+    %li
+      = f.label :subject, t('subject')
+      = f.text_field :subject, :title => t('subject_help')
+    %li
+      = f.label :body, t('body')
+      = f.text_area :body, :title => t('body_help')
+    %li
+      %li= f.submit t('create')

@@ -1,0 +1,12 @@
+- content_for :content_header do
+  %h1= t('invited')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_memberships
+      %li= link_to_invited_memberships
+- if @directory.invited_memberships.blank?
+  You don't have any group invitations.
+- else
+  .memberships= render @directory.invited_memberships
+  = render @directory

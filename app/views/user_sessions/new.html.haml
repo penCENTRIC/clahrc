@@ -1,0 +1,15 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @user_session, :url => user_session_path do |f|
+  = error_messages_for :user_session
+  %ol
+    %li
+      = f.label :email, t('email')
+      = f.text_field :email, :title => t('email_help')
+    %li
+      = f.label :password, "Password (#{link_to_reset_password})"
+      = f.password_field :password, :title => t('password_help')
+    %li
+      = f.submit t('create')
+      or
+      = link_to_register

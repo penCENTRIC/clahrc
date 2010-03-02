@@ -1,0 +1,24 @@
+- content_for :content_header do
+  %h1= t('index')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_unread_received_messages
+      %li= link_to_received_messages
+      %li= link_to_sent_messages
+.message[@sent_message]
+  .icon
+    = avatar_tag(@sent_message.recipients.first, :style => :icon)
+  .body
+    .recipients
+      To:
+      = links_to_members(@sent_message.recipients)
+    .subject
+      Subject:
+      = link_to_sent_message(@sent_message)
+    .date
+      Date:
+      = @sent_message.created_at.strftime('%k:%M on %A, %e %B %Y')
+%h2= @sent_message.subject_to_s
+%p= @sent_message.body_to_html
+= link_to t('destroy'), my_sent_message_url(@sent_message), :method => :delete, :confirm => 'Are you sure?'

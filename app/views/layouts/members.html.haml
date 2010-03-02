@@ -1,0 +1,40 @@
+- content_for :sidebar do
+  - if @user.nil? || @user.new_record?
+    .title Directory
+    %ul
+      %li= link_to_members
+      %li= link_to_groups
+  - else
+    = avatar_tag(@user, :style => :avatar)
+    %ul
+      %li= link_to_activities(@user)
+      %li= link_to_friendships(@user)
+      %li= link_to_memberships(@user)
+      %li= link_to_pages(@user)
+      %li= link_to_posts(@user)
+      %li= link_to_assets(@user)
+      - unless @user == current_user
+        %li= link_to_new_message(@user)
+        - unless current_user.friends.include?(@user) || @user.pending_friends.include?(current_user)
+          %li= link_to_new_friendship(@user)
+- content_for :content_sidebar do
+  - if @user
+    - unless @user.profile.skype.blank?
+      %p
+        %strong Skype
+        %script{ :src => "http://download.skype.com/share/skypebuttons/js/skypeCheck.js" }
+        %a{ :href=> "skype:#{@user.profile.skype}?call" }
+          %img{ :src => "http://mystatus.skype.com/bigclassic/#{@user.profile.skype}", :style => "border: none;", :width => "150px", :height => "36px", :alt => "My status" }
+    - unless @user.profile.activities.blank?
+      %p
+        %strong Activities:
+        = links_to_tags(@user.profile.activities)
+    - unless @user.profile.interests.blank?
+      %p
+        %strong Interests:
+        = links_to_tags(@user.profile.interests)
+    - unless current_domain == 'my'
+      #pages-block= javascript_tag %Q($("#pages-block").load("#{block_member_pages_path(@user)}");)
+      #posts-block= javascript_tag %Q($("#posts-block").load("#{block_member_posts_path(@user)}");)
+      #assets-block= javascript_tag %Q($("#assets-block").load("#{block_member_assets_path(@user)}");)
+= render :file => 'layouts/application'

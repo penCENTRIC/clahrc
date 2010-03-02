@@ -1,0 +1,8 @@
+- content_for :content_header do
+  %h1= @forum.title
+.forum[@forum]
+  .body
+    = @forum.body_to_html
+.topics
+  %h2= t('topics.index')
+= render @forum.topics

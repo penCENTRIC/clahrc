@@ -1,0 +1,16 @@
+<%= word_wrap("#{@received_message.sender.full_name} sent you a new message:", :line_width => 60) %>
+
+--------
+<%= word_wrap(@received_message.subject_to_s, :line_width => 60) %>
+--------
+<%= word_wrap(@received_message.body_to_s, :line_width => 60) %>
+--------
+
+<%= word_wrap("To view the message or to reply to it, please click the following link:", :line_width => 60)%>
+
+<%= my_received_message_url(@received_message, :host => 'my.clahrc.net') %>
+
+<%= word_wrap("If you are unable to click the above link, please copy the link in its entirety and paste it into your web-browser's address bar.", :line_width => 60) %>
+
+Regards,
+CLAHRC Community Team

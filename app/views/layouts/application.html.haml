@@ -1,0 +1,33 @@
+!!! Strict
+%html
+  %head
+    %title Collaboration for Leadership in Applied Health Research and Care
+    %meta{ 'http-equiv' => 'Content-Type', :content => 'text/html; charset=UTF-8' }
+    %meta{ 'http-equiv' => 'Content-Script-Type', :content => 'text/javascript' }
+    %meta{ 'http-equiv' => 'Content-Style-Type', :content => 'text/css' }
+    = stylesheet_link_tag 'screen', :media => 'screen, projection'
+    = stylesheet_link_tag 'print', :media => 'print'
+    /[if lt IE 8]
+      = stylesheet_link_tag 'ie', :media => 'screen, projection'
+    = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
+    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery-tools.min', 'jquery.autocomplete.min', 'application'
+  %body
+    #tooltip
+    #overlay.overlay
+      .wrap
+    #header-wrapper
+      = render 'shared/session'
+      = render 'shared/header'
+    #wrapper
+      = render 'shared/sidebar'
+      #content-wrapper
+        = render 'shared/content_header'
+        = render 'shared/content'
+        = render 'shared/content_sidebar'
+        = render 'shared/content_footer'
+    #footer-wrapper
+      = render 'shared/footer'
+    /[if IE 6]
+      %script{ :type => 'text/javascript', :src => 'http://shapeshed.github.com/ie6-notice/ie6notice-1.0.0.min.js' }
+    - if current_user && RAILS_ENV == 'production'
+      = render 'shared/google_analytics'

@@ -1,0 +1,9 @@
+#content-sidebar
+  = yield :content_sidebar
+  .block
+    .title
+      My Settings
+    %ul
+      %li= link_to_edit_profile
+      %li= link_to_edit_avatar
+      %li= link_to_edit_account

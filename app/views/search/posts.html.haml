@@ -1,0 +1,13 @@
+- content_for :content_header do
+  %h1 Search Results
+- form_tag(posts_search_path, :method => :get) do
+  %ol
+    %li
+      = text_field_tag :q, @query || 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'
+- if @post_results.empty?
+  %p
+    No blog posts could be found that matched the search.
+- else
+  %h2= pluralize(@post_results.total_entries, 'Blog post')
+  = render @post_results
+  .directory= will_paginate(@post_results)

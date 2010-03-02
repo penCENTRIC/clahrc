@@ -1,0 +1,421 @@
+The Rails "routing system":http://api.rubyonrails.org/classes/ActionController/Routing.html is a pretty impressive piece of code. There's a fair bit of magic going on to make your routes so easy to define and use in the rest of your Rails application. One area in which the routing system is limited however is its use of subdomains: it's pretty much assumed that your site will be using a single, fixed domain.
+
+There are times where it is preferable to spread a website over multiple subdomains. One common idiom in URL schemes is to separate aspects of the site under different subdomains, representative of those aspect. It many cases a simple, fixed subdomain scheme is desirable: _support.whatever.com_, _forums.whatever.com_, _gallery.whatever.com_ and so on. On some international sites, the subdomain is used to select the language and localization: _en.wikipedia.org_, _fr.wikipedia.org_, _ja.wikipedia.org_. Other schemes allocate each user of the site their own subdomain, so as to personalise the experience (_blogspot.com_ is a good example of this).
+
+A couple of plugins currently exists for Rails developers wishing to incorporate subdomains into their routes. The de facto standard is "SubdomainFu":http://www.intridea.com/2008/6/23/subdomainfu-a-new-way-to-tame-the-subdomain. (I'll admit - I haven't actually used this plugin myself.) There's also "SubdomainAccount":http://github.com/shuber/subdomain_account/tree/master.
+
+I've recently completed work on a subdomain library which fully incorporates subdomains into the rails routing environment - in URL generation, route recognition *and* in route definition, something I don't believe is currently available. As an added bonus, if offers the ability to define subdomain routes which are keyed to a model (user, category, etc.) stored in your database.
+
+h2. Installation
+
+The gem is called <code>SubdomainRoutes</code>, and is easy to install from GitHub (you only need to add GitHub as a source once):
+
+<pre>
+gem sources -a http://gems.github.com
+sudo gem install mholling-subdomain_routes
+</pre>
+
+In your Rails app, make sure to specify the gem dependency in environment.rb:
+
+<pre>
+config.gem "mholling-subdomain_routes", :lib => "subdomain_routes", :source => "http://gems.github.com"
+</pre>
+
+[ *UPDATE:* You can also install the gem as a plugin: <code>script/plugin install git://github.com/mholling/subdomain_routes.git</code> ]
+
+(Note that the SubdomainRoutes gem requires Rails 2.2 or later to run since it changes <code>ActionController::Resources::INHERITABLE_OPTIONS</code>. If you're on an older version of Rails, you need to get with the program. ;)
+
+Finally, you'll probably want to configure your session to work across all your subdomains. You can do this in your environment files:
+
+<pre>
+# in environment/development.rb:
+config.action_controller.session[:session_domain] = "yourdomain.local" # or whatever
+
+# in environment/production.rb:
+config.action_controller.session[:session_domain] = "yourdomain.com" # or whatever
+</pre>
+
+[ *UPDATE*: If you're using your domain without any subdomain, you may need to set the domain to ".yourdomain.com" (with leading period). Also, you may first need to set <code>config.action_controller.session ||= {}</code> in your environment file, in case the session configuration variable has not already been set. ]
+
+h2. Mapping a Single Subdomain
+
+Let's start with a simple example. Say we have a site which offers a support section, where users submit and view support tickets for problems they're having. It'd be nice to have that under a separate subdomain, say _support.mysite.com_. With subdomain routes we'd map that as follows:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain :support do |support|
+    support.resources :tickets
+    ...
+  end
+end
+</pre>
+
+What does this achieve? A few things. For routes defined within the subdomain block:
+
+* named routes have a <code>support_</code> prefix;
+* their controllers will have a <code>Support::</code> namespace;
+* they will only be recognised if the host subdomain is _support_; and
+* paths and URLs generated for them by <code>url_for</code> and named routes will force the _support_ subdomain if the current host subdomain is different.
+
+This is just what you want for a subdomain-qualified route. Rails will recognize _support.mysite.com/tickets_, but not _www.mysite.com/tickets_.
+
+Let's take a look at the flip-side of route recognition - path and URL generation. The subdomain restrictions are also applied here:
+
+<pre>
+# when the current host is support.mysite.com:
+support_tickets_path
+=> "/tickets"
+
+# when the current host is www.mysite.com:
+support_tickets_path
+=> "http://support.mysite.com/tickets"
+
+# overriding the subdomain won't work:
+support_tickets_path(:subdomain => :www)
+#  ActionController::RoutingError: Route failed to generate
+#  (expected subdomain in ["support"], instead got subdomain "www")
+</pre>
+
+Notice that, by necessity, requesting a path still results in an URL if the subdomain of the route is different. If you try and override the subdomain manually, you'll get an error, because the resulting URL would be invalid and would not be recognized. This is a good thing - you don't want to be linking to invalid URLs by mistake!
+
+In other words, <code>url_for</code> and your named routes will *never* generate an invalid URL. This is one major benefit of the SubdomainRoutes gem: it offers a smart way of switching subdomains, requiring them to be specified manually only when absolutely necessary.
+
+h2. Mapping Multiple Subdomains
+
+Subdomain routes can be set on multiple subdomains too. Let's take another example. Say we have a review site, _reviews.com_, which has reviews of titles in several different media (say, DVDs, games, books and CDs). We want to key the media type to the URL subdomain, so the user knows by the URL what section of the site they're in. (I use this scheme on my "swapping site":http://things.toswap.com.au.) A subdomain route map for such a scheme could be as follows:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain :dvd, :game, :book, :cd, :name => :media do |media|
+    media.resources :reviews
+    ...
+  end
+end
+</pre>
+
+Notice that we've specified a generic name (_media_) for our subdomain, so that our namespace and named route prefix become <code>Media::</code> and <code>media_</code>, respectively. (We could also set the <code>:name</code> to nil, or override <code>:namespace</code> or <code>:name_prefix</code> individually.)
+
+Recognition of these routes will work in the same way as before. The URL _dvd.reviews.com/reviews_ will be recognised, as will _game.reviews.com/reviews_, and so on. No luck with _concert.reviews.com/reviews_, as that subdomain is not listed in the <code>subdomain</code> mapping.
+
+URL generation may behave differently however. If the URL is being generated with current host _www.reviews.com_, there is no way for Rails to know which of the subdomains to use, so you must specify it in the call to <code>url_for</code> or the named route. On the other hand, if the current host is _dvd.reviews.com_ the URL or path will just generate with the current host unless you explicitly override the subdomain. Check it:
+
+<pre>
+# when the current host is dvd.reviews.com:
+media_reviews_path
+=> "/reviews"
+
+# when the current host is www.reviews.com:
+media_reviews_path
+#  ActionController::RoutingError: Route failed to generate (expected
+#  subdomain in ["dvd", "game", "book", "cd"], instead got subdomain "www")
+
+media_reviews_path(:subdomain => :book)
+=> "http://book.reviews.com/reviews"
+</pre>
+
+Again, requesting a path may result in an URL or a path, depending on whether the subdomain of the current host needs to be changed. And again, the URL-writing system will not generate any URL that will not in turn be recognised by the app.
+
+h2. Mapping the Nil Subdomain
+
+SubdomainRoutes allows you to specify routes for the "nil subdomain" - for example, URLs using _example.com_ instead of _www.example.com_. To do this though, you'll need to configure the gem.
+
+By default, SubdomainRoutes just extracts the first part of the host as the subdomain, which is fine for most situations. But in the example above, _example.com_ would have a subdomain of _example_; obviously, not what you want. You can change this behaviour by setting a configuration option (you can put this in an initializer file in your Rails app):
+
+<pre>
+SubdomainRoutes::Config.domain_length = 2
+</pre>
+
+With this set, the subdomain for _example.com_ will be <code>""</code>, the empty string. (You can also use nil to specify this in your routes.)
+
+If you're on a country-code top-level domain (e.g. _toswap.com.au_), you'd set the domain length to three. You may even need to set it to four (e.g. for nested government and education domains such as _health.act.gov.au_).
+
+(Note that, in your controllers, your request will now have a <code>subdomain</code> method which returns the subdomain extracted in this way.)
+
+Here's an example of how you might want to use a nil subdomain:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain nil, :www do |www|
+    www.resource :home
+    ...
+  end
+end
+</pre>
+
+All the routes within the subdomain block will resolve under both _www.example.com_ and just _example.com_.
+
+(As an aside, this is not actually an approach I would recommend taking; you should probably not have the same content mirrored under two different URLs. Instead, set up your server to redirect to your preferred host, be it with the _www_ or without.)
+
+Finally, for the nil subdomain, there is some special behaviour. Specifically, the namespace and name prefix for the routes will default to the first non-nil subdomain (or to nothing if _only_ the nil subdomain is specified). You can override this behaviour by passing a <code>:name</code> option.
+
+h2. Nested Resources under a Subdomain
+
+REST is awesome. If you're not using "RESTful routes":http://api.rubyonrails.org/classes/ActionController/Resources.html in your Rails apps, you should be. It offers a disciplined way to design your routes, and this flows through to the design of the rest of your app, encouraging you to capture pretty much all your application logic in models and leaving your controllers as generic and "skinny":http://weblog.jamisbuck.org/2006/10/18/skinny-controller-fat-model as can be.
+
+Subdomain routes work transparently with RESTful routes - any routes nested under a resource will inherit the subdomain conditions of that resource:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain :admin do |admin|
+    admin.resources :roles, :has_many => :users
+    ...
+  end
+end
+</pre>
+
+Your <code>admin_role_users_path(@role)</code> will automatically generate with the correct _admin_ subdomain if required, and paths such as _/roles/1/users_ will only be recognised when under the _admin_ subdomain. Note that both the block form and the <code>:has_many</code> form of nested resources will work in this manner. (In fact, under the hood, the latter just falls through to the former.) Any other (non-resource) routes you nest under a resource will also inherit the subdomain conditions.
+
+h2. Defining Model-Based Subdomain Routes
+
+The idea here is to have the subdomain of the URL keyed to an ActiveRecord model. Let's take a hypothetical example of a site which lists items under different categories, each category being represented under its own subdomain. Assume our <code>Category</code> model has a <code>subdomain</code> attribute which contains the category's custom subdomain. In our routes we'll still use the <code>subdomain</code> mapper, but instead of specifying one or more subdomains, we just specify a <code>:model</code> option:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain :model => :category do |category|
+    category.resources :items
+    ...
+  end
+end
+</pre>
+
+As before, the namespace and name prefix for all the nested routes will default to the name of the model (you can override these in the options). The routes will match under any subdomain, and that subdomain will be passed to the controller in the <code>params</code> hash as <code>params[:category_id]</code>. For example, a GET request to _dvds.example.com/items_ will go to the <code>Category::ItemsController#index</code> action with <code>params[:category_id]</code> set to <code>"dvds"</code>.
+
+h2. Generating Model-Based Subdomain URLs
+
+So how does URL _generation_ work with these routes? That's the best bit: just the same way as you're used to! The routes are fully integrated with your named routes, as well as the <code>form_for</code>, <code>redirect_to</code> and <code>polymorphic_path</code> helpers. The only thing you have to do is make sure your model's <code>to_param</code> returns the subdomain field for the user:
+
+<pre>
+class Category < ActiveRecord::Base
+  ...
+  alias_method :to_param, :subdomain
+  ...
+end
+</pre>
+
+Now, in the above example, let's say our site has _dvd_ and _cd_ su categories, with subdomains _dvds_ and _cds_. In our controller:
+
+<pre>
+@dvd
+=> #<Category id: 1, subdomain: "dvds", ... >
+
+@cd
+=> #<Category id: 2, subdomain: "cds", ... >
+
+# when the current host is dvds.example.com:
+category_items_path(@dvd)
+=> "/items"
+
+polymorphic_path [ @dvd, @dvd.items.first ]
+=> "/items/2"
+
+category_items_path(@cd)
+=> "http://cds.example.com/items"
+
+polymorphic_path [ @cd, @cd.items.first ]
+=> "http://cds.example.com/items/10"
+</pre>
+
+As you can see, the first argument for the named routes (and polymorphic paths) feeds directly into the subdomain for the URL. No more passing <code>:subdomain</code> options. Nice!
+
+h2. ActiveRecord Validations
+
+SubdomainRoutes also gives you a couple of utility validations for your ActiveRecord models:
+
+* <code>validates_subdomain_format_of</code> ensures a subdomain field uses only legal characters in an allowed format; and
+* <code>validates_subdomain_not_reserved</code> ensures the field does not take a value already in use by your fixed-subdomain routes.
+
+(Undoubtedly, you'll want to throw in a <code>validates_uniqueness_of</code> as well.)
+
+Let's take an example of a site where each user gets a dedicated subdomain. Validations for the <code>subdomain</code> attribute of the <code>User</code> model would be:
+
+<pre>
+class User < ActiveRecord::Base
+  ...
+  validates_subdomain_format_of :subdomain
+  validates_subdomain_not_reserved :subdomain
+  validates_uniqueness_of :subdomain
+  ...
+end
+</pre>
+
+The library currently uses a simple regexp to limit subdomains to lowercase alphanumeric characters and dashes (except on either end). If you want to conform more precisely to the URI specs, you can override the <code>SubdomainRoutes.valid_subdomain?</code> method and implement your own.
+
+h2. Using Fixed and Model-Based Subdomain Routes Together
+
+Let's try using fixed and model-based subdomain routes together. Say we want to reserve some subdomains (say _support_ and _admin_) for administrative functions, with the remainder keyed to user accounts. Our routes:
+
+<pre>
+ActionController::Routing::Routes.draw do |map|
+  map.subdomain :support do |support|
+    ...
+  end
+
+  map.subdomain :admin do |admin|
+    ...
+  end
+
+  map.subdomain :model => :user do |user|
+    ...
+  end
+end
+</pre>
+
+These routes will co-exist quite happily together. We've made sure our static subdomain routes are listed first though, so that they get matched first. In the <code>User</code> model we'd add the validations above, which in this case would prevent users from taking _www_ or _support_ as a subdomain. (We could also validate for a minimum and maximum length using <code>validates_length_of</code>.)
+
+h2. Setting Up Your Development Environment
+
+To develop your app using SudomainRoutes, you'll need to set up your machine to point some test domains to the server on your machine (i.e. to the local loopback address, 127.0.0.1). On a Mac, you can do this by editing <code>/etc/hosts</code>. Let's say you want to use the subdomains _www_, _dvd_, _game_, _book_ and _cd_, with a domain of _reviews.local_. Adding these lines to <code>/etc/hosts</code> will do the trick:
+
+<pre>
+127.0.0.1 reviews.local
+127.0.0.1 www.reviews.local
+127.0.0.1 dvd.reviews.local
+127.0.0.1 game.reviews.local
+127.0.0.1 book.reviews.local
+127.0.0.1 cd.reviews.local
+</pre>
+
+You'll need to flush your DNS cache for these changes to take effect:
+
+<pre>
+dscacheutil -flushcache
+</pre>
+
+Then fire up your <code>script/server</code>, point your browser to _www.reviews.local:3000_ and your app should be up and running. If you're using "Passenger":http://www.modrails.com to "serve your apps in development":http://www.google.com/search?q=rails+passenger+development (and I highly recommend that you do), you'll need to add a Virtual Host to your Apache .conf file. (Don't forget to alias all the subdomains and restart the server.)
+
+If you're using model-based subdomain routes (covered next), you may want to use a catch-all (wildcard) subdomain. Setting this up is not so easy, since wildcards (like _*.reviews.local_) won't work in your <code>/etc/hosts</code> file. There are a couple of work-around for this:
+
+# Use a "proxy.pac":http://en.wikipedia.org/wiki/Proxy.pac file in your browser so that it proxies _*.reviews.local_ to localhost. How to do this will depend on the browser you're using.
+# Set up a local DNS server with an A record for the domain. This may be a bit involved.
+
+h2. Testing with Subdomain Routes
+
+Testing routes and controllers with the SubdomainRoutes gem may require a little extra work. Here's a simple <code>routes.rb</code> as an example:
+
+<pre>
+map.subdomain :admin do |admin|
+  admin.resources :users
+end
+
+map.subdomain :model => :city do |city|
+  city.resources :reviews, :only => [ :index, :show ]
+end
+</pre>
+
+(This connects a fixed _admin_ subdomain to a <code>Admin::UsersController</code>, and a model-based _city_ subdomain to a <code>City::ReviewsController</code>.)
+
+h2. Testing Controllers
+
+A simple test for the <code>Admin::UsersController#show</code> action would go along these lines:
+
+<pre>
+class Admin::UsersControllerTest < ActionController::TestCase
+  test "show action" do
+    get :show, :id => "1", :subdomains => [ "admin" ]
+    assert_response :success # or whatever
+  end
+end
+</pre>
+
+Notice the <code>:subdomains => [ "admin" ]</code> in the hash passed to the <code>get</code> method. This is the additional requirement for testing controller actions which lie under a subdomain route. Your tests won't work without it. The same applies for <code>post</code>, <code>put</code> and <code>delete</code>.
+
+(For testing the model-based subdomain routes, <code>:subdomains => :city_id</code> and <code>:city_id => "..."</code> would be added to the route's options hash. Check the specs for more examples, if you need them.)
+
+It's a little bit ugly (and not too DRY) to have to list the subdomains for the route in the test. Want to change the actual subdomains you are using? You'll have to change your tests as well. But that's the way it goes. (One way to avoid this brittleness, at least, would be to assign the subdomains to a constant and use the constant in your routes and tests.)
+
+It's easy to figure out what <code>:subdomain</code> option you should pass. Just look it up in your routes by typing <code>rake routes</code> at the console:
+
+<pre>
+    admin_users GET    /users(.:format)          {:action=>"index", :subdomains=>["admin"], :controller=>"admin/users"}
+                POST   /users(.:format)          {:action=>"create", :subdomains=>["admin"], :controller=>"admin/users"}
+ new_admin_user GET    /users/new(.:format)      {:action=>"new", :subdomains=>["admin"], :controller=>"admin/users"}
+edit_admin_user GET    /users/:id/edit(.:format) {:action=>"edit", :subdomains=>["admin"], :controller=>"admin/users"}
+     admin_user GET    /users/:id(.:format)      {:action=>"show", :subdomains=>["admin"], :controller=>"admin/users"}
+                PUT    /users/:id(.:format)      {:action=>"update", :subdomains=>["admin"], :controller=>"admin/users"}
+                DELETE /users/:id(.:format)      {:action=>"destroy", :subdomains=>["admin"], :controller=>"admin/users"}
+   city_reviews GET    /reviews(.:format)        {:action=>"index", :subdomains=>:city_id, :controller=>"city/reviews"}
+    city_review GET    /reviews/:id(.:format)    {:action=>"show", :subdomains=>:city_id, :controller=>"city/reviews"}
+</pre>
+
+The <code>:subdomain</code> option you need to use is listed right there in the right-most column of each route.
+
+h2. Testing Subdomain Routes
+
+An underlying assumption in the Rails routing code is that the _path_ is all that's needed to specify an URL, since the host is assumed to be fixed and irrelevant. In some parts of the routing assertions code, this assumption is fairly tightly entangled in the code. Obviously, for subdomain routes, it's an invalid assumption.
+
+Augmenting Rails' <code>assert_generates</code> and <code>assert_recognizes</code> methods to allow for a changeable host is not really a practical or sensible option. Instead, SubdomainRoutes adds some new assertions specifically for testing subdomain routes.
+
+h3. Testing Recognition
+
+The signature for Rails' traditional <code>assert_recognizes</code> method looks like this:
+
+<pre>
+def assert_recognizes(expected_options, path, extras={}, message=nil)
+</pre>
+
+The <code>expected_options</code> path is options hash describing the route that should be recognised (always including <code>:controller</code> and <code>:action</code>, as well as any other parameters that the route might produce). The <code>path</code> can either be a string representing the path, or a hash with <code>:path</code> and <code>:method</code> values (if you need to specify an HTTP method other than GET).
+
+For <code>assert_recognizes_with_host</code> the same arguments are kept, since the <code>:host</code> can be passed as another option in the <code>path</code> hash. The <code>:host</code> option represents what host should be set in the <code>TestRequest</code> that's used to recognise the path. (Unlike traditional routes, the subdomain, and hence the host, is required for recognition of the route.)
+
+So a typical passing recognition test for the user index route would be:
+
+<pre>
+test "admin_users route recognition" do
+  assert_recognizes_with_host(
+    { :controller => "admin/users", :action => "index", :subdomains => [ "admin" ] },
+    { :path => "/users", :host => "admin.example.com" })
+end
+</pre>
+
+Notice the correct subdomain for this route is specified in the host. Note also the annoying <code>:subdomains</code> value in the first options hash. It needs to be there as well, to specify the route.
+
+h3. Testing Generation
+
+Testing route generation is a little more involved. The Rails assertion is as follows:
+
+<pre>
+def assert_generates(expected_path, options, defaults={}, extras={}, message=nil)
+</pre>
+
+This method asserts that <code>expected_path</code> (a string) is the path generated by the route <code>options</code>. But with subdomain routes, the generated route may also depend on the current host - if the subdomain for the route is different than the current host, the host will be forced to the new subdomain.
+
+To allow testing of this behaviour, the <code>assert_generates_with_host</code> method is introduced. This assertion allows you to specify the current host, as well as the host that the new route should have (if different):
+
+<pre>
+def assert_generates_with_host(expected_path, options, host, defaults={}, extras={}, message=nil)
+</pre>
+
+Notice the additional third argument, <code>host</code>, which you should set to the current host (i.e. the host under which the route is being generated).
+
+Now to test an example route. First, test the case where the host doesn't change:
+
+<pre>
+test "admin_users route generation for the same subdomain" do
+  assert_generates_with_host(
+    "/users",
+    { :controller => "admin/users", :action => "index", :subdomains => [ "admin" ] },
+    "admin.example.com")
+end
+</pre>
+
+The assertion in this test is saying that, for _admin.example.com_, the index route should generate <code>"/users"</code> as the path, and not change the host. The test passes as this is expected behaviour.
+
+The second test case covers the case of generating the route from a host with a different subdomain:
+
+<pre>
+test "admin_users route generation for a different subdomain" do
+  assert_generates_with_host(
+    { :path => "/users", :host => "admin.example.com" },
+    { :controller => "admin/users", :action => "index", :subdomains => [ "admin" ] },
+    "www.example.com")
+end
+</pre>
+
+Here the usage diverges from <code>assert_generates</code>: instead of passing a string as the expected path, a hash is passed. As with <code>assert_recognizes</code>, the hash is used to specify both the <code>:path</code> and the <code>:host</code> that the route should generate. The above test passes because the route changes the subdomain from _www_ to _admin_. (This only occurs in a single-subdomain route, of course.)
+
+h3. Use with RSpec
+
+The subdomain routing assertions won't help you much if you're using RSpec or some other testing framework. Your best bet is to wrap each assertion up in its own class, just as RSpec does with <code>assert_recognizes</code>  in its <code>route_for</code> method (check the rspec-rails source code). This shouldn't be too hard to do.
+
+
+Copyright (c) 2009 Matthew Hollingworth. See LICENSE for details.

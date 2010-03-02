@@ -1,0 +1,20 @@
+.group[group]{ :class => cycle('odd', 'even') }
+  .icon
+    - if group.hidden?
+      %img{ :src => '/images/icons/group_key.png', :style => 'cursor: move' }
+    - elsif group.private?
+      %img{ :src => '/images/icons/group_link.png', :style => 'cursor: move' }
+    - else
+      %img{ :src => '/images/icons/group.png', :style => 'cursor: move' }
+  .body
+    .title
+      = link_to_group(group, :query => @query)
+    .teaser
+      = group_teaser(group, :query => @query)
+    .links
+      %ul
+        %li= link_to t('show'), group_path(group)
+        - unless group.members.include?(current_user) || group.pending_members.include?(current_user)
+          %li= link_to_new_group_membership(group)
+        - if group.moderators.include?(current_user) && group.members.count > 1
+          %li= link_to_new_message(group)

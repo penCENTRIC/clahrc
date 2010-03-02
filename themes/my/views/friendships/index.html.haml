@@ -1,0 +1,17 @@
+- content_for :content_header do
+  %h1= t('index')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_friendships
+      %li= link_to_pending_friendships
+  .block
+    .title Community
+    %ul
+      %li= link_to_members_directory
+.friendships
+  - if @directory.friendships.blank?
+    You don't have any friends.
+  - else
+    = render @directory.friendships
+= render @directory

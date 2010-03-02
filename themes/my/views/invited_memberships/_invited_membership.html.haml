@@ -1,0 +1,12 @@
+.group[invited_membership]{ :class => cycle('odd', 'even') }
+  .icon
+    %img{ :src => '/images/icons/group.png' }
+  .body
+    .title
+      = link_to_group(invited_membership.relatable)
+    .teaser
+      = group_teaser(invited_membership.relatable)
+      .links
+        %ul
+          %li= link_to_accept_membership(invited_membership)
+          %li= link_to_reject_membership(invited_membership)

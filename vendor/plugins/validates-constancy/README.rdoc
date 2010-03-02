@@ -1,0 +1,100 @@
+== Validates Constancy for Ruby on Rails (Active Record)
+
+http://constancy.rubyforge.org
+
+Compatible with Rails v1.2.2 through v2.0.4 (Active Record v1.15.2 through
+v2.0.4)
+
+
+=== Introduction
+
+This Rails plugin adds a +validates_constancy_of+ validation to Active Record.
+It allows you to prevent particular database fields from being changed after a
+record is created. A validation error occurs on updates if an attribute of a
+model object is different from its value in the database.
+
+
+=== Installing Validates Constancy
+
+The code is packaged as a Rails plugin. It is compatible with the latest
+released version of the Rails framework (and possibly also other versions -- see
+the 'test' branch of this repository). You can install the plugin with the
+command:
+
+  ruby script/plugin install git://github.com/njonsson/validates-constancy-rails-plugin.git
+
+
+=== Using constancy validation
+
+Here's how to use this validation in your code.
+
+  class Person < ActiveRecord::Base
+    
+    # Prevent changes to Person#social_security_number.
+    validates_constancy_of :social_security_number
+    
+  end
+
+
+==== Options
+
+The validation takes two options, <tt>:if</tt> and <tt>:message</tt>. These may
+be familiar because several of Active Record's validations also use them. The
+<tt>:if</tt> option takes a Proc, or a symbol, or string with a model object
+argument and a return value of +true+ or +false+.
+
+  class Comment < ActiveRecord::Base
+    
+    # Prevent changes to Comment#text if it is "locked."
+    validates_constancy_of :text, :if => Proc.new { |comment| comment.locked? }
+    
+  end
+
+The default error message is "can't be changed". Use your own error message by
+specifying the <tt>:message</tt> option.
+
+  class LicensePlate < ActiveRecord::Base
+    
+    # Prevent changes to LicensePlate#number.
+    validates_constancy_of :number,
+                           :message => 'is off-limits! What are you thinking?'
+    
+  end
+
+More than one model attribute can be specified. Any specified options will be
+applied to all the specified attributes.
+
+
+==== Warning
+
+With associations, validate the constancy of a foreign key, not the instance
+variable itself: <tt>validates_constancy_of :invoice_id</tt> instead of
+<tt>validates_constancy_of :invoice</tt>.
+
+Also note the warning under <em>Inheritable callback queues</em> in
+http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html. "In order for
+inheritance to work for the callback queues, you must specify the callbacks
+before specifying the associations. Otherwise, you might trigger the loading of
+a child before the parent has registered the callbacks and they won't be
+inherited." Validates Constancy uses these callback queues, so you'll want to
+specify associations *after* +validates_constancy_of+ statements in your model
+classes.
+
+
+=== Running automated tests for Validates Constancy
+
+There's a suite of tests that exercises all the functionality of Validates
+Constancy. You can check out a version of the test suite from the repository
+according to the version of Rails (Active Record) it works with.
+
+  git checkout test
+  git submodule update --init
+
+Then read rails_*/doc/README_FOR_APP for instructions on how to run the tests.
+
+
+=== Credits
+
+Copyright (c) 2007-2009 Nils Jonsson (mailto:nils@alumni.rice.edu)
+
+Released under the MIT license.

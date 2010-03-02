@@ -1,0 +1,24 @@
+- content_for :content_header do
+  %h1= @group.name_to_s
+- content_for :content_sidebar do
+  - unless @group.activities.blank?
+    %p
+      %strong Activities:
+      = links_to_tags(@group.activities)
+  - unless @group.interests.blank?
+    %p
+      %strong Interests:
+      = links_to_tags(@group.interests)
+.group[@group]
+  = @group.description_to_html
+  - unless @group.memberships.blank?
+    %h2= t('members.index')
+    .members
+      %a.prevPage.browse.left
+      .scrollable
+        .items
+          - @group.memberships.each do |membership|
+            = avatar_tag(membership.user)
+      %a.nextPage.browse.right
+    %p
+      = link_to 'All members&hellip;', group_memberships_path(@group)

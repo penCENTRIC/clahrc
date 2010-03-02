@@ -1,0 +1,17 @@
+.message[sent_message]{ :class => cycle('odd', 'even') }
+  .icon
+    = avatar_tag(sent_message.message.recipients.first, :style => :icon)
+  .body
+    .recipients
+      To:
+      = links_to_members(sent_message.message.recipients)
+    .subject
+      Subject:
+      = link_to_sent_message(sent_message)
+    .date
+      Date:
+      = sent_message.created_at.strftime('%k:%M on %A, %e %B %Y')
+    .links
+      %ul
+        %li= link_to t('show'), my_sent_message_url(sent_message)
+        %li= link_to t('destroy'), my_sent_message_url(sent_message), :method => :delete, :confirm => 'Are you sure?'

@@ -1,0 +1,15 @@
+.user[user]{ :class => cycle('odd', 'even') }
+  .icon
+    = avatar_tag(user, :style => :icon)
+  .body
+    .title
+      = link_to_member(user, :query => @query)
+    .teaser
+      = member_teaser(user, :query => @query)
+    .links
+      - unless user == current_user
+        %ul
+          %li= link_to_new_message(user)
+          - unless current_user.friends.include?(user) || user.pending_friends.include?(current_user)
+            %li= link_to_new_friendship(user)
+            

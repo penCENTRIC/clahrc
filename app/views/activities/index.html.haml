@@ -1,0 +1,19 @@
+- content_for :content_header do
+  %h1
+    - if @group
+      = @group.name_to_s
+    - elsif @user
+      = @user.name_to_s
+    - else
+      = t('index')
+- if @group || @user
+  %h2= t('index')
+.activities
+  - if @directory.activities.blank?
+    %p
+      No activity could be found.
+  - else
+    - @directory.activities.group_by(&:when).each do |day, activities|
+      %h3= day
+      = render activities
+= render @directory

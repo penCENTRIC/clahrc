@@ -1,0 +1,11 @@
+#sidebar
+  = avatar_tag(current_user, :style => :avatar)
+  %ul
+    %li= link_to_inbox
+    %li= link_to_activities
+    %li= link_to_friendships
+    %li= link_to_memberships
+    %li= link_to_pages
+    %li= link_to_posts
+    %li= link_to_assets
+    %li= link_to_logout

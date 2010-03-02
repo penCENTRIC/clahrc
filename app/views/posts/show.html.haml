@@ -1,0 +1,30 @@
+- content_for :content_header do
+  %h1= @post.title_to_s
+- content_for :content_sidebar do
+  - unless @post.tags.blank?
+    %p
+      %strong Tags:
+      = links_to_tags(@post.tags)
+.post[@post]
+  .body
+    .info
+      = link_to_member(@post.user)
+      at
+      = @post.created_at.strftime('%k:%M on %A, %e %B %Y')
+    = @post.body_to_html
+.comments{ :href => '#comments' }
+  - unless @post.comments.blank? && @post.comments_disabled?
+    - unless @post.comments.blank?
+      %h2= t('comments.index')
+      = render @post.comments
+    - if @post.comments_enabled?
+      %h3= t('comments.new')
+      - form_for @post.comments.new, :url => post_comments_path(@post) do |f|
+        = error_messages_for :comment
+        %ol
+          %li
+            = f.text_area :body, :title => t('body_help')
+          %li
+            = f.submit t('comments.create')
+    - else
+      %h3= t('comments.closed')

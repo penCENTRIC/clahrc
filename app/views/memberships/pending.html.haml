@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1
+    - if @group
+      = @group.name_to_s
+    - else
+      = t('pending')
+- if @group
+  %h2= t('pending')
+.members
+  - if @directory.memberships.blank?
+    No membership requests could be found.
+  - else
+    = render @directory.memberships
+= render @directory

@@ -1,0 +1,34 @@
+- content_for :content_header do
+  %h1= @topic.title_to_s
+- content_for :content_sidebar do
+  - unless @topic.tags.blank?
+    %p
+      %strong Tags:
+      = links_to_tags(@topic.tags)
+.topic[@topic]
+  .body
+    .info
+      = link_to_member(@topic.user)
+      at
+      = @topic.created_at.strftime('%k:%M on %A, %e %B %Y')
+    = @topic.body_to_html
+.attachments{ :href => '#attachments' }
+  - unless @topic.clips.blank?
+    %h2= t('clips.index')
+    = render @topic.clips
+.comments{ :href => '#comments' }
+  - unless @topic.comments.blank? && @topic.comments_disabled?
+    - unless @topic.comments.blank?
+      %h2= t('comments.index')
+      = render @topic.comments
+    - if @topic.comments_enabled?
+      %h3= t('comments.new')
+      - form_for @topic.comments.new, :url => topic_comments_path(@topic) do |f|
+        = error_messages_for :comment
+        %ol
+          %li
+            = f.text_area :body, :title => t('body_help')
+          %li
+            = f.submit t('comments.create')
+    - else
+      %h3= t('comments.closed')

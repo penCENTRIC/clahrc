@@ -1,0 +1,21 @@
+- if @group
+  .user[invited_membership.user]{ :class => cycle('odd', 'even') }
+    .icon
+      = avatar_tag(invited_membership.user, :style => :icon)
+    .body
+      .title
+        = link_to_member(invited_membership.user)
+        &mdash;
+        Invited on
+        = invited_membership.created_at.strftime('%A, %e %B %Y')
+      .teaser
+        = member_teaser(invited_membership.user)
+      .links
+        - unless invited_membership.user == current_user
+          %ul
+            %li= link_to t('show'), member_path(invited_membership.user)
+            - if @group.owners.include?(current_user)
+              %li= link_to_reject_membership(invited_membership)
+            %li= link_to_new_message(invited_membership.user)
+- else
+  = render invited_membership.relatable

@@ -1,0 +1,11 @@
+= content_for :content_header do
+  %h1= t('edit')
+%p= avatar_tag(current_user, :style => :original)
+- form_for current_user, :url => my_avatar_url, :html => { :multipart => true } do |f|
+  = error_messages_for :user
+  %ol
+    %li
+      = f.label :avatar, t('avatar')
+      = f.file_field :avatar, :title => t('avatar_help')
+    %li
+      = f.submit t('update')

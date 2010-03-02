@@ -1,0 +1,12 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @user do |f|
+  = error_messages_for :user
+  %ol
+    %li
+      = f.label :email, t('email')
+      = f.text_field :email, :title => t('email_help')
+    %li
+      = f.submit t('create')
+      or
+      = link_to_login

@@ -1,0 +1,21 @@
+.message[received_message]{ :class => "#{cycle('odd', 'even')}#{received_message.read? ? '' : ' unread'}" }
+  .icon
+    = avatar_tag(received_message.sender, :style => :icon)
+  .body
+    .from
+      From:
+      = link_to_member(received_message.sender)
+    .subject
+      Subject:
+      = link_to_received_message(received_message)
+    .date
+      Date:
+      = received_message.created_at.strftime('%k:%M on %A, %e %B %Y')
+    .recipients
+      To:
+      = links_to_members(received_message.recipients)
+    .links
+      %ul
+        %li= link_to_unless_current t('show'), my_received_message_url(received_message)
+        %li= link_to t('reply'), reply_my_received_message_url(received_message), :rel => '#overlay'
+        %li= link_to t('destroy'), my_received_message_url(received_message), :method => :delete, :confirm => 'Are you sure?'

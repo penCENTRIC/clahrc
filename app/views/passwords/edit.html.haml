@@ -1,0 +1,14 @@
+= content_for :content_header do
+  %h1 Reset Password
+- form_for @user, :url => password_path(params[:id]) do |f|
+  = error_messages_for :user
+  %ol
+    %li
+      = f.label :password, "Password"
+      = f.password_field :password
+    %li
+      = f.label :password_confirmation, "Password Confirmation"
+      = f.password_field :password_confirmation
+    %li
+      %label Click the 'Save' button to reset your password.
+      = f.submit 'Save'

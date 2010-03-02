@@ -1,0 +1,13 @@
+.group[moderatorship]{ :class => cycle('odd', 'even') }
+  .icon
+    %img{ :src => '/images/icons/group.png' }
+  .body
+    .title
+      = link_to_group(moderatorship.relatable)
+    .teaser
+      = group_teaser(moderatorship.relatable)
+    .links
+      %ul
+        %li= link_to t('show'), group_path(moderatorship.relatable_id)
+        - if moderatorship.relatable.members.count > 1
+          %li= link_to_new_message(moderatorship.relatable)

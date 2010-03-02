@@ -1,0 +1,43 @@
+- content_for :sidebar do
+  - if @group.nil? || @group.new_record?
+    .title Directory
+    %ul
+      %li= link_to_members
+      %li= link_to_groups
+  - else
+    - if @forum.nil? || @forum.new_record?
+      .title Group
+    - else
+      .subtitle Group
+    %ul
+      - if @group.public? || @group.members.include?(current_user)
+        %li= link_to_activities(@group)
+        %li= link_to_group_memberships(@group)
+        %li= link_to_forums(@group)
+        %li= link_to_pages(@group)
+        %li= link_to_assets(@group)
+      - if @group.moderators.include?(current_user) && @group.members.count > 1
+        %li= link_to_new_message(@group)
+      - unless @group.members.include?(current_user) || @group.pending_members.include?(current_user)
+        %li= link_to_new_group_membership(@group)
+- content_for :content_sidebar do
+  - unless @group.nil? || @group.new_record?
+    .block
+      .title Group
+      %ul
+        %li= link_to_group_memberships(@group)
+        %li= link_to_group_moderatorships(@group)
+        %li= link_to_group_ownerships(@group)
+        - if current_user.can_edit?(@group)
+          %li= link_to_edit_group(@group)
+          %li= link_to_pending_group_memberships(@group)
+  .block
+    .title Community
+    %ul
+      %li= link_to_new_group
+      %li= link_to_groups_directory
+  - unless @group.nil? || @group.new_record?
+    - if @group.public? || @group.members.include?(current_user)
+      #pages-block= javascript_tag %Q($("#pages-block").load("#{block_group_pages_path(@group)}");)
+      #assets-block= javascript_tag %Q($("#assets-block").load("#{block_group_assets_path(@group)}");)
+= render :file => 'layouts/application'

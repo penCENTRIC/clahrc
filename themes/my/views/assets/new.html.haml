@@ -1,0 +1,20 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @asset, :url => my_assets_path, :html => { :multipart => true } do |f|
+  = error_messages_for :asset
+  %ol
+    %li
+      = f.file_field :data
+    %li
+      %label= t('access')
+    %li
+      = f.radio_button :access, :public
+      = t('contents.public')
+    %li
+      = f.radio_button :access, :private
+      = t('contents.private')
+    %li
+      = f.radio_button :access, :hidden
+      = t('contents.hidden')
+    %li
+      = f.submit t('create')

@@ -1,0 +1,18 @@
+- content_for :content_header do
+  %h1= t('index')
+.pages
+  - if @pages.blank?
+    %p You don't have any pages.
+  - else
+    .pages= render @directory.pages
+= render @directory
+:javascript
+  $(document).ready(function() { 
+    $(".pages").sortable({
+      containment: 'document',
+      handle:      '.icon', 
+      update:      function () {
+        $.post('http://my.clahrc.net/pages/sort', '_method=put&authenticity_token='+AUTH_TOKEN+'&'+$(this).sortable('serialize'));
+      } 
+    }); 
+  });

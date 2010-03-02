@@ -1,0 +1,11 @@
+.DS_Store
+app/stylesheets/.sass-cache/*
+assets/*
+db/*.sqlite3
+db/sphinx
+index/*
+log/*.log
+mkmf.log
+public/avatars/*
+public/stylesheets/*
+tmp/**/*

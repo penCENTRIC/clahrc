@@ -1,0 +1,18 @@
+.asset[asset]{ :class => cycle('odd', 'even')}
+  .icon
+    - if asset.hidden?
+      %img{ :src => '/images/icons/page_white_key.png' }
+    - elsif asset.private?
+      %img{ :src => '/images/icons/page_white_link.png' }
+    - else
+      %img{ :src => '/images/icons/page_white.png' }
+  .body
+    .title
+      = link_to_asset(asset, :query => @query)
+    .teaser
+      - if asset.content
+        Attached to
+        = send "link_to_#{asset.content.class.to_s.underscore}", asset.content
+    .links
+      %ul
+        %li= number_to_human_size(asset.file_size)

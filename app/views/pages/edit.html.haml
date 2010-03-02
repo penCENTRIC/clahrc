@@ -1,0 +1,27 @@
+= content_for :content_header do
+  %h1= @page.title_to_s
+- form_for @page, :html => { :multipart => true } do |f|
+  = error_messages_for :page
+  %ol
+    %li
+      = f.label :title, t('title')
+      = f.text_field :title, :title => t('title_help')
+    %li
+      = f.label :tag_list, t('tags')
+      = f.text_field :tag_list, :title => t('tags_help')
+    %li
+      = f.label :body, t('body')
+      = f.text_area :body, :title => t('body_help')
+    %li
+      = f.label :comments_enabled, t('comments_enabled')
+      = f.check_box :comments_enabled
+      = t('comments_enabled_help')
+    %li
+      = f.label :assets, t('attachments')
+      #assets-container
+        = t('attachments_help')
+        #assets
+          = render :partial => 'pages/asset', :collection => @page.assets
+        = link_to_add_asset
+    %li
+      = f.submit t('update')

@@ -1,0 +1,15 @@
+.comment[comment]{ :class => cycle('odd', 'even') }
+  .icon
+    = avatar_tag(comment.user, :style => :icon)
+  .body
+    .info
+      = link_to_member(comment.user)
+      = comment.created_at.strftime('%A, %e %B %Y at %k:%M')
+    .body
+      = comment.body_to_html
+    .links
+      %ul
+        - if comment.can_be_edited_by?(current_user)
+          %li= link_to_edit_comment(comment)
+        - if comment.can_be_destroyed_by?(current_user)
+          %li= link_to_destroy_comment(comment)

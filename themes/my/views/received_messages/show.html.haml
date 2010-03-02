@@ -1,0 +1,29 @@
+- content_for :content_header do
+  %h1= t('index')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_unread_received_messages
+      %li= link_to_received_messages
+      %li= link_to_sent_messages
+
+.message[@received_message]
+  .icon
+    = avatar_tag(@received_message.sender, :style => :icon)
+  .body
+    .from
+      From:
+      = link_to_member(@received_message.sender)
+    .subject
+      Subject:
+      = link_to_received_message(@received_message)
+    .date
+      Date:
+      = @received_message.created_at.strftime('%k:%M on %A, %e %B %Y')
+    .recipients
+      To:
+      = links_to_members(@received_message.recipients)
+%h2= @received_message.subject_to_s
+%p= @received_message.body_to_html
+= link_to t('reply'), reply_my_received_message_url(@received_message), :rel => '#overlay'
+= link_to t('destroy'), my_received_message_url(@received_message), :method => :delete, :confirm => 'Are you sure?'

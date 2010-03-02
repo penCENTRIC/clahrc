@@ -1,0 +1,8 @@
+- content_for :content_header do
+  %h1= t('index')
+.posts
+  - if @posts.blank?
+    %p You don't have any posts.
+  - else
+    .posts= render @directory.posts
+= render @directory

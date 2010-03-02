@@ -1,0 +1,30 @@
+= content_for :content_header do
+  %h1= @group.name_to_s
+- form_for @group do |f|
+  = error_messages_for :group
+  %ol
+    %li
+      = f.label :name, t('name')
+      = f.text_field :name, :title => t('title_help')
+    %li
+      = f.label :activity_list, 'Activities'
+      = f.text_field :activity_list, :title => t('activities_help')
+    %li
+      = f.label :interest_list, t('interests')
+      = f.text_field :interest_list, :title => t('interests_help')
+    %li
+      = f.label :description, t('description')
+      = f.text_area :description, :title => t('description_help')
+    %li
+      %label= t('access')
+    %li
+      = f.radio_button :access, :public
+      = t('groups.public')
+    %li
+      = f.radio_button :access, :private
+      = t('groups.private')
+    %li
+      = f.radio_button :access, :hidden
+      = t('groups.hidden')
+    %li
+      = f.submit t('update')

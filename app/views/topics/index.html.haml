@@ -1,0 +1,10 @@
+- content_for :content_header do
+  %h1= @forum.title
+%p= sanitize(@forum.body)
+%h2= t('topics.index')
+.topics
+  - if @directory.topics.blank?
+    This forums doesn't have any topics.
+  - else
+    = render @directory.topics
+= render @directory

@@ -1,0 +1,21 @@
+- if @group
+  .user[membership.user]{ :class => cycle('odd', 'even') }
+    .icon
+      = avatar_tag(membership.user, :style => :icon)
+    .body
+      .title
+        = link_to_member(membership.user)
+      .teaser
+        = member_teaser(membership.user)
+      .links
+        - unless membership.user == current_user
+          %ul
+            %li= link_to t('show'), member_path(membership.user)
+            - if membership.confirmed? == false && @group.owners.include?(current_user)
+              %li= link_to_accept_membership(membership)
+              %li= link_to_reject_membership(membership)
+            %li= link_to_new_message(membership.user)
+            - if membership.confirmed? && @group.owners.include?(current_user)
+              %li= link_to_promote_membership(membership)
+- else
+  = render membership.relatable

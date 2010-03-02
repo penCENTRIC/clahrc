@@ -1,0 +1,9 @@
+= content_for :content_header do
+  %h1= t('edit')
+- form_for @comment do |f|
+  = error_messages_for :comment
+  %ol
+    %li
+      = f.text_area :body, :title => ('body_help')
+    %li
+      = f.submit t('update')

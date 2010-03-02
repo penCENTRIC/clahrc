@@ -1,0 +1,4 @@
+- unless @pages.blank?
+  .block
+    .title Pages
+    = links_to_pages(@user || current_user, @pages.all(:limit => 5))

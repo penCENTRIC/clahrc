@@ -1,0 +1,9 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @asset, :url => @group ? group_assets_path(@group) : my_assets_path, :html => { :multipart => true } do |f|
+  = error_messages_for :asset
+  %ol
+    %li
+      = f.file_field :data
+    %li
+      = f.submit t('create')

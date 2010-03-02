@@ -1,0 +1,18 @@
+SubdomainRoutes Revision History
+
+Version 0.3.1
+* Fixed bug whereby port number was not preserved when a subdomain route changed
+  the subdomain in the host (Matsumara Akihiro, Matthew Hollingworth).
+* Similarly, added fixes to preserve https protocol when host is changed.
+
+Version 0.3.0
+
+* Added this revision history.
+* Added #assert_recognizes_with_host and #assert_generates_with_host methods to
+  ActionController::Assertions::RoutingAssertions, allowing testing of subdomain routes
+  if you're into that sort of thing.
+* Modified ActionController::Routing::Route#significant_keys to include the subdomain
+  option in the case of model-based subdomain routes.
+* Added ability to override default namespace and name prefix for model-based subdomain
+  routes by passing :name option to the map.subdomain call.
+* Updated README to describe how to test with subdomain routes.

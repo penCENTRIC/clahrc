@@ -1,0 +1,21 @@
+- content_for :content_header do
+  %h1= @user.name_to_s
+.user[@user]
+  - unless @user.profile.about.blank?
+    = textilize(@user.profile.about)
+  - unless @friends.nil? || @friends.blank?
+    %h2= t('friendships.index')
+    .friends
+      %a.prevPage.browse.left
+      .scrollable
+        .items
+          - @friends.each do |friend|
+            = avatar_tag(friend)
+      %a.nextPage.browse.right
+    %p
+      = link_to 'All friends&hellip;', member_friendships_path(@user)
+  - unless @groups.nil? || @groups.blank?
+    %h2= t('groups.index')
+    .groups= render @groups
+    %p
+      = link_to 'All groups&hellip;', member_memberships_path(@user)

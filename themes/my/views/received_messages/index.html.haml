@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1= t('index')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_unread_received_messages
+      %li= link_to_received_messages
+      %li= link_to_sent_messages
+- if @directory.received_messages.blank?
+  %p
+    Your inbox is empty.
+- else
+  .messages= render @directory.received_messages
+= render @directory

@@ -1,0 +1,10 @@
+.asset[asset]
+  - fields_for "page[#{asset.new_record? ? 'new' : 'existing'}_asset_attributes][]", asset do |f|
+    %ol
+      %li
+        - if asset.new_record?
+          = f.file_field :data
+        - else
+          = link_to_asset(asset)
+          = f.hidden_field :data
+        = link_to_function t('assets.remove'), "$(this).parents('.asset').remove()"

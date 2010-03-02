@@ -1,0 +1,23 @@
+.page[page]{ :class => cycle('odd', 'even') }
+  .icon
+    - if page.hidden?
+      %img{ :src => '/images/icons/page_key.png', :style => 'cursor: move' }
+    - elsif page.private?
+      %img{ :src => '/images/icons/page_link.png', :style => 'cursor: move' }
+    - else
+      %img{ :src => '/images/icons/page.png', :style => 'cursor: move' }
+  .body
+    .title
+      = link_to_page(page, :query => @query)
+    .teaser
+      = page_teaser(page, :query => @query)
+    .links
+      %ul
+        - if page.can_be_edited_by?(current_user)
+          %li= link_to_edit_page(page)
+        - if page.can_be_destroyed_by?(current_user)
+          %li= link_to_destroy_page(page)
+        - if page.comments_enabled? || page.comments_count > 0
+          %li= link_to pluralize(page.comments_count, 'comment'), path_for_page(page, :anchor => 'comments')
+        - unless page.clips.blank?
+          %li= link_to pluralize(page.assets.count, 'attachment'), path_for_page(page, :anchor => 'attachments')

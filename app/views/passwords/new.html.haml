@@ -1,0 +1,15 @@
+= content_for :content_header do
+  %h1 Reset Password
+%p
+  We all forget our passwords from time-to-time, but fortunately your CLAHRC Community password can be reset.
+%p
+  If you have forgotten your CLAHRC Community password, please enter your email address below - we'll send you an email containing instructions on how to reset your password.
+- form_for :user, :url => passwords_path do |f|
+  = error_messages_for :user
+  %ol
+    %li
+      = f.label :email, t('email')
+      = f.text_field :email, :title => t('email_help')
+    %li
+      %label To reset your password, click the 'Reset' button below.
+      = f.submit 'Reset'

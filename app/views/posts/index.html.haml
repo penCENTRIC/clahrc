@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1
+    - if @user
+      = @user.name_to_s
+    - else
+      CLAHRC Community
+%h2= t('index')
+.posts
+  - if @directory.posts.blank?
+    %p
+      No posts could be found.
+  - else
+    = render @directory.posts
+= render @directory

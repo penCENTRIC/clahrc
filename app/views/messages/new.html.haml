@@ -1,0 +1,16 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @message, :url => @user ? member_messages_path(@user) : group_messages_path(@group) do |f|
+  = error_messages_for :message
+  %ol
+    %li
+      = f.label 'recipients', t('recipients')
+      = text_field_tag :recipients, @message.recipients.collect { |r| r.name_to_s }.to_sentence, :disabled => true
+    %li
+      = f.label :subject, t('subject')
+      = f.text_field :subject, :title => t('subject_help')
+    %li
+      = f.label :body, t('body')
+      = f.text_area :body, :title => t('body_help')
+    %li
+      = f.submit t('create')

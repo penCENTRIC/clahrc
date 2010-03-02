@@ -1,0 +1,20 @@
+- content_for :sidebar do
+  - unless @forum.nil? || @forum.new_record?
+    - if @topic.nil? || @topic.new_record?
+      .title Forum
+    - else
+      .subtitle Forum
+    %ul
+      %li= link_to_topics(@forum)
+- content_for :content_sidebar do
+  %ul
+    - unless @forum.nil? || @forum.new_record?
+      - if @forum.can_be_edited_by?(current_user)
+        %li= link_to_edit_forum(@forum)
+      - if @forum.can_be_destroyed_by?(current_user)
+        %li= link_to_destroy_forum(@forum)
+      - if @forum.members.include?(current_user)
+        %li= link_to_new_topic(@forum)
+    - if @group.moderators.include?(current_user)
+      %li= link_to_new_forum(@group)
+= render :file => 'layouts/groups'

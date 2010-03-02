@@ -1,0 +1,20 @@
+= content_for :content_header do
+  %h1= t('edit')
+- form_for prepare_user(@user), :url => user_path(params[:id]) do |f|
+  = error_messages_for :user
+  %ol
+    - f.fields_for :profile do |p|
+      %li
+        = p.label :first_name, t('first_name')
+        = p.text_field :first_name, :title => t('first_name')
+      %li
+        = p.label :last_name, t('last_name')
+        = p.text_field :last_name, :title => t('last_name')
+    %li
+      = f.label :password, t('password')
+      = f.password_field :password, :title => t('password')
+    %li
+      = f.label :password_confirmation, t('password_confirmation')
+      = f.password_field :password_confirmation, :title => t('password_confirmation')
+    %li
+      = f.submit t('update')

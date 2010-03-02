@@ -1,0 +1,22 @@
+- content_for :content_header do
+  %h1
+    - if @group
+      = @group.name_to_s
+    - elsif @user
+      = @user.name_to_s
+    - else
+      = t('index')
+- if @user
+  %h2 Groups
+- if @group
+  %h2= t('index')
+.members
+  - if @directory.memberships.blank?
+    - if @group
+      No members could be found.
+    - else
+      = link_to_member(@user)
+      is not a member of any groups.
+  - else
+    = render @directory.memberships
+= render @directory

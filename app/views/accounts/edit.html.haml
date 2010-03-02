@@ -1,0 +1,16 @@
+- content_for :content_header do
+  %h1= t('edit')
+- form_for current_user, :url => my_account_url do |f|
+  = error_messages_for :user
+  %ol
+    %li
+      = f.label :email, t('email')
+      = f.text_field :email, :disabled => true
+    %li
+      = f.label :password, t('password')
+      = f.password_field :password, :title => t('password_help')
+    %li
+      = f.label :password_confirmation, t('password_confirmation')
+      = f.password_field :password_confirmation, :title => t('password_confirmation_help')
+    %li
+      = f.submit t('update')

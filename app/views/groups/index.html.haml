@@ -1,0 +1,19 @@
+- content_for :content_header do
+  %h1
+    - if @group
+      = @group.name_to_s
+    - else
+      Members
+- content_for :content_sidebar do
+  - unless @group.nil? || @group.new_record?
+    %ul
+      %li= link_to_moderators_group_members(@group)
+      %li= link_to_owners_group_members(@group)
+- if @group
+  %h2= t('index')
+.forums
+  - if @directory.blank?
+    No groups could be found.
+  - else
+    = render @directory.groups
+= render @directory

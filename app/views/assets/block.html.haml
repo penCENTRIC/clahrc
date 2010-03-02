@@ -1,0 +1,4 @@
+- unless @assets.blank?
+  .block
+    .title Files
+    = links_to_assets(@user || current_user, @assets.all(:limit => 5))

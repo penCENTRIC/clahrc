@@ -1,0 +1,17 @@
+- content_for :sidebar do
+  .title Directory
+  %ul
+    %li= link_to_members
+    %li= link_to_groups
+- content_for :content_sidebar do
+  %p
+    %strong= t('search')
+  %ul
+    %li= link_to_search_contents(@query)
+    %li= link_to_search_members(@query)
+    %li= link_to_search_groups(@query)
+    %li= link_to_search_pages(@query)
+    %li= link_to_search_posts(@query)
+    %li= link_to_search_forums(@query)
+    %li= link_to_search_topics(@query)
+= render :file => 'layouts/application'

@@ -1,0 +1,6 @@
+- if @user
+  = render :file => 'layouts/members'
+- elsif @group
+  = render :file => 'layouts/groups'
+- else
+  = render :file => 'layouts/application'

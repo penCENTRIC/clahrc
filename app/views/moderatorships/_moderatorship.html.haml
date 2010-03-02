@@ -1,0 +1,18 @@
+- if @group
+  .user[moderatorship.user]{ :class => cycle('odd', 'even') }
+    .icon
+      = avatar_tag(moderatorship.user, :style => :icon)
+    .body
+      .title
+        = link_to_member(moderatorship.user)
+      .teaser
+        = member_teaser(moderatorship.user)
+      .links
+        - unless moderatorship.user == current_user
+          %ul
+            %li= link_to t('show'), member_path(moderatorship.user)
+            %li= link_to_new_message(moderatorship.user)
+            - if @group.owners.include?(current_user)
+              %li= link_to_promote_moderatorship(moderatorship)
+- else
+  = render moderatorship.relatable

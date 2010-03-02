@@ -1,0 +1,9 @@
+#header
+  .logo
+    %a{ :href => 'http://clahrc.net/', :title => 'CLAHRC' }
+      %img{ :src => '/images/logo.png' }
+    %a{ :href => 'http://community.clahrc.net/', :title => 'CLAHRC Community' }
+      %img{ :src => '/images/community-logo.png' }
+  .search
+    - form_tag(search_index_path, :method => :get) do
+      = text_field_tag :q, 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'

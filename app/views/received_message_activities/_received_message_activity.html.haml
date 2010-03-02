@@ -1,0 +1,11 @@
+- unless received_message_activity.trackable.nil?
+  .activity[received_message_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(received_message_activity.received_message.sender, :style => :icon)  
+    .body
+      .info
+        = received_message_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        = link_to_member(received_message_activity.received_message.sender)
+        sent you a message
+        = "'#{link_to_received_message(received_message_activity.received_message)}'."

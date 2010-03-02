@@ -1,0 +1,14 @@
+- if friendship.confirmed?
+  = render friendship.user
+- else
+  .friendship[friendship]{ :class => cycle('odd', 'even') }
+    .icon
+      = avatar_tag(friendship.user, :style => :icon)
+    .body
+      = link_to_member(friendship.user)
+      .links
+        %ul
+          - unless friendship.confirmed?
+            %li= link_to_accept_friendship(friendship)
+            %li= link_to_reject_friendship(friendship)
+          %li= link_to_new_message(friendship.user)

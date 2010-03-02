@@ -1,0 +1,6 @@
+- unless directory.nil? || directory.page_count == 1
+  .directory
+    %ul
+      - directory.paginator.window(:inner => 2, :outer => 2) do |directory, path, classes|
+        %li{ :class => classes.join(" ").to_s }><
+          = link_to directory.number, path || '#'

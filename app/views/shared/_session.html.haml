@@ -1,0 +1,9 @@
+#session
+  .lhs
+    = link_to_home
+    - if current_user
+      = link_to_inbox
+      = link_to_friendships
+      = link_to_memberships
+  .rhs
+    = session_links

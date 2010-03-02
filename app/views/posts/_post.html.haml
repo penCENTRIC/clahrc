@@ -1,0 +1,16 @@
+.post[post]{ :class => cycle('odd', 'even')}
+  .icon
+    %img{ :src => '/images/icons/script.png' }
+  .body
+    .title
+      = link_to_post(post, :query => @query)
+    .teaser
+      = post_teaser(post, :query => @query)
+    .links
+      - if post.can_be_edited_by?(current_user)
+        %li= link_to_edit_post(post)
+      - if post.can_be_destroyed_by?(current_user)
+        %li= link_to_destroy_post(post)
+      - if post.comments_enabled? || post.comments_count > 0
+        %ul
+          %li= link_to pluralize(post.comments_count, 'comment'), post_path(post, :anchor => 'comments')

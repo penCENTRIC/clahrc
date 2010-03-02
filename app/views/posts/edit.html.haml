@@ -1,0 +1,20 @@
+= content_for :content_header do
+  %h1= @post.title_to_s
+- form_for @post do |f|
+  = error_messages_for :post
+  %ol
+    %li
+      = f.label :title, t('title')
+      = f.text_field :title, :title => t('title_help')
+    %li
+      = f.label :tag_list, t('tags')
+      = f.text_field :tag_list, :title => t('tags_help')
+    %li
+      = f.label :body, t('body')
+      = f.text_area :body
+    %li
+      = f.label :comments_enabled, t('comments_enabled')
+      = f.check_box :comments_enabled
+      = t('comments_enabled_help')
+    %li
+      = f.submit t('update')

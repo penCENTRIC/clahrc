@@ -1,0 +1,12 @@
+- unless clip.asset.nil?
+  .asset[clip.asset]{ :class => cycle('odd', 'even')}
+    .icon
+      - if clip.asset.hidden?
+        %img{ :src => '/images/icons/page_white_key.png' }
+      - elsif clip.asset.private?
+        %img{ :src => '/images/icons/page_white_link.png' }
+      - else
+        %img{ :src => '/images/icons/page_white.png' }
+    .body
+      .title
+        = "#{link_to_asset(clip.asset, :query => @query)} (#{number_to_human_size(clip.asset.file_size)})"

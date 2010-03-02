@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1= t('unread')
+- content_for :content_sidebar do
+  .block
+    %ul
+      %li= link_to_unread_received_messages
+      %li= link_to_received_messages
+      %li= link_to_sent_messages
+- if @directory.received_messages.blank?
+  %p
+    You don't have any unread messages.
+- else
+  .messages= render @directory.received_messages
+= render @directory

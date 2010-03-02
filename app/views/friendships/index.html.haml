@@ -1,0 +1,15 @@
+- content_for :content_header do
+  %h1
+    - if @user
+      = @user.name_to_s
+    - else
+      = t('index')
+- if @user
+  %h2= t('index')
+.friendships
+  - if @directory.friendships.blank?
+    = link_to_member(@user)
+    doesn't have any friends.
+  - else
+    = render @directory.friendships
+= render @directory

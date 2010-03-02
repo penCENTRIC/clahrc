@@ -1,0 +1,4 @@
+- unless @posts.blank?
+  .block
+    .title Blog posts
+    = links_to_posts(@user || current_user, @posts.all(:limit => 5))

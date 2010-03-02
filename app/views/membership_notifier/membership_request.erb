@@ -1,0 +1,10 @@
+<%= word_wrap("#{@membership.user.full_name} has asked to join the group '#{@membership.relatable.name}'.", :line_width => 60) %>
+
+<%= word_wrap("To confirm that #{@membership.user.full_name} can join the group, please click on the following link:", :line_width => 60) %>
+
+<%= pending_group_memberships_url(@membership.relatable, :host => 'community.clahrc.net') %>
+
+<%= word_wrap("If you are unable to click the above link, please copy the link in its entirety and paste it into your web-browser's address bar.", :line_width => 60) %>
+
+Regards,
+CLAHRC Community Team

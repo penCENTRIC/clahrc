@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1
+    - if @group
+      = @group.name_to_s
+    - else
+      Moderators
+- if @group
+  %h2= t('index')
+.members
+  - if @directory.moderatorships.blank?
+    No moderators could be found.
+  - else
+    = render @directory.moderatorships
+= render @directory

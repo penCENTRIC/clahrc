@@ -1,0 +1,361 @@
+en:
+  activerecord:
+    errors:
+      templates:
+        header:
+          one: "1 error prohibited this {{model}} from being saved"
+          other: "{{count}} errors prohibited this {{model}} from being saved"
+        body: "there were problems with the following fields:"
+      messages:
+        accepted: "must be accepted"
+        blank: "can't be blank"
+        confirmation: "doesn't match confirmation"
+        empty: "can't be empty"
+        equal_to: "must be equal to {{count}}"
+        even: "must be even"
+        exclusion: "is reserved"
+        greater_than: "must be greater than {{count}}"
+        greater_than_or_equal_to: "must be greater than or equal to {{count}}"
+        inclusion: "is not included in the list"
+        invalid: "is invalid"
+        less_than: "must be less than {{count}}"
+        less_than_or_equal_to: "must be less than or equal to {{count}}"
+        not_a_number: "is not a number"
+        odd: "must be odd"
+        taken: "is already taken"
+        too_long: "is too long (maximum is {{count}} characters)"
+        too_short: "is too short (minimum is {{count}} characters)"
+        wrong_length: "is the wrong length (should be {{count}} characters)"
+  
+  index: Directory
+  show: Show
+  new: New
+  edit: Edit
+  create: Save
+  update: Save
+  destroy: Delete
+
+  access: Permission
+
+  create_help: To save your changes, click 'Save' below
+  update_help: To save your changes, click 'Save' below
+  
+  home: Home
+  logged_in_as: Logged in as
+  login: Login
+  login_title: Log in to CLAHRC Community
+  logout: Logout
+  logout_title: Log out from CLAHRC Community
+  register: Register
+  register_title: Register for a CLAHRC Community account
+  require_anonymous: You are already logged in.
+  require_authentic: You must be logged in.
+  search: Search
+  
+  email: Email Address
+  email_help: An email will be sent to the email address you provide to confirm that it is valid.
+  prefix: Prefix
+  prefix_help: e.g. Dr, Mr, Ms, etc. This field is optional.
+  first_name: First Name
+  first_name_help: Enter your first name as you want it to appear.
+  middle_name: Middle Name(s)
+  middle_name_help: This field is optional.
+  last_name: Last Name
+  last_name_help: Enter your last name as you want it to appear.
+  suffix: Suffix
+  suffix_help: e.g. Jr, Esq., etc. This field is optional.
+  previous_full_name: Previous Full Name
+  previous_full_name_help: If were known by another name (e.g. a maiden name) you can enter it. It will never be displayed, but will help other members to find you. This field is optional.
+  nickname: Nickname
+  nickname_help: Enter a nickname or screen-name that you want to use. This field is optional.
+  sex: Sex
+  sex_help: Your sex will never be displayed.
+  date_of_birth: Date of Birth
+  date_of_birth_help: Your full date of birth will never be displayed, but will be used to let friends know when your birthday is.
+  activities: Activities
+  activities_help: Enter a comma-separated list of activities that you take part in. e.g. running, walking, squash.
+  interests: Interests
+  interests_help: Enter a comma-separated list of interests that you have. e.g. organic food, French pop music.
+  about: About Me
+  about_help: Please provide a short, but detailed biography of yourself.
+  from: From
+  recipients: To
+  subject: Subject
+  body: Body
+  name: Name
+  description: Description
+  you: You
+  more: More...
+  reply: Reply
+  title: Title
+  title_help: Enter a descriptive title for the item. Please note that this field is text only - any HTML content will be removed.
+  tags: Tags
+  tags_help: Entere a comma-separated list of tags. e.g. news, announcements.
+  comments_enabled: Comments
+  comments_enabled_help: Enable comments.
+  attachments: Attachments
+  attachments_help: Multiple attachements (documents, images, etc.) can be added. Click the 'Add' link below to add an attachment, and then click 'Choose file' to select the file to attach. To remove an attachement, click the 'Remove' link next to the attachment.
+  asset: Attachment
+  skype: Skype Name
+  skype_help: If you have a Skype account, you can enter your Skype Name to allow other members to contact you. Make sure that your Skype privacy settings allow your Skype status to be shown online.
+  
+  activities:
+    index: Activity
+    
+  assets:
+    # Actions
+    index: Files
+    new: New file
+    edit: Edit file
+    destroy: Delete file
+    add: Add
+    remove: Remove
+
+    # Events
+    created: The file has been uploaded.
+    destroyed: The file has been destroyed.
+    updated: The file has been updated.
+
+    # Messages
+    not_allowed: You are not allowed to view that file.
+    not_found: The file could not be found.  
+
+  accounts:
+    # Actions
+    edit: Edit my account
+    update: Save
+    
+    # Events
+    updated: Your account settings have been saved.
+
+    # Fields
+    password: Password
+    password_help: Please enter a new password. It must be at least 7 characters long, and should contain a mix of letters, numbers and symbols.
+    password_confirmation: Confirm your password
+    password_confirmation_help: Please enter your new password again to make sure that you didn't make a mistake.
+
+  avatars:
+    # Actions
+    edit: Edit my photo
+    
+    # Events
+    created: Your photograph has been saved.
+    updated: Your photograph has been saved.
+    
+    # Fields
+    avatar: Photograph
+    avatar_help: Select an image file from your computer to upload and use for your photo. You can upload .gif, .jpeg or .png image files. The maximum file size is 2 MiB.
+
+  contents:
+    search: Contents
+    access: Permission
+    public: Public - any member of the CLAHRC Community can view this
+    private: Private - only your friends can view this
+    hidden: Hidden - only you can view this
+    
+  clips:
+    index: Attachments
+    
+  comments:
+    # Actions
+    index: Comments
+    edit: Edit comment
+    new: New comment
+    directory: Comments
+    create: Submit
+    destroy: Delete comment
+    
+    # Events
+    created: Your comment was submitted.
+    
+    # Messages
+    closed: Comments are closed
+    not_allowed: You are not allowed to view the comment.
+    not_found: The comment could not be found.
+    
+  friendships:
+    # Actions
+    index: Friends
+    new: Add friend
+    create: Add as friend
+    destroy: Remove friend
+    pending: Friend requests
+    accept: Accept
+    reject: Reject
+    
+    # Events
+    created: A friend request has been sent.
+    destroyed: The friendship has been removed.
+    accepted: Friendship accepted.
+    rejected: Friendship rejected.
+    
+    # Messages
+    not_created: Sorry, but the friend request could not be sent.
+    not_found: The friendship could not be found.
+
+  forums:
+    # Actions
+    index: Forums
+    new: Start a new forum
+    edit: Edit this forum
+    destroy: Delete this forum
+    search: Forums
+    
+    # Events
+    created: The forum has been saved.
+    updated: The forum has been saved.
+    destroyed: The forum has been deleted.
+    
+    # Messages
+    not_found: The forum could not be found. 
+    not_allowed: You do not have permission to access the forum.
+    
+  groups:
+    search: Groups
+    index: Groups
+    show: Show
+    new: Start a new group
+    edit: Edit this group
+    create: Save
+    created: The group has been created.
+    update: Save
+    updated: The group has been updated.
+    destroy: Delete this group
+    destroyed: The group has been deleted.
+    not_found: The group could not be found.
+    not_allowed: You do not have permission to access the group.
+    access: Membership permission
+    public: Public - any member of the CLAHRC Community can join
+    private: Private - any member of the CLAHRC Community can request membership
+    hidden: Hidden - new members must be invited
+    directory: View all groups
+    
+  members:
+    search: Members
+    index: Members
+    directory: All members
+    
+  memberships:
+    index: Members
+    new: Join group
+    create: Join group
+    destroy: Leave group
+    pending: Member requests
+    promote: Promote to moderator
+    promoted: Member promoted to moderator
+    created: A membership request has been sent.
+    accepted: Membership accepted
+    rejected: Membership rejected
+    accept: Accept
+    reject: Reject
+    invited: Group invitations
+    
+  moderatorships:
+    index: Moderators
+    promote: Promote to owner
+    promoted: Member promoted to owner
+      
+  ownerships:
+    index: Owners
+    
+  messages:
+    new: Send message
+    create: Send
+    created: Your message has been sent.
+    
+  pages:
+    # Actions
+    index: Pages
+    new: New page
+    edit: Edit page
+    destroy: Delete page
+    search: Pages
+
+    # Events
+    created: The page has been created.
+    destroyed: The page has been destroyed.
+    updated: The page has been updated.
+
+    # Messages
+    not_allowed: You are not allowed to view that page.
+    not_found: The page could not be found.
+    
+  passwords:
+    created: An email has been sent instructing you how to reset your password.
+    updated: Your password has been reset.
+    not_found: The email address you entered is not registered.
+
+  posts:
+    # Actions
+    index: Blog
+    new: New post
+    edit: Edit post
+    destroy: Delete post
+    search: Blog posts
+
+    # Events
+    created: The blog post has been created.
+    destroyed: The blog post has been destroyed.
+    updated: The blog post has been updated.
+
+    # Messages
+    not_allowed: You are not allowed to view that post.
+    not_found: The post could not be found.
+    
+  profiles:
+    edit: Edit my profile
+    created: Your profile has been created.
+    updated: Your profile has been updated.
+
+  received_messages:
+    create: Send
+    destroyed: The message was deleted.
+    index: Messages
+    not_found: The message could not be found.
+    unread: Unread messages
+
+  sent_messages:
+    destroyed: The message was deleted.
+    index: Sent messages
+    not_found: The message could not be found.
+    
+  topics:
+     index: Topics
+     show: Show
+     new: Start a new topic
+     edit: Edit topic
+     create: Save
+     created: The topic has been created.
+     update: Save
+     updated: The topic has been updated.
+     destroy: Delete topic
+     destroyed: The topic has been deleted.
+     not_found: The topic could not be found.
+     not_allowed: You do not have permission to access the topic.
+     search: Topics
+
+  users:
+    create: Register
+    created: Your account has been registered.
+    edit: Account activation
+    email_help: Enter your email address (e.g. john.smith@example.com) - this will be used to identify your account, and will need to be confirmed.
+    not_found: We are sorry, but your activation token has expired.
+    new: Account registration
+    password: Password
+    password_help: Please enter a new password. It must be at least 7 characters long, and should contain a mix of letters, numbers and symbols.
+    password_confirmation: Confirm your password
+    password_confirmation_help: Please enter your new password again to make sure that you didn't make a mistake.
+    update: Activate
+    updated: Your account has been activated.
+    
+  user_sessions:
+    create: Login
+    create_help: To login, click 'Login' below
+    created: You have logged in.
+    destroy: Logout
+    destroyed: You have logged out.
+    email: Email address
+    email_help: Enter the email address that you used when registering your account.
+    new: Log in to CLAHRC Community
+    password: Password
+    password_help: Enter your password. If you have forgotten it, click the 'Forgot Password' link.

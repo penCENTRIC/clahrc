@@ -1,0 +1,22 @@
+- unless comment_activity.trackable.nil?
+  .activity[comment_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(comment_activity.user, :style => :icon)
+    .body
+      .info
+        = comment_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if comment_activity.action == 'create'
+          = link_to_member(comment_activity.user)
+          commented on
+          - if comment_activity.user_id == comment_activity.commentable.user_id
+            - if comment_activity.user.male?
+              his
+            - elsif comment_activity.user.female?
+              her
+            - else
+              their
+          - else
+            = "#{link_to_member(comment_activity.commentable.user)}'s"
+          = comment_activity.commentable.class.to_s.underscore
+          = "'#{link_to_commentable(comment_activity.commentable)}'."

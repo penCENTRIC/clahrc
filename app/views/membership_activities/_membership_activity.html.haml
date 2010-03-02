@@ -1,0 +1,20 @@
+- unless membership_activity.trackable.nil?
+  .activity[membership_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(membership_activity.membership.user, :style => :icon)  
+    .body
+      .info
+        = membership_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if membership_activity.membership.nil?
+          = "#{link_to_member(membership_activity.user)} joined the group '#{link_to_group(membership_activity.membership.relatable)}'."
+      
+        - if membership_activity.action == 'create'
+          - if membership_activity.membership.confirmed?
+            = "#{link_to_member(membership_activity.membership.user)} joined the group '#{link_to_group(membership_activity.membership.relatable)}'."
+          - elsif membership_activity.membership.group.moderators.include? current_user
+            = "#{link_to_member(membership_activity.membership.user)} requested to join the group '#{link_to_group(membership_activity.membership.relatable)}'. #{link_to_accept_membership(membership_activity.membership)} or #{link_to_reject_membership(membership_activity.membership)}?"
+          - else
+            = "#{link_to_member(membership_activity.membership.user)} requested to join the group '#{link_to_group(membership_activity.membership.relatable)}'."
+        - elsif membership_activity.action == 'accept'
+          = "#{link_to_member(membership_activity.membership.user)} joined the group '#{link_to_group(membership_activity.membership.relatable)}'."

@@ -1,0 +1,13 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @forum, :url => group_forums_path(@forum.group) do |f|
+  = error_messages_for :forum
+  %ol
+    %li
+      = f.label :title, t('title')
+      = f.text_field :title, :title => t('title_help')
+    %li
+      = f.label :body, t('body')
+      = f.text_area :body, :title => t('body_help')
+    %li
+      = f.submit t('create')

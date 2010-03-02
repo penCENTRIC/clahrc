@@ -1,0 +1,12 @@
+<%= word_wrap("#{@friendship.user.full_name} has added you as a friend.", :line_width => 60) %>
+
+<%= word_wrap("As a friend, #{@friendship.user.full_name} will be able to view any personal content (i.e. not group content) that you create with the privacy setting 'Private', as well as 'Public'. They will also be notified of your site activity, such as when you create new content or post comments.", :line_width => 60) %>
+
+<%= word_wrap("To confirm that #{@friendship.user.full_name} can add you as a friend, please click on the following link:", :line_width => 60) %>
+
+http://my.clahrc.net/friends/pending
+
+<%= word_wrap("If you are unable to click the above link, please copy the link in its entirety and paste it into your web-browser's address bar.", :line_width => 60) %>
+
+Regards,
+CLAHRC Community Team

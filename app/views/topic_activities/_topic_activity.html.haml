@@ -1,0 +1,12 @@
+- unless topic_activity.trackable.nil?
+  .activity[topic_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(topic_activity.user, :style => :icon)
+    .body
+      .info
+        = topic_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if topic_activity.action == 'create'
+          = "#{link_to_member(topic_activity.user)} started a new topic '#{link_to_topic(topic_activity.topic)}' in the forum '#{link_to_forum(topic_activity.topic.forum)}'."
+        - elsif topic_activity.action == 'update'
+          = "#{link_to_member(topic_activity.user)} edited the topic '#{link_to_topic(topic_activity.topic)}' in the forum '#{link_to_forum(topic_activity.topic.forum)}'."

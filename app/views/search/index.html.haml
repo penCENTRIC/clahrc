@@ -1,0 +1,45 @@
+- content_for :content_header do
+  %h1 Search Results
+- form_tag(search_index_path, :method => :get) do
+  %ol
+    %li
+      = text_field_tag :q, @query || 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'
+- unless @member_results.empty?
+  %h2= pluralize(@member_results.total_entries, 'Member')
+  .results
+    = render @member_results
+    - if @member_results.total_entries > 3
+      = link_to 'More members...', members_search_path(:q => @query)
+- unless @group_results.empty?
+  %h2= pluralize(@group_results.total_entries, 'Group')
+  .results
+    = render @group_results
+    - if @group_results.total_entries > 3
+      = link_to 'More groups...', groups_search_path(:q => @query)
+- unless @page_results.empty?
+  %h2= pluralize(@page_results.total_entries, 'Page')
+  .results
+    = render @page_results
+    - if @page_results.total_entries > 3
+      = link_to 'More pages...', pages_search_path(:q => @query)
+- unless @post_results.empty?
+  %h2= pluralize(@post_results.total_entries, 'Blog post')
+  .results
+    = render @post_results
+    - if @post_results.total_entries > 3
+      = link_to 'More blog posts...', posts_search_path(:q => @query)
+- unless @forum_results.empty?
+  %h2= pluralize(@forum_results.total_entries, 'Forum')
+  .results
+    = render @forum_results
+    - if @forum_results.total_entries > 3
+      = link_to 'More forums...', forums_search_path(:q => @query)
+- unless @topic_results.empty?
+  %h2= pluralize(@topic_results.total_entries, 'Topic')
+  .results
+    = render @topic_results
+    - if @topic_results.total_entries > 3
+      = link_to 'More topics...', topics_search_path(:q => @query)
+- if @forum_results.empty? && @group_results.empty? && @member_results.empty? && @page_results.empty? && @post_results.empty? && @topic_results.empty?
+  %p
+    Nothing could be found.

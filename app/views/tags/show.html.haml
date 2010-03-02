@@ -1,0 +1,5 @@
+- content_for :content_header do
+  %h1
+    Content tagged with
+    = link_to_tag @tag
+= render @tag.taggings

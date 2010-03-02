@@ -1,0 +1,21 @@
+- unless friendship_activity.trackable.nil?
+  .activity[friendship_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      - if friendship_activity.user_id == friendship_activity.friendship.relatable_id
+        = avatar_tag(friendship_activity.friendship.relatable, :style => :icon)
+      - else
+        = avatar_tag(friendship_activity.friendship.user, :style => :icon)  
+    .body
+      .info
+        = friendship_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if friendship_activity.action == 'create'
+          - if friendship_activity.friendship.confirmed?
+            = "#{link_to_member(friendship_activity.friendship.relatable)} added #{link_to_member(friendship_activity.friendship.user)} as a friend."
+          - else
+            = "#{link_to_member(friendship_activity.friendship.user)} added you as a friend. #{link_to_accept_friendship(friendship_activity.friendship)} or #{link_to_reject_friendship(friendship_activity.friendship)}?"
+        - elsif friendship_activity.action == 'accept'
+          - if friendship_activity.user_id == friendship_activity.friendship.relatable_id
+            = "#{link_to_member(friendship_activity.friendship.relatable)} added #{link_to_member(friendship_activity.friendship.user)} as a friend."
+          - else
+            = "#{link_to_member(friendship_activity.friendship.user)} added #{link_to_member(friendship_activity.friendship.relatable)} as a friend."

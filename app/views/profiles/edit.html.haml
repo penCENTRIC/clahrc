@@ -1,0 +1,65 @@
+= content_for :content_header do
+  %h1= t('edit')
+%ul.tabs
+  %li
+    %a{ :id => 't1', :href => '#name_tab' }Name
+  %li
+    %a{ :id => 't2', :href => '#personal_tab' }Personal
+  %li
+    %a{ :id => 't3', :href => '#about_tab' }About
+  %li
+    %a{ :id => 't4', :href => '#contact' }Contact
+- form_for @profile, :url => my_profile_path do |f|
+  = error_messages_for :profile
+  .panes
+    %ol.pane
+      %li
+        = f.label :prefix, t('prefix'), :title => t('prefix_help')
+        = f.text_field :prefix, :title => t('prefix_help')
+      %li
+        = f.label :first_name, t('first_name')
+        = f.text_field :first_name, :title => t('first_name_help')
+      %li
+        = f.label :middle_name, t('middle_name')
+        = f.text_field :middle_name, :title => t('middle_name_help')
+      %li
+        = f.label :last_name, t('last_name')
+        = f.text_field :last_name, :title => t('last_name_help')
+      %li
+        = f.label :suffix, t('suffix')
+        = f.text_field :suffix, :title => t('suffix_help')
+      %li
+        = f.label :previous_full_name, t('previous_full_name')
+        = f.text_field :previous_full_name, :title => t('previous_full_name_help')
+      %li
+        = f.label :nickname, t('nickname')
+        = f.text_field :nickname, :title => t('nickname_help')
+      %li
+        = f.submit t('update')
+    %ol.pane
+      %li
+        = f.label :sex, t('sex')
+        = f.select :sex, { 'Female' => 'F', 'Male' => 'M' }, :title => t('sex_help')
+      %li
+        = f.label :date_of_birth, t('date_of_birth')
+        = f.date_select :date_of_birth, :include_blank => true, :order => [ :day, :month, :year ], :start_year => 1900, :title => t('date_of_birth_help')
+      %li
+        = f.submit t('update')
+    %ol.pane
+      %li
+        = f.label :activity_list, 'Activities'
+        = f.text_field :activity_list, :rows => 4, :title => t('activities_help')
+      %li
+        = f.label :interest_list, t('interests')
+        = f.text_field :interest_list, :rows => 4, :title => t('interests_help')
+      %li
+        = f.label :about, t('about')
+        = f.text_area :about, :rows => 8, :title => t('about_help'), :class => 'markItUp'
+      %li
+        = f.submit t('update')
+    %ol.pane
+      %li
+        = f.label :skype, t('skype')
+        = f.text_field :skype, :title => t('skype_help')
+      %li
+        = f.submit t('update')

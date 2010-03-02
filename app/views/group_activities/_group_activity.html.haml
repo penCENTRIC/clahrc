@@ -1,0 +1,12 @@
+- unless group_activity.trackable.nil?
+  .activity[group_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(group_activity.user, :style => :icon)
+    .body
+      .info
+        = group_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if group_activity.action == 'create'
+          = "#{link_to_member(group_activity.user)} started the group '#{link_to_group(group_activity.group)}'."
+        - elsif group_activity.action == 'update'
+          = "#{link_to_member(group_activity.user)} edited the group '#{link_to_group(group_activity.group)}'."

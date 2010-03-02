@@ -1,0 +1,18 @@
+- content_for :content_sidebar do
+  .block
+    %ul
+      - unless @asset.nil? || @asset.new_record?
+        - if current_user.can_edit?(@asset)
+          %li= link_to_edit_asset(@asset)
+      - if @group
+        - if @group.members.include?(current_user)
+          %li= link_to_new_asset(@group)
+      - else
+        - if @user.nil?
+          %li= link_to_new_asset(current_user)
+- if @user
+  = render :file => 'layouts/members'
+- elsif @group
+  = render :file => 'layouts/groups'
+- else
+  = render :file => 'layouts/application'

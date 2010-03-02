@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1= current_user.name_to_s
+- content_for :content_sidebar do
+  - unless current_user.profile.activities.blank?
+    %p
+      %strong Activities:
+      = links_to_tags(current_user.profile.activities)
+  - unless current_user.profile.interests.blank?
+    %p
+      %strong Interests:
+      = links_to_tags(current_user.profile.interests)
+.user[current_user]
+  - unless current_user.profile.about.blank?
+    = textilize(current_user.profile.about)
