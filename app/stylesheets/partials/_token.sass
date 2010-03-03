@@ -1,0 +1,109 @@
+ul.token-input-list
+  +column(14)
+  +last
+  :font 11pt/18px Verdana, Helvetica, sans-serif
+  :outline none
+  height: auto !important
+  height: 1%
+  cursor: text
+  min-height: 1px
+  z-index: 999
+  list-style-type: none
+    
+  li
+  
+    input[type='text']
+      :background-color #f7f7f7
+      :border 2px solid #ccc
+      :color #333
+      :font 11pt/18px Verdana, Helvetica, sans-serif
+      :outline none
+      :margin 0 0 9px 0
+      :padding 7px
+      :width 526px
+      :-moz-border-radius 9px
+      :-webkit-border-radius 9px
+
+      &:focus
+        :border 2px solid #c00
+        :-moz-box-shadow 0 0 10px #c00
+        :-webkit-box-shadow 0 0 10px #c00
+
+
+li
+
+  &.token-input-token
+    :background-color #efefef
+    :border 2px solid #ccc
+    :color #c00
+    :font 11pt/18px Verdana, Helvetica, sans-serif
+    :font-weight normal
+    :padding 7px
+    :margin 0 5px 9px 0
+    :-moz-border-radius 9px
+    :-webkit-border-radius 9px
+    :float left
+
+    &:hover
+      :background-color #f7f7f7
+      :color #c00
+      :cursor pointer
+
+    p
+      display: inline
+      padding: 0
+      margin: 0
+
+    span
+      margin-left: 5px
+      font-weight: bold
+      cursor: pointer
+
+  &.token-input-selected-token
+    background-color: #f7f7f7
+    color: #c00
+
+  &.token-input-input-token
+    float: left
+
+
+div.token-input-dropdown
+  position: relative
+  top: -36px
+  width: 526px
+  overflow: hidden
+  z-index: 999
+  :background-color #f7f7f7
+  border: 2px solid #ccc
+  :color #333
+  :font 11pt/18px Verdana, Helvetica, sans-serif
+  :outline none
+  :margin 0 0 9px 0
+  :padding 7px
+  :width 526px
+  :-moz-border-radius 9px
+  :-webkit-border-radius 9px
+
+  p
+    margin: 0
+    padding: 5px
+    font-weight: bold
+
+  ul
+    margin: 0
+    padding: 0
+
+    li
+      background-color: #f7f7f7
+      padding: 3px
+
+      &.token-input-dropdown-item, &.token-input-dropdown-item2
+        background-color: #f7f7f7
+
+      em
+        font-weight: bold
+        font-style: none
+
+      &.token-input-selected-dropdown-item
+        background-color: #efefef
+        color: #c00

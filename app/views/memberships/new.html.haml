@@ -1,0 +1,10 @@
+= content_for :content_header do
+  %h1= t('new')
+- form_for @membership, :url => invite_group_memberships_path(@membership.group) do |f|
+  = error_messages_for :membership
+  %ol
+    %li
+      = f.label :user_id, 'Members'
+      = f.text_field :user_id
+    %li
+      = f.submit 'Invite'

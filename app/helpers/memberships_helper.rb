@@ -17,12 +17,18 @@ module MembershipsHelper
     link_to t('memberships.invited'), invited_my_memberships_path, :class => 'index membership'
   end
   
-  def link_to_new_group_membership(group)
+  def link_to_create_group_membership(group)
     unless group.nil? || group.new_record?
-      link_to t('memberships.create'), group_memberships_path(group), :method => :post, :class => 'new membership'
+      link_to t('memberships.create'), group_memberships_path(group), :method => :post, :class => 'create membership'
     end
   end
     
+  def link_to_new_group_membership(group)
+    unless group.nil? || group.new_record?
+      link_to t('memberships.new'), new_group_membership_path(group), :class => 'new membership'
+    end
+  end
+
   def link_to_pending_group_memberships(group)
     count = group.pending_memberships.count
 

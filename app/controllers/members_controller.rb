@@ -29,7 +29,7 @@ class MembersController < ApplicationController
       @users = User.find(:all, :include => :profile, :conditions => [ "LOCATE(:q, profiles.full_name) > 0", { :q => params[:q] } ], :limit => params[:limit] || 10)
     
       respond_to do |format|
-        format.json { render :json => @users.inject([]) { |result, user| result << { :id => user.id, :full_name => user.profile.full_name } } }
+        format.json { render :json => @users.inject([]) { |result, user| result << { :id => user.id, :name => user.profile.full_name } } }
       end
     else
       respond_to do |format|

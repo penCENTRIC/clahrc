@@ -10,7 +10,7 @@ var hideFlash = function() {
 
 $(document).ready(function() {
   document.domain = document.domain.replace(new RegExp(/^(community|my)\./i),"");
-    
+  
   $(document).ajaxSend(function(event, request, settings) {
     if (typeof window.AUTH_TOKEN == "undefined") {
       // do nothing
@@ -21,7 +21,9 @@ $(document).ready(function() {
       settings.data += (settings.data ? "&" : "") + "authenticity_token=" + encodeURIComponent(window.AUTH_TOKEN);
     }
   });
-
+  
+  $("#membership_user_id").tokenInput("/members/autocomplete.json", {});
+  
   setTimeout(hideFlash, 3500);
   
   $("ul.tabs").tabs(".panes > .pane").history();

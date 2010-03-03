@@ -7,14 +7,16 @@ class MembershipsController < ApplicationController
   before_filter :find_groups
   before_filter :find_group
 
-  before_filter :find_memberships, :only => [ :index, :create, :destroy, :promote ]
+  before_filter :find_memberships, :only => [ :index, :new, :create, :destroy, :promote ]
   before_filter :find_pending_memberships, :only => [ :pending, :accept, :reject ]
   before_filter :find_invited_memberships, :only => [ :invited ]
   
   before_filter :find_membership, :only => [ :destroy, :accept, :reject, :promote ]
   
+  before_filter :new_membership, :only => [ :new ]
   before_filter :create_membership, :only => [ :create ]
-
+  before_filter :create_invited_membership, :only => [ :invite ]
+  
   before_filter :require_moderatorship, :only => [ :destroy, :accept, :promote, :reject ]
 
   before_filter :destroy_membership, :only => [ :destroy ]
@@ -39,6 +41,12 @@ class MembershipsController < ApplicationController
     
     respond_to do |format|
       format.html # index.html
+    end
+  end
+  
+  def new
+    respond_to do |format|
+      format.html # new.html
     end
   end
   
@@ -114,6 +122,14 @@ class MembershipsController < ApplicationController
       format.html { redirect_to pending_memberships_path }
     end
   end
+  
+  def invite
+    flash[:notice] = t('invited')
+    
+    respond_to do |format|
+      format.html { redirect_to group_memberships_path(@group) }
+    end
+  end
     
   protected
     def accept_membership
@@ -124,6 +140,14 @@ class MembershipsController < ApplicationController
       @membership = @memberships.find_or_create_by_user_id(current_user.id)
     end
 
+    def create_invited_membership
+      if params[:membership][:user_id]
+        params[:membership][:user_id].split(',').uniq.each do |user_id|
+          @group.invited_memberships.find_or_create_by_user_id(user_id, :confirmed => false)
+        end
+      end
+    end
+      
     def destroy_membership
       @membership.destroy
     end
@@ -239,5 +263,9 @@ class MembershipsController < ApplicationController
           format.html { redirect_to group_memberships_path(@group) }
         end
       end
+    end
+    
+    def new_membership
+      @membership = @memberships.build
     end
 end

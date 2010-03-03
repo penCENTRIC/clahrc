@@ -66,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
       group.resources :activities, :as => 'activity', :only => [ :index ], :paged => { :name => :directory }
 
       # Memberships
-      group.resources :memberships, :as => 'members', :collection => { :pending => :get }, :member => { :accept => :put, :promote => :put, :reject => :delete }, :only => [ :index, :create ], :paged => { :name => :directory }
+      group.resources :memberships, :as => 'members', :collection => { :pending => :get, :invite => :post }, :member => { :accept => :put, :promote => :put, :reject => :delete }, :only => [ :index, :new, :create ], :paged => { :name => :directory }
       group.resources :moderatorships, :as => 'moderators', :member => { :promote => :put }, :only => [ :index ], :paged => { :name => :directory }
       group.resources :ownerships, :as => 'owners', :only => [ :index ], :paged => { :name => :directory }
 

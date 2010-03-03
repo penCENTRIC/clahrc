@@ -237,7 +237,7 @@ en:
     
   memberships:
     index: Members
-    new: Join group
+    new: Invite members
     create: Join group
     destroy: Leave group
     pending: Member requests

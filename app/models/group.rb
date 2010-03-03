@@ -69,7 +69,7 @@ class Group < ActiveRecord::Base
   has_many :assets
   
   # Invitations
-  has_many :invited_memberships, :as => :relatable, :dependent => :destroy
+  has_many :invited_memberships, :as => :relatable, :conditions => { :confirmed => false }, :dependent => :destroy
   has_many :invited_members, :through => :invited_memberships, :source => :user
   
   # Memberships

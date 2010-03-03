@@ -19,7 +19,7 @@
       - if @group.moderators.include?(current_user) && @group.members.count > 1
         %li= link_to_new_message(@group)
       - unless @group.members.include?(current_user) || @group.pending_members.include?(current_user)
-        %li= link_to_new_group_membership(@group)
+        %li= link_to_create_group_membership(@group)
 - content_for :content_sidebar do
   - unless @group.nil? || @group.new_record?
     .block
@@ -31,6 +31,8 @@
         - if current_user.can_edit?(@group)
           %li= link_to_edit_group(@group)
           %li= link_to_pending_group_memberships(@group)
+        - if @group.members.include?(current_user)
+          %li= link_to_new_group_membership(@group)
   .block
     .title Community
     %ul

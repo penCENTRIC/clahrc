@@ -1,5 +1,5 @@
 module PendingMembershipsHelper
-  def link_to_new_group_membership(group)
+  def link_to_create_group_membership(group)
     unless group.nil? || group.new_record?
       link_to t('memberships.create'), group_memberships_path(group), :method => :post, :class => 'new membership'
     end
