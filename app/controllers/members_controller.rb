@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_filter :require_authentic, :except => [ :autocomplete ]
+  before_filter :require_authentic
   
   before_filter :find_members, :except => [ :autocomplete ]
   before_filter :find_member, :only => [ :show ]
