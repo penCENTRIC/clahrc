@@ -9,7 +9,7 @@ class MembershipsController < ApplicationController
 
   before_filter :find_memberships, :only => [ :index, :new, :create, :destroy, :promote ]
   before_filter :find_pending_memberships, :only => [ :pending, :accept, :reject ]
-  before_filter :find_invited_memberships, :only => [ :invited ]
+  before_filter :find_invited_memberships, :only => [ :accept, :invited, :reject ]
   
   before_filter :find_membership, :only => [ :destroy, :accept, :reject, :promote ]
   
@@ -153,16 +153,16 @@ class MembershipsController < ApplicationController
     end
     
     def find_membership
-      unless @membership = @memberships.find_by_id(params[:id])
+      if @membership = @memberships.find_by_id(params[:id])
+        # do nothing
+      elsif @membership = @invited_memberships.find_by_id(params[:id])
+        @invited_membership = @membership
+      else
         flash[:warning] = t('not_found')
         
         respond_to do |format|
           format.html { redirect_to my_memberships_path }
         end
-      end
-      
-      if @membership.is_a? InvitedMembership
-        @invited_membership = @membership
       end
     end
 
