@@ -207,7 +207,7 @@ class ApplicationController < ActionController::Base
       when @group
         @group.forums.scoped(:order => 'updated_at DESC')
       else
-        Forum.scoped(:conditions => { :group_id => current_user.group_ids }, :order => 'updated_at DESC')
+        Forum.scoped(:conditions => { :group_id => current_user.all_group_ids }, :order => 'updated_at DESC')
       end
     end
     
@@ -234,16 +234,16 @@ class ApplicationController < ActionController::Base
     def find_groups
       @groups = case
       when @user
-        if current_user.group_ids.blank?
+        if current_user.all_group_ids.blank?
           @groups = @user.groups.scoped(:conditions => { :hidden => false }, :order => '`groups`.`name` ASC')
         else
-          @groups = @user.groups.scoped(:conditions => [ %Q(hidden = :false OR id IN (:group_ids)), { :false => false, :group_ids => current_user.group_ids } ], :order => '`groups`.`name` ASC')
+          @groups = @user.groups.scoped(:conditions => [ %Q(hidden = :false OR id IN (:group_ids)), { :false => false, :group_ids => current_user.all_group_ids } ], :order => '`groups`.`name` ASC')
         end
       else
-        if current_user.group_ids.blank?
+        if current_user.all_group_ids.blank?
           @groups = Group.scoped(:conditions => { :hidden => false }, :order => '`groups`.`name` ASC')
         else
-          @groups = Group.scoped(:conditions => [ %Q(hidden = :false OR id IN (:group_ids)), { :false => false, :group_ids => current_user.group_ids } ], :order => '`groups`.`name` ASC')
+          @groups = Group.scoped(:conditions => [ %Q(hidden = :false OR id IN (:group_ids)), { :false => false, :group_ids => current_user.all_group_ids } ], :order => '`groups`.`name` ASC')
         end
       end        
     end
@@ -374,7 +374,7 @@ class ApplicationController < ActionController::Base
       when @forum
         @forum.topics.scoped(:order => 'updated_at DESC')
       else
-        Topic.scoped(:conditions => { :group_id => current_user.group_ids }, :order => 'updated_at DESC')
+        Topic.scoped(:conditions => { :group_id => current_user.all_group_ids }, :order => 'updated_at DESC')
       end
     end
     

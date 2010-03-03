@@ -10,6 +10,10 @@ class User < ActiveRecord::Base
 
   delegate :sanitize, :textilize, :to => :helpers
 
+  def all_group_ids
+    self.group_ids + self.invited_group_ids
+  end
+  
   def name_to_s
     sanitize(full_name || nickname || email.split('@'))
   end

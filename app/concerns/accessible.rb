@@ -5,14 +5,14 @@ module Accessible
     base.named_scope :accessible, lambda { |user|
       {
         :conditions => case
-        when user.friend_ids.blank? && user.group_ids.blank?
-          [ %Q((user_id = :id) OR (private = :false AND hidden = :false AND group_id IS NULL)), { :false => false, :id => user.id, :group_ids => user.group_ids } ]
+        when user.friend_ids.blank? && user.all_group_ids.blank?
+          [ %Q((user_id = :id) OR (private = :false AND hidden = :false AND group_id IS NULL)), { :false => false, :id => user.id, :group_ids => user.all_group_ids } ]
         when user.friend_ids.blank?
-          [ %Q((user_id = :id) OR (private = :false AND hidden = :false AND group_id IS NULL) OR (group_id IN (:group_ids))), { :false => false, :id => user.id, :group_ids => user.group_ids } ]
-        when user.group_ids.blank?
+          [ %Q((user_id = :id) OR (private = :false AND hidden = :false AND group_id IS NULL) OR (group_id IN (:group_ids))), { :false => false, :id => user.id, :group_ids => user.all_group_ids } ]
+        when user.all_group_ids.blank?
           [ %Q((user_id = :id) OR (private = :false OR user_id IN (:friend_ids)) AND hidden = :false AND group_id IS NULL), { :false => false, :id => user.id, :friend_ids => user.friend_ids } ]
         else
-          [ %Q((user_id = :id) OR ((private = :false OR user_id IN (:friend_ids)) AND hidden = :false AND group_id IS NULL) OR (group_id IN (:group_ids))), { :false => false, :id => user.id, :friend_ids => user.friend_ids, :group_ids => user.group_ids } ]
+          [ %Q((user_id = :id) OR ((private = :false OR user_id IN (:friend_ids)) AND hidden = :false AND group_id IS NULL) OR (group_id IN (:group_ids))), { :false => false, :id => user.id, :friend_ids => user.friend_ids, :group_ids => user.all_group_ids } ]
         end
       }
     }

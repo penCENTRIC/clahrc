@@ -174,16 +174,16 @@ class MembershipsController < ApplicationController
       @memberships = case
       when @user
         if current_user.friends.include?(@user) || current_user.id == @user.id
-          if current_user.group_ids.blank?
+          if current_user.all_group_ids.blank?
             @user.memberships.scoped(:include => :relatable, :conditions => { :groups => { :hidden => false } }, :order => '`groups`.`name` ASC')
           else
-            @user.memberships.scoped(:include => :relatable, :conditions => [ %{`groups`.`hidden` = :false OR `groups`.`id` IN (:group_ids)}, { :false => false, :group_ids => current_user.group_ids } ], :order => '`groups`.`name` ASC')
+            @user.memberships.scoped(:include => :relatable, :conditions => [ %{`groups`.`hidden` = :false OR `groups`.`id` IN (:group_ids)}, { :false => false, :group_ids => current_user.all_group_ids } ], :order => '`groups`.`name` ASC')
           end
         else
-          if current_user.group_ids.blank?
+          if current_user.all_group_ids.blank?
             @user.memberships.scoped(:include => :relatable, :conditions => { :groups => { :private => false, :hidden => false } }, :order => '`groups`.`name` ASC')
           else
-            @user.memberships.scoped(:include => :relatable, :conditions => [ %{(`groups`.`private` = :false AND `groups`.`hidden` = :false) OR `groups`.`id` IN (:group_ids)}, { :false => false, :group_ids => current_user.group_ids } ], :order => '`groups`.`name` ASC')
+            @user.memberships.scoped(:include => :relatable, :conditions => [ %{(`groups`.`private` = :false AND `groups`.`hidden` = :false) OR `groups`.`id` IN (:group_ids)}, { :false => false, :group_ids => current_user.all_group_ids } ], :order => '`groups`.`name` ASC')
           end
         end
       when @group
