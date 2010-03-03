@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_filter :require_authentic
+  before_filter :require_authentic, :except => [ :autocomplete ]
   
   before_filter :find_members, :except => [ :autocomplete ]
   before_filter :find_member, :only => [ :show ]
@@ -22,12 +22,18 @@ class MembersController < ApplicationController
     end
   end
   
+  # :call-seq:
+  #   GET /members/autocomplete?q=<query>
   def autocomplete
     if request.xhr?
       @users = User.find(:all, :include => :profile, :conditions => [ "LOCATE(:q, profiles.full_name) > 0", { :q => params[:q] } ], :limit => params[:limit] || 10)
     
       respond_to do |format|
-        format.html # autocomplete
+        format.json { render :json => @users.inject([]) { |result, user| result << { :id => user.id, :full_name => user.profile.full_name } } }
+      end
+    else
+      respond_to do |format|
+        format.json { head :method_not_allowed }
       end
     end
   end
