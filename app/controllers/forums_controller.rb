@@ -83,7 +83,7 @@ class ForumsController < ApplicationController
   # DELETE /forums/:id
   def destroy
     respond_to do |format|
-      format.html { redirect_to forums_path }
+      format.html { redirect_to group_forums_path(@forum.group) }
     end
   end
   
