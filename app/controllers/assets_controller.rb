@@ -101,7 +101,21 @@ class AssetsController < ApplicationController
     def destroy_asset
       @asset.destroy
     end
+    
+    def destroy_asset_with_authority
+      if @asset.can_be_destroyed_by?(current_user)
+        destroy_asset_without_authority
+      else
+        flash[:warning] = t('not_allowed')
       
+        respond_to do |format|
+          format.html { redirect_to @template.path_for_assets(@group || current_user) }
+        end
+      end
+    end
+    
+    alias_method_chain :destroy_asset, :authority
+    
     def find_asset
       if asset = @assets.find_by_id(params[:id].to_i)
         found_asset(asset)
