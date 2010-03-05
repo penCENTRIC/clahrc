@@ -2,6 +2,7 @@ class Asset < ActiveRecord::Base
   attr_accessible :data
 
   include Accessible
+  include Destroyable
   
   belongs_to :user
   belongs_to :group
