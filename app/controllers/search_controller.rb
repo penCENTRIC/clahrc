@@ -41,7 +41,7 @@ class SearchController < ApplicationController
   
   def groups
     add_breadcrumb 'Search', search_index_path(:q => @query)
-    add_breadcrumb 'groups', groups_search_path(:q => @query)
+    add_breadcrumb 'Groups', groups_search_path(:q => @query)
 
     respond_to do |format|
       format.html
