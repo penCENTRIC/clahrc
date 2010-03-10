@@ -99,7 +99,7 @@ class SearchController < ApplicationController
     end
     
     def find_forum_results
-      @forum_results = @forums.search(@query, conditions)
+      @forum_results = @forums.search(@query, conditions.merge(:index => 'forum, forum_taggable'))
     end
 
     def find_forums
@@ -107,7 +107,7 @@ class SearchController < ApplicationController
     end
     
     def find_group_results
-      @group_results = @groups.search(@query, conditions)
+      @group_results = @groups.search(@query, conditions.merge(:index => 'group'))
     end
     
     def find_groups
@@ -123,7 +123,7 @@ class SearchController < ApplicationController
     end
     
     def find_page_results
-      @page_results = @pages.search(@query, conditions)
+      @page_results = @pages.search(@query, conditions.merge(:index => 'page, page_taggable'))
     end
     
     def find_pages
@@ -131,7 +131,7 @@ class SearchController < ApplicationController
     end
     
     def find_post_results
-      @post_results = @posts.search(@query, conditions)
+      @post_results = @posts.search(@query, conditions.merge(:index => 'post, post_taggable'))
     end
     
     def find_posts
@@ -139,7 +139,7 @@ class SearchController < ApplicationController
     end
     
     def find_topic_results
-      @topic_results = @topics.search(@query, conditions)
+      @topic_results = @topics.search(@query, conditions.merge(:index => 'topic, topic_taggable'))
     end
         
     def find_topics
