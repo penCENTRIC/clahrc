@@ -5,16 +5,20 @@ module ContentsHelper
       options.reverse_merge! :url => url_for(content)
       
       returning(html = "") do
+        doc = nil
+        
         if query = options.delete(:query)
-          html << textilize(content.excerpts.body)
+          doc = Hpricot(textilize(content.excerpts.body))
         else
           doc = Hpricot(content.body_to_html)
-          
-          if p = (doc/'p').first
-            html << p.to_html
-          else
-            html << doc.to_html
-          end
+        end
+        
+        if doc.nil?
+          # do nothing
+        elsif p = (doc/'p').first
+          html << p.to_html
+        else
+          html << doc.to_html
         end
       end
     end

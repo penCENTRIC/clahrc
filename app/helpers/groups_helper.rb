@@ -5,18 +5,22 @@ module GroupsHelper
       options.reverse_merge! :url => url_for(group)
       
       returning(html = "") do
+        doc = nil
+        
         if query = options.delete(:query)
-          html << textilize(group.excerpts.description)
+          doc = Hpricot(textilize(group.excerpts.description))
         else
           doc = Hpricot(group.description_to_html)
-
-          if p = (doc/'p').first
-            html << p.to_html
-          else
-            html << doc.to_html
-          end
         end
-      end      
+        
+        if doc.nil?
+          # do nothing
+        elsif p = (doc/'p').first
+          html << p.to_html
+        else
+          html << doc.to_html
+        end
+      end
     end
   end
     
