@@ -1,1 +1,0 @@
-ExceptionNotifier.exception_recipients = %w(mhg@taose.co.uk)

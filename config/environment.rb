@@ -20,6 +20,7 @@ Rails::Initializer.run do |config|
   # config.gem "sqlite3-ruby", :lib => "sqlite3"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'gravtastic', :source => 'http://gemcutter.org'
+  config.gem 'hoptoad_notifier'
   config.gem 'hpricot', :source => 'http://gemcutter.org'
   config.gem 'paged_scopes', :source => 'http://gemcutter.org'
   config.gem 'RedCloth'

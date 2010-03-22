@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   helper :all
   helper_method :current_domain, :current_host, :current_user
   
-  include ExceptionNotifiable
-  
   protect_from_forgery #:only => [ :create, :update, :destroy ]
   
   filter_parameter_logging :password, :password_confirmation
