@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091124111633) do
+ActiveRecord::Schema.define(:version => 20100326123507) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -90,10 +90,16 @@ ActiveRecord::Schema.define(:version => 20091124111633) do
     t.boolean  "private",          :default => false
     t.boolean  "hidden",           :default => false
     t.boolean  "delta",            :default => true,  :null => false
+    t.boolean  "locked",           :default => false
+    t.boolean  "boolean",          :default => false
+    t.datetime "locked_at"
+    t.integer  "locked_by_id"
+    t.string   "permalink"
   end
 
   add_index "contents", ["group_id"], :name => "index_contents_on_group_id"
   add_index "contents", ["parent_id", "parent_type"], :name => "index_contents_on_parent_id_and_parent_type"
+  add_index "contents", ["permalink"], :name => "index_contents_on_permalink"
   add_index "contents", ["user_id"], :name => "index_contents_on_user_id"
 
   create_table "groups", :force => true do |t|

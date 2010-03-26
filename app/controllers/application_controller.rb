@@ -108,6 +108,21 @@ class ApplicationController < ActionController::Base
       end
     end
     
+    def found_wiki_page(wiki_page)
+      unless @wiki_page || wiki_page.nil?
+        if wiki_page.group
+          found_group(wiki_page.group)
+        else
+          found_member(wiki_page.user)
+        end
+        
+        @wiki_page = wiki_page
+        
+        add_breadcrumb t('wiki_pages.index'), @template.path_for_wiki_pages(wiki_page.group || wiki_page.user || current_user)
+        add_breadcrumb wiki_page.title_to_s, @template.path_for_wiki_page(wiki_page)
+      end
+    end
+    
     def correct_safari_and_ie_accept_headers
       request.accepts.sort!{ |x, y| y.to_s == 'text/javascript' ? 1 : -1 } if request.xhr?
     end
@@ -373,6 +388,23 @@ class ApplicationController < ActionController::Base
         @forum.topics.scoped(:order => 'updated_at DESC')
       else
         Topic.scoped(:conditions => { :group_id => current_user.all_group_ids }, :order => 'updated_at DESC')
+      end
+    end
+    
+    def find_wiki_pages
+      @wiki_pages = case
+      when @group
+        @group.wiki_pages.scoped(:order => 'position ASC, updated_at DESC')
+      when @user
+        if @user.friends.include?(current_user) || current_user.id == @user.id
+          @user.wiki_pages.scoped(:conditions => { :hidden => false, :group_id => nil }, :order => 'position ASC, updated_at DESC')
+        else
+          @user.wiki_pages.scoped(:conditions => { :private => false, :hidden => false, :group_id => nil }, :order => 'position ASC, updated_at DESC')
+        end
+      when current_domain == 'my'
+        current_user.wiki_pages.scoped(:conditions => { :group_id => nil }, :order => 'position ASC, updated_at DESC')
+      else
+        WikiPage.accessible(current_user)
       end
     end
     

@@ -1,0 +1,14 @@
+- content_for :content_header do
+  %h1= @wiki_page.title_to_s
+- content_for :content_sidebar do
+  - unless @wiki_page.tags.blank?
+    %p
+      %strong Tags:
+      = links_to_tags(@wiki_page.tags)
+.wiki_page[@wiki_page]
+  .body
+    .info
+      = link_to_member(@wiki_page.user)
+      at
+      = @wiki_page.created_at.strftime('%k:%M on %A, %e %B %Y')
+    = @wiki_page.body_to_html

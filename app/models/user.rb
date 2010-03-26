@@ -84,6 +84,7 @@ class User < ActiveRecord::Base
   # Content
   has_many :pages
   has_many :posts
+  has_many :wiki_pages
   
   define_index do
     indexes profile(:full_name), :as => :full_name

@@ -359,3 +359,21 @@ en:
     new: Log in to CLAHRC Community
     password: Password
     password_help: Enter your password. If you have forgotten it, click the 'Forgot Password' link.
+    
+  wiki_pages:
+    # Actions
+    index: Wiki
+    new: New wiki page
+    edit: Edit wiki page
+    destroy: Delete wiki page
+    search: Wiki pages
+
+    # Events
+    created: The wiki page has been created.
+    destroyed: The wiki page has been destroyed.
+    updated: The wiki page has been updated.
+
+    # Messages
+    not_allowed: You are not allowed to view that wiki page.
+    not_found: The wiki page could not be found.
+    

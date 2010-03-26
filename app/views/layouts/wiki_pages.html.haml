@@ -1,0 +1,20 @@
+- content_for :content_sidebar do
+  .block
+    %ul
+      - unless @wiki_page.nil? || @wiki_page.new_record?
+        - if @wiki_page.can_be_edited_by?(current_user)
+          %li= link_to_edit_wiki_page(@wiki_page)
+        - if @wiki_page.can_be_destroyed_by?(current_user)
+          %li= link_to_destroy_wiki_page(@wiki_page)
+      - if @group
+        - if @group.members.include?(current_user)
+          %li= link_to_new_wiki_page(@group)
+      - else
+        - if @user.nil?
+          %li= link_to_new_wiki_page(current_user)
+- if @user
+  = render :file => 'layouts/members'
+- elsif @group
+  = render :file => 'layouts/groups'
+- else
+  = render :file => 'layouts/application'

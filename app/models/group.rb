@@ -90,6 +90,7 @@ class Group < ActiveRecord::Base
   # Content
   has_many :forums
   has_many :pages
+  has_many :wiki_pages
   
   def to_param
     unless new_record?

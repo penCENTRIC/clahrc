@@ -17,6 +17,7 @@ ActionController::Routing::Routes.draw do |map|
     # Content
     my.resources :pages, :collection => { :sort => :put }, :paged => { :name => :directory }
     my.resources :posts, :paged => { :name => :directory }
+    my.resources :wiki_pages, :as => :wiki
     
     # Friendships
     my.resources :friendships, :as => 'friends', :collection => { :pending => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :create, :destroy ], :paged => { :name => :directory }
@@ -58,6 +59,7 @@ ActionController::Routing::Routes.draw do |map|
       # Content
       member.resources :pages, :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
       member.resources :posts, :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
+      member.resources :wiki_pages, :as => :wiki, :only => [ :index, :show ]
     end
     
     # Groups
@@ -79,6 +81,7 @@ ActionController::Routing::Routes.draw do |map|
       # Content
       group.resources :forums, :only => [ :index, :new, :create ], :paged => { :name => :directory }
       group.resources :pages, :only => [ :index, :new, :create ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
+      group.resources :wiki_pages, :as => :wiki
     end
 
     # Assets

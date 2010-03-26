@@ -15,6 +15,7 @@
         %li= link_to_group_memberships(@group)
         %li= link_to_forums(@group)
         %li= link_to_pages(@group)
+        %li= link_to_wiki_pages(@user)
         %li= link_to_assets(@group)
       - if @group.moderators.include?(current_user) && @group.members.count > 1
         %li= link_to_new_message(@group)

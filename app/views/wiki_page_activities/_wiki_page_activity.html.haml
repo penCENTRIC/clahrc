@@ -1,0 +1,18 @@
+- unless wiki_page_activity.trackable.nil?
+  .activity[wiki_page_activity]{ :class => cycle('odd', 'even')}
+    .icon
+      = avatar_tag(wiki_page_activity.user, :style => :icon)
+    .body
+      .info
+        = wiki_page_activity.created_at.strftime('%A, %e %B %Y at %k:%M')
+      .title
+        - if wiki_page_activity.group
+          - if wiki_page_activity.action == 'create'
+            = "#{link_to_member(wiki_page_activity.user)} published a new wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
+          - elsif wiki_page_activity.action == 'update'
+            = "#{link_to_member(wiki_page_activity.user)} edited the wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
+        - else
+          - if wiki_page_activity.action == 'create'
+            = "#{link_to_member(wiki_page_activity.user)} published a new wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."
+          - elsif wiki_page_activity.action == 'update'
+            = "#{link_to_member(wiki_page_activity.user)} edited the wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."
