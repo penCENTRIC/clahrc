@@ -21,6 +21,9 @@ class SearchController < ApplicationController
   before_filter :find_topics, :only => [ :index, :topics ]
   before_filter :find_topic_results, :only => [ :index, :topics ]
   
+  before_filter :find_wiki_pages, :only => [ :index, :wiki_pages ]
+  before_filter :find_wiki_page_results, :only => [ :index, :wiki_pages ]
+
   # GET /search
   def index
     add_breadcrumb 'Search', search_index_path
@@ -78,6 +81,15 @@ class SearchController < ApplicationController
   def topics
     add_breadcrumb 'Search', search_index_path(:q => @query)
     add_breadcrumb 'Topics', topics_search_path(:q => @query)
+
+    respond_to do |format|
+      format.html
+    end
+  end
+  
+  def wiki_pages
+    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Wiki Pages', wiki_pages_search_path(:q => @query)
 
     respond_to do |format|
       format.html
@@ -145,4 +157,12 @@ class SearchController < ApplicationController
     def find_topics
       @topics = Topic.accessible(current_user)
     end
+    
+    def find_wiki_page_results
+      @wiki_page_results = @wiki_pages.search(@query, conditions)
+    end
+    
+    def find_wiki_pages
+      @wiki_pages = WikiPage.accessible(current_user)
+    end    
 end

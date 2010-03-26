@@ -108,7 +108,7 @@ ActionController::Routing::Routes.draw do |map|
     end
   
     # Search
-    community.resources :search, :only => [ :index ], :collection => { :forums => :get, :groups => :get, :members => :get, :pages => :get, :posts => :get, :topics => :get }
+    community.resources :search, :only => [ :index ], :collection => { :forums => :get, :groups => :get, :members => :get, :pages => :get, :posts => :get, :topics => :get, :wiki_pages => :get }
   
     # Comments
     community.resources :comments, :only => [ :show, :edit, :update, :destroy ], :member => { :reply => :get }

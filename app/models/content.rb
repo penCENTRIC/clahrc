@@ -17,17 +17,6 @@ class Content < ActiveRecord::Base
   end  
 
   delegate :sanitize, :to => :helpers
- 
-  define_index do
-    indexes :title
-    indexes :body
-    
-    has 'IF(hidden, user_id, NULL)', :as => :owner_id, :type => :integer
-    has 'IF(hidden, NULL, IF(private, user_id, 0))', :as => :owner_ids, :type => :integer
-    has 'IF(group_id, group_id, 0)', :as => :group_ids, :type => :integer
-    
-    set_property :delta => true
-  end
     
   def body_to_html
     RedCloth.new(body.to_s).extend(RedCloth::Extensions).to_html
