@@ -110,7 +110,7 @@ class WikiPagesController < ApplicationController
         flash[:warning] = t('not_allowed')
       
         respond_to do |format|
-          format.html { redirect_to wiki_page_path(@wiki_page) }
+          format.html { redirect_to @template.path_for_wiki_page(@wiki_page) }
         end
       end
     end
@@ -164,7 +164,7 @@ class WikiPagesController < ApplicationController
         flash[:warning] = t('not_allowed')
       
         respond_to do |format|
-          format.html { redirect_to wiki_page_path(@wiki_page) }
+          format.html { redirect_to @template.path_for_wiki_page(@wiki_page) }
         end
       end
     end

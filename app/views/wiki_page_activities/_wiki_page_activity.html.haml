@@ -8,11 +8,11 @@
       .title
         - if wiki_page_activity.group
           - if wiki_page_activity.action == 'create'
-            = "#{link_to_member(wiki_page_activity.user)} published a new wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
+            = "#{link_to_member(wiki_page_activity.user)} published a new wiki page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
           - elsif wiki_page_activity.action == 'update'
-            = "#{link_to_member(wiki_page_activity.user)} edited the wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
+            = "#{link_to_member(wiki_page_activity.user)} edited the wiki page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}' in the group '#{link_to_group(wiki_page_activity.group)}'."
         - else
           - if wiki_page_activity.action == 'create'
-            = "#{link_to_member(wiki_page_activity.user)} published a new wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."
+            = "#{link_to_member(wiki_page_activity.user)} published a new wiki page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."
           - elsif wiki_page_activity.action == 'update'
-            = "#{link_to_member(wiki_page_activity.user)} edited the wiki_page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."
+            = "#{link_to_member(wiki_page_activity.user)} edited the wiki page '#{link_to_wiki_page(wiki_page_activity.wiki_page)}'."

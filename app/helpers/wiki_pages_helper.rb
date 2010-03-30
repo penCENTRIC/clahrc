@@ -18,7 +18,7 @@ module WikiPagesHelper
   def link_to_wiki_page(wiki_page, options = {})
     unless wiki_page.nil?
       options.symbolize_keys!
-      options.reverse_merge! :class => 'show wiki_page', :url => wiki_page.permalink
+      options.reverse_merge! :class => 'show wiki_page', :url => path_for_wiki_page(wiki_page)
       
       link_to_content wiki_page, options
     end
