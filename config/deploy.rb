@@ -58,7 +58,7 @@ namespace :deploy do
     run "ln -nfs #{shared_path}/db/sphinx #{current_path}/db/sphinx"
   end
 
-  task :symlink_shared_paths do
+  task :symlink_app_settings do
     run "rm -f #{current_path}/config/app_settings.rb"
     run "ln -nfs #{shared_path}/config/app_settings.rb #{current_path}/config/app_settings.rb"
   end
