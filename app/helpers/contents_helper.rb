@@ -2,7 +2,7 @@ module ContentsHelper
   def content_teaser(content, options = {})
     unless content.nil?
       options.symbolize_keys!
-      options.reverse_merge! :url => url_for(content)
+      options.reverse_merge! :url => try(:url_for, content)
       
       returning(html = "") do
         doc = nil
@@ -27,8 +27,8 @@ module ContentsHelper
   def link_to_content(content, options = {})
     unless content.nil?
       options.symbolize_keys!
-      options.reverse_merge! :class => content.class.to_s.underscore, :title => content.title_to_s, :url => url_for(content)
-      
+      options.reverse_merge! :class => content.class.to_s.underscore, :title => content.title_to_s, :url => try(:url_for, content)
+
       if query = options.delete(:query)
         link_to content.excerpts.title, options.delete(:url), options
       else
