@@ -29,8 +29,4 @@ config.action_view.cache_template_loading            = true
 
 ActionController::Base.asset_host = ENV['ASSET_HOST']
  
-ActionMailer::Base.smtp_settings = {
-  :address => ENV['SMTP_SERVER'],
-  :port => ENV['SMTP_PORT'],
-  :domain => ENV['SMTP_DOMAIN']
-}
+ActionMailer::Base.smtp_settings = AppSettings.smtp_settings.marshal_dump
