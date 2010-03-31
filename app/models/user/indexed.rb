@@ -6,7 +6,7 @@ class User
         indexes profile.previous_full_name, :as => :previous_full_name
         indexes profile.about, :as => :about
 
-        set_property :delta => true
+        #set_property :delta => true
       end
     end
   end

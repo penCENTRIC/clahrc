@@ -21,7 +21,7 @@ class Group < ActiveRecord::Base
     indexes :name
     indexes :description
     
-    set_property :delta => true
+    #set_property :delta => true
   end
   
   # Avatar

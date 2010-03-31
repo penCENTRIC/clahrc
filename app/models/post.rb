@@ -11,7 +11,7 @@ class Post < Content
     has 'IF(hidden, NULL, IF(private, user_id, 0))', :as => :owner_ids, :type => :integer
     has 'IF(group_id, group_id, 0)', :as => :group_ids, :type => :integer
     
-    set_property :delta => true
+    #set_property :delta => true
   end
   
   named_scope :all_posts, :order => 'updated_at DESC'
