@@ -30,7 +30,7 @@ ActionController::Routing::Routes.draw do |map|
     my.resources :memberships, :as => 'groups', :collection => { :invited => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :destroy ], :paged => { :name => :directory }
 
     # Default route
-    my.root :controller => 'accounts', :action => 'show'
+    my.root :controller => 'activities', :action => 'index'
   end
   
   # community.clahrc.net
