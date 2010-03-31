@@ -8,6 +8,6 @@ module AccountsHelper
   end
   
   def link_to_home
-    link_to t('home'), current_user ? my_activity_path : 'http://clahrc.net/'
+    link_to t('home'), current_user ? my_activities_path : 'http://clahrc.net/'
   end
 end
