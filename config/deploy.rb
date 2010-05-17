@@ -59,8 +59,7 @@ namespace :deploy do
   end
 
   task :symlink_app_settings do
-    run "rm -f #{current_path}/config/app_settings.rb"
-    run "ln -nfs #{shared_path}/config/app_settings.rb #{current_path}/config/app_settings.rb"
+    run "ln -nfs #{shared_path}/config/app_settings.rb #{shared_path}/config/app_settings.rb"
   end
 end
 

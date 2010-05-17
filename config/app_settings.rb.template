@@ -1,0 +1,11 @@
+require "ostruct"
+
+AppSettings = OpenStruct.new({
+  :session => OpenStruct.new({
+    :domain => '.clahrc.net',
+    :key => '_clahrc.net_session',
+    :secret => 'c1c029236147d319eacfefe336b30455b1d3de80a95146cdbcfac5263b5cbddb75ae6adfb0051e7acfc3c417dc9e051a6b9fad711a0f306e6103a3adcf245e81'
+  }),
+  :smtp_settings => OpenStruct.new({
+  })
+})
