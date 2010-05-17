@@ -4,4 +4,4 @@ test:
   morphology: stem_en
 production:
   morphology: stem_en
-  searchd: '/usr/local/bin'
+  bin_path: '/usr/local/bin'
