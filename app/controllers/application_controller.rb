@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   helper :all
-  helper_method :current_domain, :current_host, :current_user
+  helper_method :current_subdomain, :current_host, :current_user
 
   protect_from_forgery
 
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
       unless @user || user.nil?
         @user = user
 
-        unless current_domain == "my"
+        unless current_subdomain == "my"
           add_breadcrumb t('members.index'), members_path
           add_breadcrumb user.name_to_s, member_path(user)
         end
@@ -129,8 +129,8 @@ class ApplicationController < ActionController::Base
       request.accepts.sort!{ |x, y| y.to_s == 'text/javascript' ? 1 : -1 } if request.xhr?
     end
 
-    def current_domain
-      @current_domain ||= current_host.sub(/\.?clahrc\.(net|com)$/, '')
+    def current_subdomain
+      @current_subdomain ||= request.subdomain
     end
 
     def current_host
@@ -142,7 +142,7 @@ class ApplicationController < ActionController::Base
     end
 
     def current_theme
-      @current_theme ||= (current_domain.blank? ? nil : current_domain)
+      @current_theme ||= (current_subdomain.blank? ? nil : current_subdomain)
     end
 
     def current_user
@@ -190,7 +190,7 @@ class ApplicationController < ActionController::Base
         else
           @user.assets.scoped(:conditions => { :private => false, :hidden => false, :group_id => nil }, :order => 'updated_at DESC')
         end
-      when current_domain == 'my'
+      when current_subdomain == 'my'
         current_user.assets.scoped(:conditions => { :group_id => nil }, :order => 'updated_at DESC')
       else
         Asset.accessible(current_user)
@@ -322,7 +322,7 @@ class ApplicationController < ActionController::Base
         else
           @user.pages.scoped(:conditions => { :private => false, :hidden => false, :group_id => nil }, :order => 'position ASC, updated_at DESC')
         end
-      when current_domain == 'my'
+      when current_subdomain == 'my'
         current_user.pages.scoped(:conditions => { :group_id => nil }, :order => 'position ASC, updated_at DESC')
       else
         Page.accessible(current_user)
@@ -357,7 +357,7 @@ class ApplicationController < ActionController::Base
         else
           @user.posts.scoped(:conditions => { :private => false, :hidden => false }, :order => 'updated_at DESC')
         end
-      when current_domain == 'my'
+      when current_subdomain == 'my'
         current_user.posts.scoped(:order => 'updated_at DESC')
       else
         Post.accessible(current_user)
@@ -403,7 +403,7 @@ class ApplicationController < ActionController::Base
         else
           @user.wiki_pages.scoped(:conditions => { :private => false, :hidden => false, :group_id => nil }, :order => 'position ASC, updated_at DESC')
         end
-      when current_domain == 'my'
+      when current_subdomain == 'my'
         current_user.wiki_pages.scoped(:conditions => { :group_id => nil }, :order => 'position ASC, updated_at DESC')
       else
         WikiPage.accessible(current_user)

@@ -34,7 +34,7 @@
       %p
         %strong Interests:
         = links_to_tags(@user.profile.interests)
-    - unless current_domain == 'my'
+    - unless current_subdomain == 'my'
       #pages-block= javascript_tag %Q($("#pages-block").load("#{block_member_pages_path(@user)}");)
       #posts-block= javascript_tag %Q($("#posts-block").load("#{block_member_posts_path(@user)}");)
       #assets-block= javascript_tag %Q($("#assets-block").load("#{block_member_assets_path(@user)}");)
