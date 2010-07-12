@@ -24,7 +24,7 @@ class User
         }
       end
       
-      base.validates_constancy_of :email
+      #base.validates_constancy_of :email
       
       base.send :include, InstanceMethods
     end

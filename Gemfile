@@ -7,23 +7,28 @@ gem 'rails', '3.0.0.beta4'
 
 gem 'mysql'
 
-# Use unicorn as the web server
-# gem 'unicorn'
+group :development do
+  gem 'capistrano'
+  gem 'ruby-debug'
+end
 
-# Deploy with Capistrano
-# gem 'capistrano'
+gem 'compass'
+gem 'gravtastic'
+gem 'hoptoad_notifier'
+gem 'hpricot'
+#gem 'paged_scopes'
+gem 'RedCloth'
+gem 'whenever'
+gem 'will_paginate'
+gem 'thinking-sphinx', '1.3.16'
 
-# To use debugger
-# gem 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri', '1.4.1'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
-
-# Bundle gems for certain environments:
-# gem 'rspec', :group => :test
-# group :test do
-#   gem 'webrat'
-# end
+gem 'acts_as_list'
+gem 'acts_as_tree'
+gem 'acts-as-taggable-on'
+gem 'authlogic'
+gem 'haml'
+gem 'paperclip'
+#gem 'subdomain_routes'
+gem 'translator'
+gem 'vestal_versions'
+gem 'will_paginate'

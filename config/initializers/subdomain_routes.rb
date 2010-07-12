@@ -1,1 +1,1 @@
-SubdomainRoutes::Config.domain_length = 2
+#SubdomainRoutes::Config.domain_length = 2

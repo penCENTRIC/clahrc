@@ -14,6 +14,7 @@ module Clahrc
 
     # Add additional load paths for your own custom dirs
     # config.load_paths += %W( #{config.root}/extras )
+    config.load_paths += %W( #{config.root}/app/concerns #{config.root}/app/observers #{config.root}/app/sweepers )
 
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named
@@ -21,7 +22,8 @@ module Clahrc
 
     # Activate observers that should always be running
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-
+    config.active_record.observers = :membership_observer, :message_observer, :message_recipient_observer, :received_message_observer
+    
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -43,4 +45,19 @@ module Clahrc
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
   end
+end
+
+require 'hpricot'
+require 'RedCloth'
+
+module ActionView::Helpers::UrlHelper
+  def link_to_with_active(name, options = {}, html_options = {}, &block)
+    if current_page?(options)
+      html_options[:class] = "active #{html_options[:class]}"
+    end
+    
+    link_to_without_active name, options, html_options, &block
+  end
+  
+  alias_method_chain :link_to, :active
 end

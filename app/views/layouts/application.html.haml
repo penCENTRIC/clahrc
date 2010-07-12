@@ -9,8 +9,9 @@
     = stylesheet_link_tag 'print', :media => 'print'
     /[if lt IE 8]
       = stylesheet_link_tag 'ie', :media => 'screen, projection'
+    = csrf_meta_tag
     = javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery?
-    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery-tools.min', 'jquery.tokeninput', 'application'
+    = javascript_include_tag 'jquery-1.4.2.min', 'jquery-ui-1.8.2.custom.min', 'jquery-tools-1.2.3.min', 'jquery.tokeninput', 'rails', 'application'
   %body
     #tooltip
     #overlay.overlay

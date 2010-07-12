@@ -1,7 +1,0 @@
-There are no unit tests for the Validates Constancy plugin. Instead, there are
-suites of integration tests in the form of Active Record models that use the
-plugin while running against different versions of Active Record.
-
-See the doc/README_FOR_APP files that are included in the various Rails
-applications. Those applications can be found at in the ‘test’ branch of this
-repository.

@@ -1,1 +1,0 @@
-require 'subdomain_routes'
