@@ -1,22 +1,21 @@
 #require 'vendor/plugins/thinking-sphinx/recipes/thinking_sphinx'
 
+set :stages, %w(staging production)
+set :default_stage, "production"
+
+require 'capistrano/ext/multistage'
+
 default_run_options[:pty] = true
 
 set :application, "clahrc"
-set :domain,      "dptserver3.ex.ac.uk"
-set :user,        "web641"
-set :repository,  "git@github.com:penCENTRIC/clahrc.git"
-set :use_sudo,    false
-set :deploy_to,   "/opt/webs/clahrc.net/docs"
 
-set :scm,                   "git"
-set :branch,                "master"
+set :repository, "git@github.com:penCENTRIC/clahrc.git"
+set :use_sudo, false
+
+set :scm, "git"
+set :branch, "master"
 set :git_enable_submodules, true
-set :git_shallow_clone,     1
-
-role :app, domain
-role :web, domain
-role :db,  domain, :primary => true
+set :git_shallow_clone, 1
 
 namespace :deploy do
   desc "Restart Application"

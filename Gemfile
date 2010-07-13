@@ -9,6 +9,7 @@ gem 'mysql'
 
 group :development do
   gem 'capistrano'
+  gem 'capistrano-ext'
   gem 'ruby-debug'
 end
 
@@ -20,7 +21,7 @@ gem 'hpricot'
 gem 'RedCloth'
 gem 'whenever'
 gem 'will_paginate'
-gem 'thinking-sphinx', '1.3.16'
+gem 'thinking-sphinx'
 
 gem 'acts_as_list'
 gem 'acts_as_tree'
