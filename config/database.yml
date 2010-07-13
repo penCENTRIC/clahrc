@@ -5,7 +5,7 @@ development:
   database: clahrc_development
   pool: 5
   username: root
-  password: 9dqpl33
+  password:
   socket: /opt/local/var/run/mysql5/mysqld.sock
 
 # Warning: The database defined as "test" will be erased and
@@ -19,14 +19,4 @@ test:
   pool: 5
   username: root
   password:
-  socket: /opt/local/var/run/mysql5/mysqld.sock
-
-production:
-  adapter: mysql
-  encoding: utf8
-  reconnect: false
-  database: clahrc_production
-  pool: 5
-  username: root
-  password: 
   socket: /opt/local/var/run/mysql5/mysqld.sock
