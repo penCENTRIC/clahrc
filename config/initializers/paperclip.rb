@@ -1,4 +1,4 @@
-Paperclip.options[:command_path] = case RAILS_ENV.to_sym
+Paperclip.options[:command_path] = case Rails.env.to_sym
 when :production
   %{/usr/bin}
 else

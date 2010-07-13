@@ -65,15 +65,15 @@ end
 
 namespace :thinking_sphinx do
   task :configure, :roles => [:app] do
-    run "cd #{release_path} && #{sudo} rake thinking_sphinx:configure RAILS_ENV=production"
+    run "cd #{release_path} && #{sudo} rake thinking_sphinx:configure Rails.env=production"
   end
   
   task :start, :roles => [:app] do
-    run "cd #{release_path} && #{sudo} rake thinking_sphinx:start RAILS_ENV=production"
+    run "cd #{release_path} && #{sudo} rake thinking_sphinx:start Rails.env=production"
   end
 
   task :stop, :roles => [:app] do
-    run "cd #{current_path} && #{sudo} rake thinking_sphinx:stop RAILS_ENV=production"
+    run "cd #{current_path} && #{sudo} rake thinking_sphinx:stop Rails.env=production"
   end
 end
 
