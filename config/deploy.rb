@@ -17,6 +17,12 @@ set :branch, "master"
 set :git_enable_submodules, true
 set :git_shallow_clone, 1
 
+set :default_environment, { 
+  'PATH' => "/opt/ruby-enterprise-1.8.7-2010.02/bin:$PATH",
+  'GEM_HOME' => '/opt/ruby-enterprise-1.8.7-2010.02/lib/ruby/gems/1.8',
+  'GEM_PATH' => '/opt/ruby-enterprise-1.8.7-2010.02/lib/ruby/gems/1.8' 
+}
+
 namespace :deploy do
   desc "Restart Application"
   task :restart, :roles => :app do
