@@ -5,6 +5,7 @@ assets/*
 config/database.yml
 db/*.sqlite3
 db/sphinx
+Gemfile.lock
 index/*
 log/*.log
 log/*.pid
