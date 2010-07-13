@@ -10,7 +10,7 @@ class CreateRelationships < ActiveRecord::Migration
     end
     
     change_table :relationships do |t|
-      t.index [ :type, :user_id, :relatable_type, :relatable_id ], :name => :unique_relationship, :unique => true
+      t.index [ :type, :user_id, :relatable_type, :relatable_id ], :name => 'unique_relationship', :unique => true
     end
   end
 
