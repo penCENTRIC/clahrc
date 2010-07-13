@@ -25,6 +25,8 @@ namespace :deploy do
 
   after "deploy:setup", "deploy:setup_shared_paths"
 
+  after 'deploy:update_code', 'bundler:bundle_new_release'
+
   before "deploy", "thinking_sphinx:stop"
   
   after "deploy:symlink", "deploy:symlink_shared_paths", "deploy:symlink_app_settings"
@@ -81,5 +83,18 @@ namespace :crontab do
   desc "Update the crontab file"
   task :update, :roles => :db do
     run "cd #{release_path} && #{sudo} whenever -i CLAHRC_NET --update-crontab --user #{user}"
+  end
+end
+
+namespace :bundler do
+  task :create_symlink, :roles => :app do
+    shared_dir = File.join(shared_path, 'bundle')
+    release_dir = File.join(current_release, '.bundle')
+    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
+  end
+ 
+  task :bundle_new_release, :roles => :app do
+    bundler.create_symlink
+    run "cd #{release_path} && bundle install --without test"
   end
 end
