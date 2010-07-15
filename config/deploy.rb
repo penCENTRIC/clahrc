@@ -29,8 +29,15 @@ set :default_environment, {
 }
 
 namespace :deploy do
-  desc 'Restart Application'
-  task :restart, :roles => :app do
+  task :start, :roles => :app do
+    # do nothing
+  end
+
+  task :stop, :roles => :app do
+    # do nothing
+  end
+    
+  task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
   end
 
