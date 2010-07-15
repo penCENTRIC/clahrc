@@ -5,7 +5,7 @@ production:
   pool: 5
   username:
   password: 
-  socket: /var/lib/mysql/mysql.sock
+  socket: /var/run/mysqld/mysqld.sock
   
 staging:
   production

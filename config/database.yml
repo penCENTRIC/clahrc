@@ -20,12 +20,4 @@ test:
   username: clahrc
   password: clahrc
   socket: /opt/local/var/run/mysql5/mysqld.sock
-
-staging:
-  adapter: mysql
-  encoding: utf8
-  database: 
-  pool: 5
-  username: clahrc
-  password: clahrc
-  socket: /var/run/mysqld/mysqld.sock
+  

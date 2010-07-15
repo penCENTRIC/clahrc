@@ -1,57 +1,48 @@
 #require 'vendor/plugins/thinking-sphinx/recipes/thinking_sphinx'
 
 set :stages, %w(staging production)
-set :default_stage, "production"
+set :default_stage, 'staging'
 
 require 'capistrano/ext/multistage'
 
 default_run_options[:pty] = true
 
-set :application, "clahrc"
-
-set :repository, "git@github.com:penCENTRIC/clahrc.git"
+set :application, 'clahrc'
+set :repository, 'git@github.com:penCENTRIC/clahrc.git'
 set :use_sudo, false
 
-set :scm, "git"
-set :branch, "master"
+set :domain, 'dptserver2.ex.ac.uk' # 'dptserver3.ex.ac.uk'
+set :user, 'matthew' # 'web641'
+
+set :scm, 'git'
 set :git_enable_submodules, true
 set :git_shallow_clone, 1
+
+role :app, "#{domain}"
+role :web, "#{domain}"
+role :db,  "#{domain}", :primary => true
 
 set :default_environment, { 
   'PATH' => "/opt/ruby-enterprise-1.8.7-2010.02/bin:$PATH",
   'GEM_HOME' => '/opt/ruby-enterprise-1.8.7-2010.02/lib/ruby/gems/1.8',
-  'GEM_PATH' => '/opt/ruby-enterprise-1.8.7-2010.02/lib/ruby/gems/1.8' 
+  'GEM_PATH' => '/opt/ruby-enterprise-1.8.7-2010.02/lib/ruby/gems/1.8'
 }
 
 namespace :deploy do
-  desc "Restart Application"
+  desc 'Restart Application'
   task :restart, :roles => :app do
     run "touch #{current_path}/tmp/restart.txt"
   end
 
-  after "deploy:setup", "deploy:setup_shared_paths"
+  before 'deploy', 'thinking_sphinx:stop'
+  
+  after 'deploy:setup', 'deploy:setup_shared_paths'
 
   after 'deploy:update_code', 'bundler:bundle_new_release'
 
-  before "deploy", "thinking_sphinx:stop"
+  after 'deploy:symlink', 'deploy:symlink_shared_paths', 'deploy:symlink_app_settings', 'deploy:symlink_db_settings'
   
-  after "deploy:symlink", "deploy:symlink_shared_paths", "deploy:symlink_app_settings"
-  
-  after "deploy", "deploy:configure_database_connection", "thinking_sphinx:configure", "thinking_sphinx:start", "crontab:update"
-  
-  task :configure_database_connection, :roles => :app do
-    require "yaml"
-
-    set :password, proc { Capistrano::CLI.password_prompt("Password for remote production database: ") }
-
-    buffer = YAML::load_file('config/database.yml.template')
-
-    buffer['production']['database'] = 'clahrc2'
-    buffer['production']['username'] = 'clahrc2'
-    buffer['production']['password'] = password
-
-    put YAML::dump(buffer), "#{deploy_to}/current/config/database.yml", :mode => 0664
-  end
+  after 'deploy', 'thinking_sphinx:configure', 'thinking_sphinx:start', 'crontab:update'
   
   task :setup_shared_paths do
     run "mkdir -p #{shared_path}/assets"
@@ -69,26 +60,30 @@ namespace :deploy do
   task :symlink_app_settings do
     run "ln -nfs #{shared_path}/config/app_settings.rb #{current_path}/config/app_settings.rb"
   end
+
+  task :symlink_db_settings do
+    run "ln -nfs #{shared_path}/config/database.yml #{current_path}/config/database.yml"
+  end
 end
 
 namespace :thinking_sphinx do
-  task :configure, :roles => [:app] do
-    run "cd #{release_path} && #{sudo} rake thinking_sphinx:configure Rails.env=production"
+  task :configure, :roles => :app do
+    run "cd #{release_path} && rake thinking_sphinx:configure RAILS_ENV=#{stage}"
   end
   
-  task :start, :roles => [:app] do
-    run "cd #{release_path} && #{sudo} rake thinking_sphinx:start Rails.env=production"
+  task :start, :roles => :app do
+    run "cd #{release_path} && rake thinking_sphinx:start RAILS_ENV=#{stage}"
   end
 
-  task :stop, :roles => [:app] do
-    run "cd #{current_path} && #{sudo} rake thinking_sphinx:stop Rails.env=production"
+  task :stop, :roles => :app do
+    run "cd #{current_path} && rake thinking_sphinx:stop RAILS_ENV=#{stage}"
   end
 end
 
 namespace :crontab do
-  desc "Update the crontab file"
-  task :update, :roles => :db do
-    run "cd #{release_path} && #{sudo} whenever -i CLAHRC_NET --update-crontab --user #{user}"
+  desc 'Update the crontab file'
+  task :update, :roles => :app do
+    run "cd #{release_path} && whenever -i CLAHRC_NET --update-crontab --set environment=#{stage}&output=#{shared_path}/log/cron.log&path=#{release_path}"
   end
 end
 
@@ -96,11 +91,12 @@ namespace :bundler do
   task :create_symlink, :roles => :app do
     shared_dir = File.join(shared_path, 'bundle')
     release_dir = File.join(current_release, '.bundle')
-    run("mkdir -p #{shared_dir} && ln -s #{shared_dir} #{release_dir}")
+    run "cd #{release_path} && if [ -f Gemfile ] ; then mkdir -p #{shared_dir} ; fi"
+    run "cd #{release_path} && if [ -f Gemfile ] ; then ln -s #{shared_dir} #{release_dir} ; fi"
   end
  
   task :bundle_new_release, :roles => :app do
     bundler.create_symlink
-    run "cd #{release_path} && bundle install --without test"
+    run "cd #{release_path} && if [ -f Gemfile ] ; then bundle install --without test ; fi"
   end
 end
