@@ -4,6 +4,8 @@ class User
       base.attr_accessible :email, :password, :password_confirmation
 
       base.acts_as_authentic do |config|
+        config.login_field :email 
+      
         config.validates_uniqueness_of_email_field_options = {
           :case_sensitive => false,
           :if => :email_changed?,
