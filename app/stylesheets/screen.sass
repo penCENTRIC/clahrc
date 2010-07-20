@@ -1,17 +1,17 @@
-@import blueprint/reset.sass
-@import partials/base.sass
-@import blueprint/modules/grid.sass
-@import blueprint/modules/debug.sass
+@import "blueprint/reset"
+@import "partials/base"
+@import "blueprint/grid"
+@import "blueprint/debug"
 
 body
   +blueprint-grid
   +blueprint-debug
 
 html
-  :overflow -moz-scrollbars-vertical
-  :overflow-y scroll
-  :overflow-x auto
-  
+  overflow: -moz-scrollbars-vertical
+  overflow-y: scroll
+  overflow-x: auto
+
 @import partials/color.sass
 @import partials/font.sass
 @import partials/layout.sass
