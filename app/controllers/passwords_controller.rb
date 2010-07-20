@@ -28,7 +28,7 @@ class PasswordsController < ApplicationController
     flash[:notice] = t('created')
     
     respond_to do |format|
-      format.html { redirect_to new_user_session_url }
+      format.html { redirect_to new_session_url }
     end
   end
 
@@ -58,7 +58,7 @@ class PasswordsController < ApplicationController
       unless @user = @users.find_using_perishable_token(params[:id], 1.week)
         flash[:warning] = t('not_found')
         
-        redirect_to new_user_session_path
+        redirect_to new_session_path
       end
     end
     

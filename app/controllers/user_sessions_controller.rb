@@ -35,7 +35,7 @@ class UserSessionsController < ApplicationController
     flash[:notice] = t('destroyed')
     
     respond_to do |format|
-      format.html { redirect_to new_user_session_path }
+      format.html { redirect_to new_session_path }
     end
   end
   

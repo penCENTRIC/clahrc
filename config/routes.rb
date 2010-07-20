@@ -1,56 +1,56 @@
 Clahrc::Application.routes.draw do |map|
   constraints CommunitySubdomain do
-    resources :users, :as => :members, :only => [ :new, :edit, :create, :update ], :path_names => {  :new => 'register', :edit => 'activate' }
-    resource :user_session, :as => :session, :only => [ :new, :create, :destroy ], :path_names => { :new => 'login' }
+    resources :members, :controller => :users, :only => [ :new, :edit, :create, :update ], :path_names => {  :new => 'register', :edit => 'activate' }
+    resource :session, :controller => :user_sessions, :only => [ :new, :create, :destroy ], :path_names => { :new => 'login' }
     resources :passwords, :only => [ :new, :edit, :create, :update ], :path_names => { :new => 'reset', :edit => 'reset' }
 
     # Members
     resources :members, :only => [ :index, :show ], :collection => { :autocomplete => :get }, :paged => { :name => :directory } do
       # Activities
-      resources :activities, :as => 'activity', :only => [ :index ], :paged => { :name => :directory }
+      resources :activity, :controller => :ativities, :only => [ :index ], :paged => { :name => :directory }
 
       # Friendships
-      resources :friendships, :as => 'friends', :only => [ :index, :create ], :paged => { :name => :directory }
+      resources :friends, :controller => :friendships, :only => [ :index, :create ], :paged => { :name => :directory }
 
       # Memberships
-      resources :memberships, :as => 'groups', :only => [ :index ], :paged => { :name => :directory }
+      resources :groups, :controller => :memberships, :only => [ :index ], :paged => { :name => :directory }
 
       # Messages
       resources :messages, :only => [ :new, :create ]
 
       # Assets
-      resources :assets, :as => 'files', :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
+      resources :files, :controller => :assets, :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
 
       # Content
       resources :pages, :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
       resources :posts, :only => [ :index ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
-      resources :wiki_pages, :as => :wiki, :only => [ :index, :show ]
+      resources :wiki, :controller => :wiki_pages, :only => [ :index, :show ]
     end
 
     # Groups
     resources :groups, :paged => { :name => :directory } do
       # Activitites
-      resources :activities, :as => 'activity', :only => [ :index ], :paged => { :name => :directory }
+      resources :activity, :controller => :activities, :only => [ :index ], :paged => { :name => :directory }
 
       # Memberships
-      resources :memberships, :as => 'members', :collection => { :pending => :get, :invite => :post }, :member => { :accept => :put, :promote => :put, :reject => :delete }, :only => [ :index, :new, :create ], :paged => { :name => :directory }
-      resources :moderatorships, :as => 'moderators', :member => { :promote => :put }, :only => [ :index ], :paged => { :name => :directory }
-      resources :ownerships, :as => 'owners', :only => [ :index ], :paged => { :name => :directory }
+      resources :members, :controller => :memberships, :collection => { :pending => :get, :invite => :post }, :member => { :accept => :put, :promote => :put, :reject => :delete }, :only => [ :index, :new, :create ], :paged => { :name => :directory }
+      resources :moderators, :controller => :moderatorships, :member => { :promote => :put }, :only => [ :index ], :paged => { :name => :directory }
+      resources :owners, :controller => :ownerships, :only => [ :index ], :paged => { :name => :directory }
 
       # Messages
       resources :messages, :only => [ :new, :create ]
 
       # Assets
-      resources :assets, :as => 'files', :only => [ :index, :new, :create ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
+      resources :files, :controller => :assets, :only => [ :index, :new, :create ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
 
       # Content
       resources :forums, :only => [ :index, :new, :create ], :paged => { :name => :directory }
       resources :pages, :only => [ :index, :new, :create ], :collection => { :block => :get }, :paged => { :name => :directory, :index => true }
-      resources :wiki_pages, :as => :wiki
+      resources :wiki, :controller => :wiki_pages
     end
 
     # Assets
-    resources :assets, :as => 'files', :only => [ :show, :edit, :update, :destroy ]
+    resources :files, :controller => :assets, :only => [ :show, :edit, :update, :destroy ]
 
     # Forums
     resources :forums, :only => [ :show, :edit, :update, :destroy ] do
@@ -73,7 +73,14 @@ Clahrc::Application.routes.draw do |map|
     end
 
     # Search
-    resources :search, :only => [ :index ], :collection => { :forums => :get, :groups => :get, :members => :get, :pages => :get, :posts => :get, :topics => :get, :wiki_pages => :get }
+    match '/search', :to => 'search#index'
+    match '/search/forums', :to => 'search#forums'
+    match '/search/groups', :to => 'search#groups'
+    match '/search/members', :to => 'search#members'
+    match '/search/pages', :to => 'search#pages'
+    match '/search/posts', :to => 'search#posts'
+    match '/search/topics', :to => 'search#topics'
+    match '/search/wiki_pages', :to => 'search#wiki_pages'
 
     # Comments
     resources :comments, :only => [ :show, :edit, :update, :destroy ], :member => { :reply => :get }
@@ -92,25 +99,25 @@ Clahrc::Application.routes.draw do |map|
       my.resource :profile, :only => [ :edit, :update ]
 
       # Activities
-      my.resources :activities, :as => 'activity', :only => [ :index ], :paged => { :name => :directory }
+      my.resources :activity, :controller => :activities, :only => [ :index ], :paged => { :name => :directory }
 
       # Assets
-      my.resources :assets, :as => 'files', :paged => { :name => :directory }
+      my.resources :files, :as => :assets, :paged => { :name => :directory }
 
       # Content
       my.resources :pages, :collection => { :sort => :put }, :paged => { :name => :directory }
       my.resources :posts, :paged => { :name => :directory }
-      my.resources :wiki_pages, :as => :wiki
+      my.resources :wiki, :controller => :wiki_pages
 
       # Friendships
-      my.resources :friendships, :as => 'friends', :collection => { :pending => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :create, :destroy ], :paged => { :name => :directory }
+      my.resources :friends, :controller => :friendships, :collection => { :pending => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :create, :destroy ], :paged => { :name => :directory }
 
       # Messages
-      my.resources :sent_messages, :as => :sent, :only => [ :index, :show, :destroy ], :path_prefix => 'messages', :paged => { :name => :directory }
-      my.resources :received_messages, :as => :messages, :only => [ :index, :show, :destroy ], :collection => { :unread => :get }, :member => { :reply => :get }, :paged => { :name => :directory }
+      my.resources :sent, :controller => :sent_messages, :only => [ :index, :show, :destroy ], :path_prefix => 'messages', :paged => { :name => :directory }
+      my.resources :messages, :controller => :received_messages, :only => [ :index, :show, :destroy ], :collection => { :unread => :get }, :member => { :reply => :get }, :paged => { :name => :directory }
 
       # Memberships
-      my.resources :memberships, :as => 'groups', :collection => { :invited => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :destroy ], :paged => { :name => :directory }
+      my.resources :groups, :controller => :memberships, :collection => { :invited => :get }, :member => { :accept => :put, :reject => :delete }, :only => [ :index, :destroy ], :paged => { :name => :directory }
     end
   end
 end

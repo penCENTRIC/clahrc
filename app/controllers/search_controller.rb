@@ -26,7 +26,7 @@ class SearchController < ApplicationController
 
   # GET /search
   def index
-    add_breadcrumb 'Search', search_index_path
+    add_breadcrumb 'Search', search_path
     
     respond_to do |format|
       format.html
@@ -34,7 +34,7 @@ class SearchController < ApplicationController
   end
 
   def forums
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Forums', forums_search_path(:q => @query)
     
     respond_to do |format|
@@ -43,7 +43,7 @@ class SearchController < ApplicationController
   end
   
   def groups
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Groups', groups_search_path(:q => @query)
 
     respond_to do |format|
@@ -52,7 +52,7 @@ class SearchController < ApplicationController
   end
   
   def members
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Members', members_search_path(:q => @query)
 
     respond_to do |format|
@@ -61,7 +61,7 @@ class SearchController < ApplicationController
   end
   
   def pages
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Pages', pages_search_path(:q => @query)
 
     respond_to do |format|
@@ -70,7 +70,7 @@ class SearchController < ApplicationController
   end
   
   def posts
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Posts', posts_search_path(:q => @query)
 
     respond_to do |format|
@@ -79,7 +79,7 @@ class SearchController < ApplicationController
   end
   
   def topics
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Topics', topics_search_path(:q => @query)
 
     respond_to do |format|
@@ -88,7 +88,7 @@ class SearchController < ApplicationController
   end
   
   def wiki_pages
-    add_breadcrumb 'Search', search_index_path(:q => @query)
+    add_breadcrumb 'Search', search_path(:q => @query)
     add_breadcrumb 'Wiki Pages', wiki_pages_search_path(:q => @query)
 
     respond_to do |format|

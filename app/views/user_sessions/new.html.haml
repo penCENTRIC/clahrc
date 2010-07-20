@@ -1,6 +1,6 @@
 = content_for :content_header do
   %h1= t('new')
-- form_for @user_session, :url => user_session_path do |f|
+- form_for @user_session, :url => session_path do |f|
   = error_messages_for :user_session
   %ol
     %li

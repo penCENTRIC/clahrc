@@ -5,5 +5,5 @@
     %a{ :href => 'http://my.clahrc.net/', :title => 'My CLAHRC' }
       %img{ :src => '/images/my-logo.png' }
   .search
-    - form_tag(search_index_path, :method => :get) do
+    - form_tag(search_path, :method => :get) do
       = text_field_tag :q, 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'

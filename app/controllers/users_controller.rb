@@ -65,7 +65,7 @@ class UsersController < ApplicationController
       unless @user = @users.find_using_perishable_token(params[:id], 1.week)
         flash[:warning] = t('not_found')
         
-        redirect_to new_user_session_path
+        redirect_to new_session_path
       end
     end    
     

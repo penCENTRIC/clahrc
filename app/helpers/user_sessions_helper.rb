@@ -1,10 +1,10 @@
 module UserSessionsHelper
   def link_to_login
-    link_to t('login'), new_user_session_path, :title => t('login_title'), :class => 'new session'
+    link_to t('login'), new_session_path, :title => t('login_title'), :class => 'new session'
   end
 
   def link_to_logout
-    link_to t('logout'), user_session_path, :method => :delete, :title => t('logout_title'), :class => 'destroy session'
+    link_to t('logout'), session_path, :method => :delete, :title => t('logout_title'), :class => 'destroy session'
   end
   
   def session_links

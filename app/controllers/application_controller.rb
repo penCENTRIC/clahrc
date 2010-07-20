@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       end  
     end
 
-    add_breadcrumb 'Home', '/', :if => Proc.new { |controller| controller.send(:current_domain) != "community" }
+    add_breadcrumb 'Home', '/', :if => Proc.new { |controller| controller.send(:current_subdomain) != "community" }
 
    def found_asset(asset)
       unless @asset || asset.nil?
@@ -450,7 +450,7 @@ class ApplicationController < ActionController::Base
       unless current_user
         flash[:warning] = t('require_authentic')
 
-        store_location_and_redirect_to new_user_session_url
+        store_location_and_redirect_to new_session_url
       end
     end
 
