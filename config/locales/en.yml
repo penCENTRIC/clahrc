@@ -349,6 +349,10 @@ en:
     updated: Your account has been activated.
     
   user_sessions:
+    new: # new.html
+      submit: "Login"
+      title: "Log in to CLAHRC Community"
+
     create: Login
     create_help: To login, click 'Login' below
     created: You have logged in.
@@ -356,7 +360,6 @@ en:
     destroyed: You have logged out.
     email: Email address
     email_help: Enter the email address that you used when registering your account.
-    new: Log in to CLAHRC Community
     password: Password
     password_help: Enter your password. If you have forgotten it, click the 'Forgot Password' link.
     
