@@ -17,7 +17,7 @@ class UserSessionsController < ApplicationController
   # POST /login
   def create
     if @user_session.save
-      flash[:notice] = t('created')
+      flash[:notice] = t('.created')
       
       respond_to do |format|
         format.html { redirect_to_stored_location_or_default my_account_path }
@@ -32,7 +32,7 @@ class UserSessionsController < ApplicationController
   # DELETE /logout
   # GET /logout
   def destroy
-    flash[:notice] = t('destroyed')
+    flash[:notice] = t('.destroyed')
     
     respond_to do |format|
       format.html { redirect_to new_session_path }

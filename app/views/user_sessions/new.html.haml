@@ -4,11 +4,11 @@
   = error_messages_for :user_session
   %ol
     %li
-      = f.label :email, t('email')
-      = f.text_field :email, :title => t('email_help')
+      = f.label :email
+      = f.text_field :email, :title => t('.accessibility.email')
     %li
-      = f.label :password, t('.password')
-      = f.password_field :password, :title => t('password_help')
+      = f.label :password, t('.password', :link => link_to_reset_password).html_safe
+      = f.password_field :password, :title => t('.accessibility.password')
     %li
       = f.submit t('.submit')
       or

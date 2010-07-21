@@ -1,0 +1,11 @@
+en:
+  user_sessions:
+    new:
+      accessibility:
+        email: "Enter the email address that you used when registering your account."
+        password: "Enter you password. If you have forgotten it, click the 'Forgot password?' link."
+      
+      reset_password: "Forgot password?"
+      password: "Password (%{link})"
+      submit: "Login"
+      title: "Log in to CLAHRC Community"

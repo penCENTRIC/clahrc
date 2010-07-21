@@ -1,0 +1,4 @@
+en:
+  user_sessions:
+    created: "You have logged in."
+    destroyed: "You have logged out."
