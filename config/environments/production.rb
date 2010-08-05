@@ -29,4 +29,6 @@ config.action_view.cache_template_loading            = true
 
 ActionController::Base.asset_host = ENV['ASSET_HOST']
  
-ActionMailer::Base.smtp_settings = AppSettings.smtp_settings.marshal_dump
+require 'postmark-rails'
+config.action_mailer.postmark_api_key = AppSettings.postmark_api_key
+config.action_mailer.delivery_method = :postmark
