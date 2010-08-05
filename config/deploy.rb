@@ -10,7 +10,7 @@ set :use_sudo,    false
 set :deploy_to,   "/opt/webs/clahrc.net/docs"
 
 set :scm,                   "git"
-set :branch,                "master"
+set :branch,                "production"
 set :git_enable_submodules, true
 set :git_shallow_clone,     1
 
