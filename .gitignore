@@ -1,3 +1,4 @@
+.bundle
 .DS_Store
 app/stylesheets/.sass-cache/*
 assets/*
@@ -5,6 +6,7 @@ config/app_settings.rb
 config/database.yml
 db/*.sqlite3
 db/sphinx
+Gemfile.lock
 index/*
 log/*.log
 log/*.pid
