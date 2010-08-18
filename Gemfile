@@ -1,26 +1,34 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0.beta4'
+gem 'rails', '3.0.0.rc'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
+gem 'bson_ext'
+gem 'compass'
+gem 'haml'
 gem 'mysql'
+gem 'mongoid', '>= 2.0.0.beta.16'
+gem 'pg'
+gem 'will_paginate', '>= 3.0.pre2'
+
 
 group :development do
   gem 'capistrano'
   gem 'capistrano-ext'
-  gem 'ruby-debug'
 end
 
-gem 'compass'
+group :development, :test do  
+  gem 'rspec', '>= 2.0.0.beta.19'
+  gem 'rspec-rails', '>= 2.0.0.beta.19'
+  gem 'ruby-debug'
+  gem 'wirble'
+end
+
 gem 'gravtastic'
 gem 'hoptoad_notifier'
 gem 'hpricot'
 gem 'paged_scopes', :git => 'git://github.com/accuser/paged_scopes.git'
 gem 'RedCloth'
 gem 'whenever'
-gem 'will_paginate'
 gem 'thinking-sphinx', '2.0.0.rc1', :require => 'thinking_sphinx'
 
 gem 'acts_as_list'
@@ -30,3 +38,4 @@ gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => '
 gem 'haml'
 gem 'paperclip'
 gem 'vestal_versions'
+

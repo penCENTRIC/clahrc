@@ -57,7 +57,7 @@ module ActionController
 
         if theme
           # Add the theme's view path to the front of the view paths
-          prepend_view_path(File.join(RAILS_ROOT, 'themes', theme.to_s, 'views'))
+          prepend_view_path(File.join(Rails.root, 'themes', theme.to_s, 'views'))
         end
         
         # Call the #render method chain

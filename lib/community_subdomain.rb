@@ -1,3 +1,5 @@
+require_dependency 'subdomain'
+
 class CommunitySubdomain < Subdomain
   class << self
     def matches?(request)

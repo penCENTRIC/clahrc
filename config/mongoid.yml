@@ -1,0 +1,11 @@
+defaults: &defaults
+  host: localhost
+
+development:
+  <<: *defaults
+  database: clahrc_development
+
+test:
+  <<: *defaults
+  database: clahrc_test
+  

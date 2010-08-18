@@ -12,10 +12,6 @@ module Clahrc
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    # Add additional load paths for your own custom dirs
-    # config.load_paths += %W( #{config.root}/extras )
-    config.load_paths += %W( #{config.root}/app/concerns #{config.root}/app/observers #{config.root}/app/sweepers )
-
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]

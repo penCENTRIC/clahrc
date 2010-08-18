@@ -1,3 +1,6 @@
+require 'community_subdomain'
+require 'my_subdomain'
+
 Clahrc::Application.routes.draw do |map|
   constraints CommunitySubdomain do
     resources :members, :controller => :users, :only => [ :new, :edit, :create, :update ], :path_names => {  :new => 'register', :edit => 'activate' }
