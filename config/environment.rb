@@ -29,7 +29,10 @@ Rails::Initializer.run do |config|
   config.gem 'whenever', :lib => false, :source => 'http://gemcutter.org'
   config.gem 'will_paginate', :source => 'http://gemcutter.org'
   config.gem 'thinking-sphinx', :lib => 'thinking_sphinx'
+
+  config.gem 'postmark'
   config.gem 'postmark-rails'
+  require    'postmark-rails'
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
