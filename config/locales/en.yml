@@ -98,7 +98,8 @@ en:
   asset: Attachment
   skype: Skype Name
   skype_help: If you have a Skype account, you can enter your Skype Name to allow other members to contact you. Make sure that your Skype privacy settings allow your Skype status to be shown online.
-  
+  notification_preferences: Notification Preferences
+
   activities:
     index: Activity
     

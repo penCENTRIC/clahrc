@@ -3,6 +3,7 @@ ActionController::Routing::Routes.draw do |map|
   map.subdomain :my, :name => nil, :name_prefix => 'my_' do |my|
     # Settings
     my.resource :account, :only => [ :show, :edit, :update ]
+    my.resources :notification_preferences
 
     # Profile
     my.resource :avatar, :only => [ :edit, :update ]
