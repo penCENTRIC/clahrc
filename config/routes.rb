@@ -90,7 +90,9 @@ ActionController::Routing::Routes.draw do |map|
     
     # Forums
     community.resources :forums, :only => [ :show, :edit, :update, :destroy ] do |forum|
-      forum.resources :topics, :only => [ :index, :new, :create ], :paged => { :name => :directory }
+      forum.resources :topics, :only => [ :index, :new, :create ], :paged => { :name => :directory } do |topic|
+        topic.resource :subscription
+      end
     end
 
     # Pages

@@ -377,4 +377,7 @@ en:
     # Messages
     not_allowed: You are not allowed to view that wiki page.
     not_found: The wiki page could not be found.
-    
+  
+  subscriptions:
+    create: Subscribe To Topic
+    destroy: Unsubscribe

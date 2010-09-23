@@ -15,5 +15,6 @@ class Relationship < ActiveRecord::Base
   end
 
   require_dependency 'friendship'
-  require_dependency 'membership'  
+  require_dependency 'membership'
+  require_dependency 'subscription'
 end

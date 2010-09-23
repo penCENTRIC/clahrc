@@ -32,3 +32,11 @@
             = f.submit t('comments.create')
     - else
       %h3= t('comments.closed')
+.subscriptions
+  - if @topic.subscriptions.for_user(current_user).any?
+    %p You are subscribed to updates from this topic
+    = button_to t('subscriptions.destroy'), forum_topic_subscription_path(@forum, @topic), :method => 'delete'
+  - else
+    - form_for @topic.subscriptions.build, :url => forum_topic_subscription_path(@forum, @topic) do |f|
+      = error_messages_for :subscription
+      = f.submit t('subscriptions.create')

@@ -18,6 +18,10 @@ class Topic < Content
   
   alias :forum :parent
   
+  has_many :subscriptions, :as => :relatable
+  has_many :subscribers, :through => :subscriptions, :source => :user
+  # has_many :moderatorships, :as => :relatable, :conditions => { :confirmed => true }
+  # has_many :moderators, :through => :moderatorships, :source => :user
   def comments_disabled?
     !self.comments_enabled?
   end
