@@ -1,0 +1,57 @@
+<h2>General Preferences</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Event Type</th>
+      <th>Notification Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @preferences.each do |preference| %>
+    <tr>
+      <td><%= preference.event.capitalize %></td>
+      <td>
+        <% form_for([:my, preference]) do |f| %>
+          <%= f.select :notification_type, NotificationPreference.available_notification_types %>
+          <%= f.submit %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Group Specific Preferences</h2>
+
+<% if current_user.groups.any? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Group</th>
+        <th>Notification Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @group_preferences.each do |preference| %>
+      <tr>
+        <td><%= preference.context %></td>
+        <td>
+          <% form_for([:my, preference]) do |f| %>
+            <%= f.hidden_field :context_type %>
+            <%= f.hidden_field :context_id %>            
+            <%= f.hidden_field :event, :value => 'new content in group' %>
+            <%= f.select :notification_type, ['Inherit'] + NotificationPreference.available_notification_types %>
+            <%= f.submit %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<h2>Notes</h2>
+<ol>
+  <li>To receive updates via twitter you must be following <a href="http://twitter.com/clahrcaccount">clahrcaccount</a></li>
+</ol>
