@@ -49,6 +49,8 @@ class User < ActiveRecord::Base
   has_many :pending_friendships, :as => :relatable, :class_name => 'Friendship', :conditions => { :confirmed => false }
   has_many :pending_friends, :through => :pending_friendships, :source => :user
   
+  has_many :notification_preferences
+
   # Memberships
   has_many :memberships, :conditions => { :confirmed => true }, :dependent => :destroy
   has_many :groups, :through => :memberships, :source => :relatable
