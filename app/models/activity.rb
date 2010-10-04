@@ -1,5 +1,6 @@
 class Activity < ActiveRecord::Base
   attr_accessible :trackable, :user, :group, :controller, :action, :private, :hidden
+  after_save :prepare_notifications
   
   serialize :changes
   
@@ -33,8 +34,13 @@ class Activity < ActiveRecord::Base
     end
   end
   
+  def prepare_notifications
+    Rails.logger.warn "Hit the parent prepare_notifications method"
+  end
+  
   require_dependency 'comment_activity'
   require_dependency 'content_activity'
   require_dependency 'group_activity'
-  require_dependency 'relationship_activity'
+  require_dependency 'relationship_activity' 
+
 end
