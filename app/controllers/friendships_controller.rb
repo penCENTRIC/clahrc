@@ -16,8 +16,6 @@ class FriendshipsController < ApplicationController
   before_filter :reject_friendship, :only => [ :reject ]
   
   paginate :friendships, :name => 'directory', :per_page => 10, :path => :directory_friendships_path, :only => [ :index, :pending ]
-
-  after_filter :track_friendship, :only => [ :create, :accept ]
     
   # GET /friends
   # GET /members/:member_id/friends
@@ -33,7 +31,7 @@ class FriendshipsController < ApplicationController
   def create
     if @friendship.save
       flash[:notice] = t('created')
-    
+
       respond_to do |format|
         format.html { redirect_to member_path(@user) }
       end
@@ -117,24 +115,6 @@ class FriendshipsController < ApplicationController
 
     def find_pending_friendships
       @friendships = current_user.pending_friendships
-    end
-    
-    def track_friendship
-      if @friendship.valid?
-        if action_name == 'create'
-          FriendshipActivity.create(:trackable => @friendship, :user => @friendship.relatable, :controller => controller_name, :action => action_name, :hidden => true)
-        elsif action_name == 'accept'
-          if friendship = @friendship.activities.first
-            friendship.update_attributes(:hidden => false, :private => true)
-          else
-            FriendshipActivity.create(:trackable => @friendship, :user => @friendship.relatable, :controller => controller_name, :action => action_name, :private => true)
-          end
-        
-          FriendshipActivity.create(:trackable => @friendship, :user => @friendship.user, :controller => controller_name, :action => action_name, :private => true)
-        end
-      end
-    rescue
-      nil
     end
     
     def reject_friendship
