@@ -75,7 +75,7 @@ class Group < ActiveRecord::Base
   # Memberships
   has_many :memberships, :as => :relatable, :conditions => { :confirmed => true }, :dependent => :destroy
   has_many :members, :through => :memberships, :source => :user
-  
+
   has_many :pending_memberships, :as => :relatable, :class_name => 'Membership', :conditions => { :confirmed => false }, :dependent => :destroy
   has_many :pending_members, :through => :pending_memberships, :source => :user
   
@@ -107,5 +107,9 @@ class Group < ActiveRecord::Base
   
   def can_be_edited_by?(user)
     self.moderators.include? user
+  end
+  
+  def to_s
+    name_to_s
   end
 end
