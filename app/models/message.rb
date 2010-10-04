@@ -44,4 +44,10 @@ class Message < ActiveRecord::Base
       self.recipients = [ recipients ].flatten.uniq
     end
   end
+  
+  include Trackable
+  after_create :store_activity
+  def store_activity
+    MessageActivity.create(:trackable => self, :user => sender, :controller => 'messages', :action => 'sent', :hidden => true)
+  end
 end
