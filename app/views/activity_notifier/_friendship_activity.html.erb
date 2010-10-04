@@ -1,6 +1,0 @@
-<%- if notification[:activity].action == 'create' -%>
-<%= notification[:activity].trackable.user %> requested the pleasure of your friendship
-Review and approve the request at <%= pending_my_friendships_url(:host => 'my.clahrc.net') %>
-<%- else -%>
-<%= notification[:activity].trackable.relatable %> accepted your offer of friendship
-<%- end -%>

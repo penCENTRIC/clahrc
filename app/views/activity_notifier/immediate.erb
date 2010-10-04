@@ -1,6 +1,6 @@
-<%= render :partial => @notification[:activity].class.to_s.underscore, :locals => {:notification => @notification} %>
+<%= @notification[:activity].describe %>
 
---
+-- 
 
 Not sure why you received this email? You can manage your CLAHRC notification preferences
 at <%= my_notification_preferences_url(:host => 'my.clahrc.net') %>
