@@ -6,6 +6,7 @@ class Activity < ActiveRecord::Base
   
   include Accessible
   include Commentable
+  include UrlAware
   
   belongs_to :user
   validates_presence_of :user
@@ -33,14 +34,7 @@ class Activity < ActiveRecord::Base
       'Older'
     end
   end
-  
-  cattr_accessor :default_url_options
-  def self.default_url_options(options = {})
-    options.merge({:host=>'www.myhostname.com'})
-  end
-   
-  include ActionController::UrlWriter
-  
+
   def prepare_notifications
     Rails.logger.warn "Hit the parent prepare_notifications method"
   end
@@ -49,5 +43,5 @@ class Activity < ActiveRecord::Base
   require_dependency 'content_activity'
   require_dependency 'group_activity'
   require_dependency 'relationship_activity' 
-
+  require_dependency 'message_activity'
 end
