@@ -19,14 +19,16 @@ class ClahrcNotifier
   # TODO: These could be some clever pluggable mechanisms, but for now we just have a method
   # that fits the operation of #dispatch
   
-  # TODO: Get actual twitter details here for DMing
   def twitter_dm
-    auth = Twitter::OAuth.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
-    auth.authorize_from_access(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET)
-    client = Twitter::Base.new(auth)
-    msg = "d #{user.profile.twitter} #{activity[:activity].describe}"
-    Rails.logger.info(msg)
-    client.update(msg)
+    if user.profile.twitter.present?
+      auth = Twitter::OAuth.new(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+      auth.authorize_from_access(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_SECRET)
+      client = Twitter::Base.new(auth)
+      msg = "d #{user.profile.twitter} #{activity[:activity].describe}"
+      Rails.logger.info(msg)
+      client.update(msg)
+    end
+  rescue
   end
   
   def immediate_email
