@@ -53,5 +53,8 @@
 
 <h2>Notes</h2>
 <ol>
-  <li>To receive updates via twitter you must be following <a href="http://twitter.com/clahrcaccount">clahrcaccount</a></li>
+  <li>To receive updates via twitter you must be following <a href="http://twitter.com/CLAHRCnet">CLAHRCnet</a></li>
+  <% if current_user.profile.twitter.blank? %>
+  <li>If you wish to receive updates via twitter, please <%= link_to 'let us know your username', edit_my_profile_path(:anchor => 'contact') %></li>
+  <% end %>
 </ol>

@@ -97,6 +97,8 @@ en:
   attachments_help: Multiple attachements (documents, images, etc.) can be added. Click the 'Add' link below to add an attachment, and then click 'Choose file' to select the file to attach. To remove an attachement, click the 'Remove' link next to the attachment.
   asset: Attachment
   skype: Skype Name
+  twitter: Twitter Name
+  twitter_help: If you have a twitter account, you can enter your Twitter Name to allow other members to follow you, and to receive CLAHRC notifications via twitter.
   skype_help: If you have a Skype account, you can enter your Skype Name to allow other members to contact you. Make sure that your Skype privacy settings allow your Skype status to be shown online.
   notification_preferences: Notification Preferences
 

@@ -59,6 +59,9 @@
         = f.submit t('update')
     %ol.pane
       %li
+        = f.label :twitter, t('twitter')
+        = f.text_field :twitter, :title => t('twitter_help')
+      %li
         = f.label :skype, t('skype')
         = f.text_field :skype, :title => t('skype_help')
       %li

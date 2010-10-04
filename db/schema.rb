@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100326123507) do
+ActiveRecord::Schema.define(:version => 20101004123657) do
 
   create_table "activities", :force => true do |t|
     t.string   "type"
@@ -138,6 +138,20 @@ ActiveRecord::Schema.define(:version => 20100326123507) do
   add_index "messages", ["parent_id"], :name => "index_messages_on_parent_id"
   add_index "messages", ["sender_id"], :name => "index_messages_on_sender_id"
 
+  create_table "notification_preferences", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "context_id"
+    t.string   "context_type"
+    t.string   "event"
+    t.string   "notification_type"
+    t.string   "notification_period"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "notification_preferences", ["user_id", "context_id", "context_type"], :name => "with_context"
+  add_index "notification_preferences", ["user_id"], :name => "index_notification_preferences_on_user_id"
+
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "prefix"
@@ -154,6 +168,7 @@ ActiveRecord::Schema.define(:version => 20100326123507) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "skype"
+    t.string   "twitter"
   end
 
   add_index "profiles", ["user_id"], :name => "index_profiles_on_user_id", :unique => true
