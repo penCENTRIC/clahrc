@@ -95,4 +95,18 @@ class User < ActiveRecord::Base
 
     #set_property :delta => true
   end
+  
+  def to_s
+    full_name
+  end
+  
+  def process_notification(details)
+    # TODO: Deal with contextual preferences
+    notification_preference = notification_preferences.find_by_event(details[:event])
+
+    unless notification_preference.notification_type == 'None'
+      c = ClahrcNotifier.new(self, details, notification_preference)
+      c.dispatch
+    end
+  end
 end
