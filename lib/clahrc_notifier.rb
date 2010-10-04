@@ -16,7 +16,7 @@ class ClahrcNotifier
     send(preference.notification_type.downcase.gsub(' ', '_'))
   end
 
-  # TODO: These could be some clever pluggable mechanisms, but for now we just have a method
+  # These could be some clever pluggable mechanisms, but for now we just have a method
   # that fits the operation of #dispatch
   
   def twitter_dm
