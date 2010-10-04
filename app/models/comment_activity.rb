@@ -7,9 +7,8 @@ class CommentActivity < Activity
     comment.commentable if comment
   end
 
-  # TODO : Work out appropriate link
   def describe
-    "#{trackable.user} posted a new comment on #{trackable.commentable} - URL tbd"
+    "#{trackable.user} posted a new comment on #{commentable} - #{content_url(commentable)}"
   end
 
   # TODO : Some users will get two notifications here
