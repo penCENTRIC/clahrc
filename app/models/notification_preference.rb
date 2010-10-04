@@ -1,7 +1,6 @@
 class NotificationPreference < ActiveRecord::Base
   belongs_to :user
   
-  # TODO: Consider squashing this to just be a group
   belongs_to :context, :polymorphic => true
   
   named_scope :for_event, proc { |e| {:conditions => {:event => e} }}
