@@ -5,9 +5,8 @@ class ContentActivity < Activity
   
   require_dependency 'page_activity'
   
-  # TODO : Work out appropriate link
   def describe
-    "#{trackable.user} posted new content in #{trackable.group} - URL tbd"
+    "#{trackable.user} posted new content in #{trackable.group} - #{content_url(content)}"
   end
 
   # TODO : Some users will get two notifications here
