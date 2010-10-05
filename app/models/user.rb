@@ -48,8 +48,6 @@ class User < ActiveRecord::Base
       
   has_many :pending_friendships, :as => :relatable, :class_name => 'Friendship', :conditions => { :confirmed => false }
   has_many :pending_friends, :through => :pending_friendships, :source => :user
-  
-  has_many :notification_preferences
 
   # Memberships
   has_many :memberships, :conditions => { :confirmed => true }, :dependent => :destroy
@@ -80,8 +78,10 @@ class User < ActiveRecord::Base
   has_many :received_messages, :dependent => :destroy
   has_many :unread_messages, :through => :received_messages, :source => :message, :conditions => { :received_messages => { :read => false } }
   
-  # Activities
+  # Activities and notifications
   has_many :activities
+  has_many :notifications
+  has_many :notification_preferences
   
   # Content
   has_many :pages
@@ -99,16 +99,21 @@ class User < ActiveRecord::Base
   def to_s
     full_name
   end
-  
+
+  # We use the Notification model to record any notifications sent (to ensure we don't send 
+  # duplicates) and queued (for digests)
   def process_notification(details, context = nil)
-    if context
-      notification_preference = notification_preferences.find_by_context(context)
-    end
+    notification = notifications.find_or_initialize_by_activity_id(details[:activity].id)
+    return true unless notification.new_record?
     
+    notification_preference = notification_preferences.find_by_context(context) if context
     notification_preference ||= notification_preferences.find_by_event(details[:event])
+
     unless notification_preference.nil? or notification_preference.notification_type == 'None'
-      c = ClahrcNotifier.new(self, details, notification_preference)
+      c = ClahrcNotifier.new(self, details, notification_preference, notification)
       c.dispatch
     end
+
+    notification.save
   end
 end
