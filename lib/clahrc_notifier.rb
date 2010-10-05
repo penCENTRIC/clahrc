@@ -4,12 +4,13 @@ class ClahrcNotifier
   TWITTER_ACCESS_TOKEN = '20201554-IFUGE6RG7EekDAxL56cg7hBWHTiYHIuNuIkHOOubB'
   TWITTER_ACCESS_SECRET = 'bb1GPH4ePbKqENY3aKt7fP7ZtMIsMuyYt93LbxWsc'
   
-  attr_accessor :user, :activity, :preference
+  attr_accessor :user, :activity, :preference, :notification
 
-  def initialize(user, activity, preference)
+  def initialize(user, activity, preference, notification)
     self.user = user
     self.activity = activity
     self.preference = preference
+    self.notification = notification
   end
   
   def dispatch
@@ -27,15 +28,16 @@ class ClahrcNotifier
       msg = "d #{user.profile.twitter} #{activity[:activity].describe}"
       Rails.logger.info(msg)
       client.update(msg)
+      notification.sent = true
     end
   rescue
   end
   
   def immediate_email
-    ActivityNotifier.deliver_immediate(user, activity, activity[:event].capitalize)
+    notification.sent = ActivityNotifier.deliver_immediate(user, activity, activity[:event].capitalize)
   end
   
   def email_digest
-    # We presume that the activity stream will have captured this and so don't do anything
+    notification.for_digest = true
   end
 end
