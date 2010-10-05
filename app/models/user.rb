@@ -106,7 +106,7 @@ class User < ActiveRecord::Base
     end
     
     notification_preference ||= notification_preferences.find_by_event(details[:event])
-    unless notification_preference.notification_type == 'None'
+    unless notification_preference.nil? or notification_preference.notification_type == 'None'
       c = ClahrcNotifier.new(self, details, notification_preference)
       c.dispatch
     end
