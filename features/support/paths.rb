@@ -7,9 +7,15 @@ module NavigationHelpers
   #
   def path_to(page_name)
     case page_name
-
+    when /the sign in page/
+      "/session/login?subdomain=community"
+    when /the profile page for "(.+?)"/
+      member_path(User.find_by_email($1))
     when /the home\s?page/
       '/'
+    when /the new setting_notification_preferences page/
+      new_setting_notification_preferences_path
+
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
