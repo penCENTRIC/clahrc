@@ -1,3 +1,11 @@
-ActivityNotifier#digest
+This is a digest of recent activity on the CLAHRCnet website tailored to your
+interests:
 
-Find me in app/views/activity_notifier/digest.erb
+<% @notifications.each do |notice| %>
+* <%= notice.activity.describe %>
+<% end %>
+
+-- 
+
+Not sure why you received this email? You can manage your CLAHRC notification preferences
+at <%= my_notification_preferences_url(:host => 'my.clahrc.net') %>

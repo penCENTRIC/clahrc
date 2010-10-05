@@ -1,4 +1,15 @@
 namespace :clahrc do
+  
+  desc "Assemble and deliver email digests"
+  task :deliver_digest_email => :environment do
+    User.find_each do |u|
+      if u.notifications.for_digest.unsent.any?
+        ActivityNotifier.deliver_digest(u, u.notifications.for_digest.unsent)
+        u.notifications.for_digest.unsent.update_all(['sent = ?', true])
+      end
+    end
+  end
+  
   desc "Notify users of activities"
   task :notify => :environment do
     Activity.all(:conditions => { :notified => false }, :order => 'created_at ASC').each do |activity|
