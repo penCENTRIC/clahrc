@@ -13,8 +13,10 @@ class CommentActivity < Activity
 
   # TODO : Some users will get two notifications here
   def prepare_notifications
-    notification = { :event => 'reply to followed thread', :status => 'posted', :activity => self }
-    comment.root.follows.each { |user| user.process_notification(notification) }
+    if comment.commentable.respond_to?(:follows)
+      notification = { :event => 'reply to followed thread', :status => 'posted', :activity => self }
+      comment.commentable.follows.each { |user| user.process_notification(notification) }
+    end
     
     notification = { :event => 'new content in group', :status => 'posted', :activity => self }
     comment.group.members.each { |user| user.process_notification(notification, group) }
