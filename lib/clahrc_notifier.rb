@@ -35,7 +35,7 @@ class ClahrcNotifier
     ActivityNotifier.deliver_immediate(user, activity, activity[:event].capitalize)
   end
   
-  def digest_email
+  def email_digest
     # We presume that the activity stream will have captured this and so don't do anything
   end
 end
