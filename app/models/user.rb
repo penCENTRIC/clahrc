@@ -100,9 +100,12 @@ class User < ActiveRecord::Base
     full_name
   end
   
-  def process_notification(details)
-    # TODO: Deal with contextual preferences
-    notification_preference = notification_preferences.find_by_event(details[:event])
+  def process_notification(details, context = nil)
+    if context
+      notification_preference = notification_preferences.find_by_context(context)
+    end
+    
+    notification_preference ||= notification_preferences.find_by_event(details[:event])
     unless notification_preference.notification_type == 'None'
       c = ClahrcNotifier.new(self, details, notification_preference)
       c.dispatch

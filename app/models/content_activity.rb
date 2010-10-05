@@ -9,11 +9,10 @@ class ContentActivity < Activity
     "#{trackable.user} posted new content in #{trackable.group} - #{content_url(content)}"
   end
 
-  # TODO : Some users will get two notifications here
   def prepare_notifications
     if content.group
       notification = { :event => 'new content in group', :status => 'posted', :activity => self }
-      content.group.members.each { |user| user.process_notification(notification) }
+      content.group.members.each { |user| user.process_notification(notification, content.group) }
     end
   end
   
