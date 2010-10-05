@@ -14,6 +14,10 @@ class NotificationPreference < ActiveRecord::Base
   self.available_notification_types = ['None', 'Email Digest', 'Immediate Email', 'Twitter DM']
 
   class <<self
+    def find_by_context(context)
+      find_by_context_id_and_context_type(context.id, context.class.to_s)
+    end
+    
     def build_or_retrieve_top_level_for_user(user)
       current_prefs = user.notification_preferences.top_level.all
       (event_types - current_prefs.collect(&:event)).each do |event_type|
