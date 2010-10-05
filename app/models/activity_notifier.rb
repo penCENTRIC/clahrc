@@ -7,12 +7,11 @@ class ActivityNotifier < ActionMailer::Base
     body       :user => user, :notification => activity
   end
 
-  def digest(user)
+  def digest(user, notifications)
     subject    'CLAHRCnet: Recent Activity'
     recipients user.email
     from       'no-reply@clahrc.net'
-    
-    body       :greeting => 'Hi,' 
+    body       :user => user, :notifications => notifications
   end
 
 end
