@@ -1,5 +1,5 @@
 class Profile < ActiveRecord::Base
-  attr_accessible :prefix, :first_name, :middle_name, :last_name, :suffix, :previous_full_name, :nickname, :date_of_birth, :sex, :about, :skype
+  attr_accessible :prefix, :first_name, :middle_name, :last_name, :suffix, :previous_full_name, :nickname, :date_of_birth, :sex, :about, :skype, :twitter
   
   validates_presence_of :first_name
   validates_presence_of :last_name
