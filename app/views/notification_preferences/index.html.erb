@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @preferences.each do |preference| %>
+    <% @preferences.reject(&:new_record?).each do |preference| %>
     <tr>
       <td><%= preference.event.capitalize %></td>
       <td>
