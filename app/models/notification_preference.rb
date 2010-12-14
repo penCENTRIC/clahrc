@@ -10,8 +10,10 @@ class NotificationPreference < ActiveRecord::Base
 
   cattr_accessor :event_types, :default_notification_type, :available_notification_types
   self.event_types = ['friend request', 'new content in group', 'reply to followed thread', 'private message']
-  self.default_notification_type = 'email digest'
+  self.default_notification_type = 'Email Digest'
   self.available_notification_types = ['None', 'Email Digest', 'Immediate Email', 'Twitter DM']
+
+  validates_presence_of :event
 
   class <<self
     def find_by_context(context)
