@@ -1,4 +1,8 @@
 module AccountsHelper
+  def link_to_edit_notication_settings
+    link_to t('notifications.edit'), my_notification_preferences_path
+  end
+
   def link_to_edit_account
     link_to t('accounts.edit'), edit_my_account_path, :class => 'edit account'
   end

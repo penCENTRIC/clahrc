@@ -123,6 +123,9 @@ en:
     not_allowed: You are not allowed to view that file.
     not_found: The file could not be found.  
 
+  notifications:
+      edit: Edit my notification preferences
+
   accounts:
     # Actions
     edit: Edit my account
