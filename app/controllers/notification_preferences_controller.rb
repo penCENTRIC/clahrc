@@ -11,7 +11,7 @@ class NotificationPreferencesController < ApplicationController
   end
   
   def create
-    @preference = current_user.notification_preferences.build(params[:notification_preferences])
+    @preference = current_user.notification_preferences.build(params[:notification_preference])
     if @preference.save
       flash[:notice] = 'Preference updated'
     else
@@ -23,7 +23,7 @@ class NotificationPreferencesController < ApplicationController
   def update
     @preference = current_user.notification_preferences.find(params[:id])
     
-    if @preference.update_attributes(params[:notification_preferences])
+    if @preference.update_attributes(params[:notification_preference])
       flash[:notice] = 'Preference updated'
     else
       flash[:notice] = 'Couldn\'t update preference'
