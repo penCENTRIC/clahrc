@@ -8,7 +8,7 @@ class CommentActivity < Activity
   end
 
   def describe
-    "#{trackable.user} posted a new comment on #{commentable} - #{content_url(commentable)}"
+    "#{trackable.user} posted a new comment on #{commentable} - #{content_url(commentable, :host => 'community.clahrc.net')}"
   end
 
   # TODO : Some users will get two notifications here

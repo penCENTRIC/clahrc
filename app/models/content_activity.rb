@@ -6,7 +6,7 @@ class ContentActivity < Activity
   require_dependency 'page_activity'
   
   def describe
-    "#{trackable.user} posted new content in #{trackable.group} - #{content_url(content)}"
+    "#{trackable.user} posted new content in #{trackable.group} - #{content_url(content, :host => 'community.clahrc.net')}"
   end
 
   def prepare_notifications
