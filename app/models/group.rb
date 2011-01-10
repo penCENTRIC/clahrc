@@ -24,6 +24,8 @@ class Group < ActiveRecord::Base
     #set_property :delta => true
   end
   
+  include Gravatar
+  
   # Avatar
   has_attached_file :avatar, {
     :url => '/:attachment/:class/:id_partition/:style.:extension',
