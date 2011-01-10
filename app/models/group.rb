@@ -24,7 +24,7 @@ class Group < ActiveRecord::Base
     #set_property :delta => true
   end
   
-  include Gravatar
+  include Gravtastic
   
   # Avatar
   has_attached_file :avatar, {
