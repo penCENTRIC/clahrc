@@ -1,4 +1,6 @@
 class User
+  include Gravtastic
+  
   module Avatar
     def self.included(base)
       base.has_attached_file :avatar, {
