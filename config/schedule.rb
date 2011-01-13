@@ -1,5 +1,4 @@
-set :output, "/var/www/domains/clahrc.net/web/public/current/log/cron.log"
-set :path, "/var/www/domains/clahrc.net/web/public/current" 
+env :MAILTO, 'mhg@taose.co.uk'
 
 every 1.minute do
   rake "clahrc:notify"
