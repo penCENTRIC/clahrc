@@ -87,7 +87,7 @@ namespace :production do
     set :branch, "production"
     set :stage, "production"
     
-    server "clahrc.net", :app, :web, :db
+    server "dptserver3.ex.ac.uk", :app, :web, :db
     
     set :rails_env, "#{stage}"
     set :deploy_to, "/opt/webs/clahrc.net/docs"

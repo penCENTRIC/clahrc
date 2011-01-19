@@ -4,7 +4,6 @@ defaults: &defaults
   reconnect: false
   pool: 5
   username: clahrc
-  password: clahrc
   socket: /opt/local/var/run/mysql5/mysqld.sock
 
 development:
