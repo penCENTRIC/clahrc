@@ -11,12 +11,12 @@ set :default_stage, "staging"
 
 default_run_options[:pty] = true
 
-set :default_environment, { 
-  'PATH' => "/usr/local/rvm/gems/ree-1.8.7-2010.02/bin:/usr/local/rvm/gems/ree-1.8.7-2010.02@global/bin:/usr/local/rvm/rubies/ree-1.8.7-2010.02/bin:/usr/local/bin:$PATH",
-  'RUBY_VERSION' => 'ree-1.8.7-2010.02',
-  'GEM_HOME' => '/usr/local/rvm/gems/ree-1.8.7-2010.02',
-  'GEM_PATH' => '/usr/local/rvm/gems/ree-1.8.7-2010.02:/usr/local/rvm/gems/ree-1.8.7-2010.02@global' 
-}
+#set :default_environment, { 
+#  'PATH' => "/usr/local/rvm/gems/ree-1.8.7-2010.02/bin:/usr/local/rvm/gems/ree-1.8.7-2010.02@global/bin:/usr/local/rvm/rubies/ree-1.8.7-2010.02/bin:/usr/local/bin:$PATH",
+#  'RUBY_VERSION' => 'ree-1.8.7-2010.02',
+#  'GEM_HOME' => '/usr/local/rvm/gems/ree-1.8.7-2010.02',
+#  'GEM_PATH' => '/usr/local/rvm/gems/ree-1.8.7-2010.02:/usr/local/rvm/gems/ree-1.8.7-2010.02@global' 
+#}
 
 namespace :deploy do
   after "deploy:setup", "deploy:setup_shared_paths"
