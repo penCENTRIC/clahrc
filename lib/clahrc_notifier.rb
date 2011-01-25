@@ -1,8 +1,10 @@
+require 'app_settings'
+
 class ClahrcNotifier
-  TWITTER_CONSUMER_KEY = '8UTBbxcMBqt613xKVAKzvw'
-  TWITTER_CONSUMER_SECRET = '2Y811lOeyhfqpmrWoyLn4hVHKubZgmQ5ZW1l30ftZY'
-  TWITTER_ACCESS_TOKEN = '20201554-IFUGE6RG7EekDAxL56cg7hBWHTiYHIuNuIkHOOubB'
-  TWITTER_ACCESS_SECRET = 'bb1GPH4ePbKqENY3aKt7fP7ZtMIsMuyYt93LbxWsc'
+  TWITTER_CONSUMER_KEY = AppSettings.twitter.consumer_key
+  TWITTER_CONSUMER_SECRET = AppSettings.twitter.consumer_secret
+  TWITTER_ACCESS_TOKEN = AppSettings.twitter.access_token
+  TWITTER_ACCESS_SECRET = AppSettings.twitter.access_secret
   
   attr_accessor :user, :activity, :preference, :notification
 
