@@ -34,7 +34,7 @@ config.action_mailer.postmark_api_key = AppSettings.postmark_api_key
 config.action_mailer.delivery_method = :postmark
 
 config.after_initialize do 
-  [CommentActivity, ContentActivity, GroupActivity, MessageActivity, ReceivedMessageActivity, RelationshipActivity].each do |klass|
+  [CommentActivity, ContentActivity, GroupActivity, ReceivedMessageActivity, RelationshipActivity].each do |klass|
     klass.handle_asynchronously :prepare_notifications
   end
 end
