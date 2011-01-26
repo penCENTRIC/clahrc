@@ -43,5 +43,5 @@ class Activity < ActiveRecord::Base
   require_dependency 'content_activity'
   require_dependency 'group_activity'
   require_dependency 'relationship_activity' 
-  require_dependency 'message_activity'
+  require_dependency 'received_message_activity'
 end
