@@ -163,15 +163,15 @@ namespace :delayed_job do
   task :stop, :roles => :app do
     run <<-BASH
       cd #{current_path};
-      RAILS_ENV=#{rails_env} script/delayed_job stop
+      RAILS_ENV=#{stage} script/delayed_job stop
     BASH
   end
 
   desc "Start DelayedJob"
-  task :stop, :roles => :app do
+  task :start, :roles => :app do
     run <<-BASH
       cd #{current_path};
-      RAILS_ENV=#{rails_env} script/delayed_job start
+      RAILS_ENV=#{stage} script/delayed_job start
     BASH
   end
 end
