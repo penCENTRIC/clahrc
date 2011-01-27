@@ -157,6 +157,28 @@ namespace :testing do
   end
 end
 
+# DelayedJob
+namespace :delayed_job do
+  desc "Stop DelayedJob"
+  task :stop, :roles => :app do
+    run <<-BASH
+      cd #{current_path};
+      RAILS_ENV=#{rails_env} script/delayed_job stop
+    BASH
+  end
+
+  desc "Start DelayedJob"
+  task :stop, :roles => :app do
+    run <<-BASH
+      cd #{current_path};
+      RAILS_ENV=#{rails_env} script/delayed_job start
+    BASH
+  end
+end
+
+before "deploy:update", "delayed_job:stop"
+after "deploy:update", "delayed_job:start"
+
 # ThinkingSphinx
 namespace :thinking_sphinx do
   desc "Generate the Sphinx configuration file using ThinkingSphinx's settings"
@@ -187,7 +209,7 @@ namespace :thinking_sphinx do
 
   before "thinking_sphinx:start", "thinking_sphinx:configure"
   
-  desc "Start the Sphinx searchd daemon using ThinkingSphinx's settings"
+  desc "Stop the Sphinx searchd daemon using ThinkingSphinx's settings"
   task :stop, :roles => :app do
     run <<-BASH
       cd #{current_path};
