@@ -1,0 +1,1 @@
+ThinkingSphinx.suppress_delta_output = true
