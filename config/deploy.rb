@@ -226,7 +226,7 @@ namespace :crontab do
   desc "Update the crontab file"
   task :update, :roles => :app, :except => { :no_release => true } do
     run <<-BASH
-      cd #{release_path};
+      cd #{current_path};
       whenever -i CLAHRC_NET --update-crontab --set environment=#{stage}&output=#{shared_path}/log/cron.log&path=#{release_path};
     BASH
   end
