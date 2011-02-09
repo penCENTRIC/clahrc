@@ -5,15 +5,15 @@ class ReceivedMessageActivity < Activity
   
   def describe
     %{
-      #{received_message.sender} sent you a message:
-      
-      Subject: #{received_message.subject_to_s}
+#{received_message.sender} sent you a message:
 
-      #{received_message.body_to_s}
+Subject: #{received_message.subject_to_s}
+
+#{received_message.body_to_s}
       
-      To view this message, please click the following link:
+To view this message, please click the following link:
       
-      #{my_received_message_url(received_message, :host => 'my.clahrc.net')}
+    #{my_received_message_url(received_message, :host => 'my.clahrc.net')}
     }
   end
 

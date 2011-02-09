@@ -36,8 +36,12 @@ class Comment < ActiveRecord::Base
     sanitize(textilize(body))
   end
   
-  def body_for_index
+  def body_to_s
     Hpricot(body_to_html).inner_text
+  end
+  
+  def body_for_index
+    body_to_s
   end
   
   def subject_to_html
