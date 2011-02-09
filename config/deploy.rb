@@ -61,6 +61,7 @@ namespace :deploy do
 
   task :symlink_app_settings do
     run "ln -nfs #{shared_path}/config/app_settings.rb #{current_path}/config/app_settings.rb"
+    run "ln -nfs #{shared_path}/config/app_settings.rb #{current_path}/lib/app_settings.rb"
   end
 end
 
