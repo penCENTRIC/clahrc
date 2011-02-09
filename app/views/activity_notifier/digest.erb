@@ -2,10 +2,10 @@ This is a digest of recent activity on the CLAHRCnet website tailored to your
 interests:
 
 <% @notifications.each do |notice| %>
-* <%= notice.activity.describe %>
+<%= word_wrap notice.activity.describe, :line_width => 60 %>
+
+--------
+
 <% end %>
-
--- 
-
 Not sure why you received this email? You can manage your CLAHRC notification preferences
 at <%= my_notification_preferences_url(:host => 'my.clahrc.net') %>
