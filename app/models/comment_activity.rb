@@ -8,7 +8,15 @@ class CommentActivity < Activity
   end
 
   def describe
-    "#{trackable.user} posted a new comment on #{commentable} - #{content_url(commentable, :host => 'community.clahrc.net')}"
+    %{
+#{comment.user} commented on '#{commentable.title}':
+
+#{comment.body_to_s}
+
+To view the comments, please click the following link:
+
+    #{commentable_comments_url(commentable, :host => 'my.clahrc.net')}
+  }
   end
 
   # TODO : Some users will get two notifications here
