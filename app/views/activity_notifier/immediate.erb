@@ -1,6 +1,6 @@
-<%= @notification[:activity].describe %>
+<%= word_wrap @notification[:activity].describe, :line_width => 60 %>
 
--- 
+--------
 
 Not sure why you received this email? You can manage your CLAHRC notification preferences
 at <%= my_notification_preferences_url(:host => 'my.clahrc.net') %>
