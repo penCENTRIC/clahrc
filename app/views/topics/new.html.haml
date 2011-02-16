@@ -14,7 +14,7 @@
       #assets-container
         = t('attachments_help')
         #assets
-          = render @topic.clips
+          = render :partial => 'topics/asset', :collection => @topic.assets
         = link_to_add_asset
     %li
       = f.submit t('create')
