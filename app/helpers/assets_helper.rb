@@ -1,7 +1,7 @@
 module AssetsHelper
-  def link_to_add_asset 
+  def link_to_add_asset(parent) 
     link_to_function t('assets.add') do |page| 
-      page.insert_html :bottom, :assets, :partial => 'pages/asset', :object => Asset.new 
+      page.insert_html :bottom, :assets, :partial => "#{parent.class.to_s.underscore.pluralize}/asset", :object => Asset.new 
     end 
   end
   

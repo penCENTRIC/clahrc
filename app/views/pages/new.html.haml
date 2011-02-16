@@ -22,6 +22,6 @@
         = t('attachments_help')
         #assets
           = render :partial => 'pages/asset', :collection => @page.assets
-        = link_to_add_asset
+        = link_to_add_asset(@page)
     %li
       = f.submit t('create')
