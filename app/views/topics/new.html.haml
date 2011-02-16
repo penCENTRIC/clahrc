@@ -1,6 +1,6 @@
 = content_for :content_header do
   %h1= t('new')
-- form_for @topic, :url => forum_topics_path(@topic.forum) do |f|
+- form_for @topic, :url => forum_topics_path(@topic.forum), :html => { :multipart => true } do |f|
   = error_messages_for :topic
   %ol
     %li
