@@ -8,6 +8,8 @@ class Activity < ActiveRecord::Base
   include Commentable
   include UrlAware
   
+  include ActionController::UrlWriter
+  
   belongs_to :user
   validates_presence_of :user
 

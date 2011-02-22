@@ -1,8 +1,8 @@
 This is a digest of recent activity on the CLAHRCnet website tailored to your
 interests:
 
-<% @notifications.each do |notice| %>
-<%= word_wrap notice.activity.describe, :line_width => 60 %>
+<% @notifications.each do |notification| %>
+<%= word_wrap notification.activity.describe, :line_width => 60 %>
 
 --------
 
