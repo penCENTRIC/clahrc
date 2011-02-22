@@ -6,9 +6,11 @@
   %li
     %a{ :id => 't2', :href => '#personal_tab' }Personal
   %li
-    %a{ :id => 't3', :href => '#about_tab' }About
+    %a{ :id => 't3', :href => '#professional_tab' }Professional
   %li
-    %a{ :id => 't4', :href => '#contact' }Contact
+    %a{ :id => 't4', :href => '#about_tab' }About
+  %li
+    %a{ :id => 't5', :href => '#contact' }Contact
 - form_for @profile, :url => my_profile_path do |f|
   = error_messages_for :profile
   .panes
@@ -47,17 +49,38 @@
         = f.submit t('update')
     %ol.pane
       %li
-        = f.label :activity_list, 'Activities'
-        = f.text_field :activity_list, :rows => 4, :title => t('activities_help')
+        = f.label :location, t('employer')
+        = f.text_field :location, :title => t('employer_help')
+      %li
+        = f.label :projects, t('projects')
+        = f.text_area :projects, :rows => 8, :title => t('projects_help'), :class => 'markItUp'
+      %li
+        = f.label :expertise_list, t('expertises')
+        = f.text_field :expertise_list, :title => t('expertises_help')
+      %li
+        = f.submit t('update')
+    %ol.pane
+      %li
+        = f.label :activity_list, t('activities')
+        = f.text_field :activity_list, :title => t('activities_help')
       %li
         = f.label :interest_list, t('interests')
-        = f.text_field :interest_list, :rows => 4, :title => t('interests_help')
+        = f.text_field :interest_list, :title => t('interests_help')
       %li
         = f.label :about, t('about')
         = f.text_area :about, :rows => 8, :title => t('about_help'), :class => 'markItUp'
       %li
         = f.submit t('update')
     %ol.pane
+      %li
+        = f.label :location, t('location')
+        = f.text_field :location, :title => t('location_help')
+      %li
+        = f.label :work_phone, t('work_phone')
+        = f.text_field :work_phone, :title => t('work_phone_help')
+      %li
+        = f.label :work_email, t('work_email')
+        = f.text_field :work_email, :title => t('work_email_help')
       %li
         = f.label :twitter, t('twitter')
         = f.text_field :twitter, :title => t('twitter_help')
