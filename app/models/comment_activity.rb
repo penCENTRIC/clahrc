@@ -15,10 +15,14 @@ class CommentActivity < Activity
 
 To view the comments, please click the following link:
 
-    #{commentable_comments_url(commentable, :host => 'my.clahrc.net')}
+    #{commentable_comments_url(commentable, :host => 'community.clahrc.net')}
   }
   end
 
+  def commentable_comments_url(commentable, options = {})
+    send "#{commentable.class.to_s.underscore}_comments_url", commentable, options
+  end
+  
   # TODO : Some users will get two notifications here
   def prepare_notifications
     if comment.commentable.respond_to?(:follows)
