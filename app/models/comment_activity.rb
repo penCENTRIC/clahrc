@@ -31,6 +31,6 @@ To view the comments, please click the following link:
     end
     
     notification = { :event => 'new content in group', :status => 'posted', :activity => self }
-    comment.group.members.each { |user| user.process_notification(notification, group) }
+    comment.group.members.each { |user| user.process_notification(notification, group) unless user == comment.user }
   end
 end
