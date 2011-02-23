@@ -12,7 +12,7 @@ class ContentActivity < Activity
   def prepare_notifications
     if content.group
       notification = { :event => 'new content in group', :status => 'posted', :activity => self }
-      content.group.members.each { |user| user.process_notification(notification, content.group) }
+      content.group.members.each { |user| user.process_notification(notification, content.group) unless user == content.user }
     end
   end
   
