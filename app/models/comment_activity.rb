@@ -9,7 +9,7 @@ class CommentActivity < Activity
 
   def describe
     %{
-#{comment.user} commented on '#{commentable.title}':
+#{user} commented on '#{commentable.title}':
 
 #{comment.body_to_s}
 
