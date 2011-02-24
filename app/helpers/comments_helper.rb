@@ -16,7 +16,7 @@ module CommentsHelper
   end
        
   def commentable_comments_path(commentable)
-    send "#{commentable.class.to_s.underscore}_comments_path", commentable
+    send "#{commentable.class.to_s.underscore}_path", commentable, :anchor => 'comments'
   end
 
   def path_for_edit_comment(comment)
