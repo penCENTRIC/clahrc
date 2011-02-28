@@ -29,8 +29,5 @@ To view the comments, please click the following link:
       notification = { :event => 'reply to followed thread', :status => 'posted', :activity => self }
       comment.commentable.follows.each { |user| user.process_notification(notification) }
     end
-    
-    notification = { :event => 'new content in group', :status => 'posted', :activity => self }
-    comment.group.members.each { |user| user.process_notification(notification, group) unless user == comment.user }
   end
 end
