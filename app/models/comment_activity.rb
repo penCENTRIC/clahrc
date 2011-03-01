@@ -27,7 +27,7 @@ To view the comments, please click the following link:
   def prepare_notifications
     if comment.commentable.respond_to?(:follows)
       notification = { :event => 'reply to followed thread', :status => 'posted', :activity => self }
-      comment.commentable.follows.each { |user| user.process_notification(notification) }
+      comment.commentable.follows.each { |u| u.process_notification(notification) }
     end
   end
 end

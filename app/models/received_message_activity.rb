@@ -19,6 +19,6 @@ To view this message, please click the following link:
 
   def prepare_notifications
     notification = { :event => 'private message', :status => 'posted', :activity => self }
-    received_message.recipients.each { |user| user.process_notification(notification) }
+    received_message.recipients.each { |u| u.process_notification(notification) }
   end
 end
