@@ -5,5 +5,7 @@
 %h2 Other things to try:
 %p
   Search <em>clahrc.net</em>:
-  - form_tag(search_index_path, :method => :get) do
-    = text_field_tag :q, 'Search', :value => searchify(request.path)
+- form_tag(search_index_path, :method => :get) do
+  %ol
+    %li
+      = text_field_tag :q, searchify(request.path) || 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'

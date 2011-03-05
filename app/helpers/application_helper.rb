@@ -16,11 +16,11 @@ module ApplicationHelper
   def searchify(s)
     s = s.to_s.mb_chars.normalize(:kd)
 
-    s.gsub!(/[^\w -]+/n, '')  # strip unwanted characters
+    s.gsub!(/[^\w -]+/n, ' ')  # strip unwanted characters
     s.strip!
     s.downcase!
     s.gsub!(/[ -]+/, ' ')
   
-    s
+    s.to_s
   end    
 end
