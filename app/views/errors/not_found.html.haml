@@ -2,5 +2,8 @@
   %h1 Don't Panic
 %p
   The page you were looking for doesn't exist. You may have mistyped the address or the page may have moved.
-- form_tag(search_index_path, :method => :get) do
-  = text_field_tag :q, 'Search', :onclick => 'if(this.value=="Search"){this.value=""}', :onblur => 'if(this.value==""){this.value="Search"}'
+%h2 Other things to try:
+%p
+  Search <em>clahrc.net</em>:
+  - form_tag(search_index_path, :method => :get) do
+    = text_field_tag :q, 'Search', :value => searchify(request.path)
