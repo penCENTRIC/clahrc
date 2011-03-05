@@ -12,4 +12,15 @@ module ApplicationHelper
       %Q(2009)
     end
   end
+  
+  def searchify(s)
+    s = s.to_s.mb_chars.normalize(:kd)
+
+    s.gsub!(/[^\w -]+/n, '')  # strip unwanted characters
+    s.strip!
+    s.downcase!
+    s.gsub!(/[ -]+/, ' ')
+  
+    s
+  end    
 end
