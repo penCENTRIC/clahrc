@@ -9,8 +9,8 @@ class ApplicationController < ActionController::Base
   theme :current_theme
   
   before_filter :correct_safari_and_ie_accept_headers
-    
-  protected      
+
+  protected	
     def add_breadcrumb(name, url = '')  
       @breadcrumbs ||= []  
       url = eval(url) if url =~ /_path|_url|@/
@@ -121,6 +121,15 @@ class ApplicationController < ActionController::Base
         add_breadcrumb t('wiki_pages.index'), @template.path_for_wiki_pages(wiki_page.group || wiki_page.user || current_user)
         add_breadcrumb wiki_page.title_to_s, @template.path_for_wiki_page(wiki_page)
       end
+    end
+    
+    def rescue_action_in_public(exception)
+    	case response_code_for_rescue(exception)
+    	when :not_found
+  			render "errors/not_found", :status	=> :not_found
+  		else
+  			render "errors/internal_server_error", :status => :internal_server_error
+  		end
     end
     
     def correct_safari_and_ie_accept_headers
