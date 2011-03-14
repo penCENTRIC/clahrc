@@ -90,7 +90,7 @@ en:
   title: Title
   title_help: Enter a descriptive title for the item. Please note that this field is text only - any HTML content will be removed.
   tags: Tags
-  tags_help: Entere a comma-separated list of tags. e.g. news, announcements.
+  tags_help: Enter a comma-separated list of tags. e.g. news, announcements.
   comments_enabled: Comments
   comments_enabled_help: Enable comments.
   attachments: Attachments
@@ -100,6 +100,18 @@ en:
   twitter: Twitter Name
   twitter_help: If you have a twitter account, you can enter your Twitter Name to allow other members to follow you, and to receive CLAHRC notifications via twitter.
   skype_help: If you have a Skype account, you can enter your Skype Name to allow other members to contact you. Make sure that your Skype privacy settings allow your Skype status to be shown online.
+  employer: Employer
+  employer_help: Enter your employer's name.
+  projects: Projects
+  projects_help: You can provide details of projects you are involved in.
+  expertises: Experitses
+  expertises_help: You can provide details of specific areas of expertise that you possess  and/or practice.
+  location: Location
+  location_help: Where are you located?
+  work_phone: Work Phone
+  work_phone_help: Your work telephone number, and extension if applicable.
+  work_email: Work Email Address
+  work_email_help: Your work email address, if different from your profile email address.
   notification_preferences: Notification Preferences
 
   activities:
