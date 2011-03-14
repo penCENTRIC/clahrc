@@ -6,8 +6,8 @@ class Profile < ActiveRecord::Base
   
   belongs_to :user
   
-  acts_as_taggable_on :activities, :interests
-  attr_accessible :activity_list, :interest_list
+  acts_as_taggable_on :activities, :interests, :research_interests, :expertises
+  attr_accessible :activity_list, :interest_list, :expertise_list
   
   def helpers
     ActionController::Base.helpers
