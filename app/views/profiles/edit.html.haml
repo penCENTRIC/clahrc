@@ -49,8 +49,8 @@
         = f.submit t('update')
     %ol.pane
       %li
-        = f.label :location, t('employer')
-        = f.text_field :location, :title => t('employer_help')
+        = f.label :employer, t('employer')
+        = f.text_field :employer, :title => t('employer_help')
       %li
         = f.label :projects, t('projects')
         = f.text_area :projects, :rows => 8, :title => t('projects_help'), :class => 'markItUp'
@@ -61,7 +61,7 @@
         = f.submit t('update')
     %ol.pane
       %li
-        = f.label :activity_list, t('activities')
+        = f.label :activity_list, "Activities"
         = f.text_field :activity_list, :title => t('activities_help')
       %li
         = f.label :interest_list, t('interests')
