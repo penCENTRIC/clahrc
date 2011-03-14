@@ -124,9 +124,7 @@ class ApplicationController < ActionController::Base
     end
     
     def rescue_action_in_public(exception)
-      @query = searchify(request.path)
-      
-    	case response_code_for_rescue(exception)
+      case response_code_for_rescue(exception)
     	when :not_found
   			render "errors/not_found", :status	=> :not_found
   		else
